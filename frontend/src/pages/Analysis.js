@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { useFirebase } from '../context/Firebase';
+import { Link } from 'react-router-dom';
 
 function Analysis() {
   const [formData, setFormData] = useState({
@@ -14,7 +15,7 @@ function Analysis() {
   });
 
   const handleNeutralise = async () => {
-    if (!results){
+    if (!results) {
       alert("Please utilise the Emission Calculator to calculate your emissions first");
       return;
     }
@@ -24,7 +25,7 @@ function Analysis() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        emissions: results?.totalEmissions || 0, // Using results if available
+        emissions: results?.totalEmissions || 0,
         transportation: formData.transportation,
         fuel: formData.fuel,
       }),
@@ -59,10 +60,18 @@ function Analysis() {
 
   const handleGenerateAndStorePDF = async () => {
     try {
-      const canvas = await html2canvas(formRef.current);
+      const canvas = await html2canvas(formRef.current, {
+        scale: 2, // Increase scale for higher resolution
+        useCORS: true, // Enable CORS if your images are from a different origin
+      });
+
       const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF();
-      pdf.addImage(imgData, 'PNG', 0, 0);
+      const pdf = new jsPDF('p', 'mm', 'a4'); // Change the format to 'a4' for better fitting
+      const imgWidth = pdf.internal.pageSize.getWidth();
+      const imgHeight = (canvas.height * imgWidth) / canvas.width; // Maintain aspect ratio
+
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+
       const pdfBlob = pdf.output('blob');
 
       const downloadURL = await uploadPDFToFirebase(pdfBlob);
@@ -75,8 +84,8 @@ function Analysis() {
 
 
   return (
-   <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center" ref={formRef}>
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md" ref={formRef}>
         <h2 className="text-2xl font-bold mb-6 text-center">Carbon Emission Estimator</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -171,12 +180,12 @@ function Analysis() {
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Explore Carbon Neutralization Pathways</h2>
         <p className="text-lg mb-4">
-              To mitigate the impact of your emissions, we can explore various neutralisation strategies. 
-              Click the button below to get recommendations for reducing your carbon footprint through 
-              different pathways such as afforestation and clean technologies.
+          To mitigate the impact of your emissions, we can explore various neutralisation strategies.
+          Click the button below to get recommendations for reducing your carbon footprint through
+          different pathways such as afforestation and clean technologies.
         </p>
-        <button className="w-full bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" 
-        onClick = {handleNeutralise}>Suggest Neutralisation Pathways</button>
+        <button className="w-full bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+          onClick={handleNeutralise}>Suggest Neutralisation Pathways</button>
         {neutralisationResults && (
           <div className="mt-8 bg-gray-50 p-4 rounded-lg">
             <h3 className="text-xl font-semibold mb-4">Neutralisation Pathways:</h3>
@@ -188,7 +197,7 @@ function Analysis() {
           </div>
         )}
       </div>
-    
+
 
       <button
         onClick={handleGenerateAndStorePDF}
@@ -196,6 +205,13 @@ function Analysis() {
       >
         Generate and Store PDF
       </button>
+      <Link to="/view">
+        <button
+          className="mt-4 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+        >
+          View Data
+        </button>
+      </Link>
     </div>
   );
 }

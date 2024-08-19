@@ -10,7 +10,7 @@ import {
     signOut,
     sendPasswordResetEmail
 } from 'firebase/auth';
-import { getFirestore, doc, setDoc, addDoc, collection } from "firebase/firestore";
+import { getFirestore, doc, setDoc, addDoc, collection, getDocs } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 // Firebase configuration
@@ -43,17 +43,27 @@ export const useFirebase = () => {
 
 export const FirebaseProvider = (props) => {
     const [user, setUser] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(() => {
+        // Retrieve the value from local storage on initial load
+        return JSON.parse(localStorage.getItem('isLoggedIn')) || false;
+    });
 
     useEffect(() => {
-        onAuthStateChanged(firebaseAuth, user => {
-            if (user)
+        const unsubscribe = onAuthStateChanged(firebaseAuth, user => {
+            if (user) {
                 setUser(user);
-            else
+                setIsLoggedIn(true);
+                localStorage.setItem('isLoggedIn', JSON.stringify(true));
+            } else {
                 setUser(null);
-        })
-    }, [])
+                setIsLoggedIn(false);
+                localStorage.setItem('isLoggedIn', JSON.stringify(false));
+            }
+        });
 
-    const isLoggedIn = user ? true : false;
+        // Cleanup subscription on component unmount
+        return () => unsubscribe();
+    }, []);
 
     // Function to add a user to Firestore
     const addUser = async (CoalName, email, password) => {
@@ -123,6 +133,7 @@ export const FirebaseProvider = (props) => {
     const handleLogout = async () => {
         try {
             await signOut(firebaseAuth);
+            localStorage.removeItem('isLoggedIn');
         } catch (error) {
             console.error('Error occurred during logout:', error);
         }
@@ -139,7 +150,7 @@ export const FirebaseProvider = (props) => {
             const downloadURL = await getDownloadURL(snapshot.ref);
 
             // Step 3: Store PDF metadata or URL in Firestore
-            await addDoc(collection(firestore, "analysis"), {
+            await addDoc(collection(firestore, "users", user.uid, "pdfs"), {
                 url: downloadURL,
                 createdAt: new Date(),
                 userId: user ? user.uid : null,
@@ -153,6 +164,22 @@ export const FirebaseProvider = (props) => {
         }
     };
 
+    // Function to fetch all PDFs for the logged-in user
+    const fetchUserPDFs = async () => {
+        try {
+            if (!user) throw new Error("No user is logged in");
+
+            const pdfsCollectionRef = collection(firestore, 'users', user.uid, 'pdfs');
+            const pdfsSnapshot = await getDocs(pdfsCollectionRef);
+            const pdfList = pdfsSnapshot.docs.map(doc => doc.data());
+
+            return pdfList;
+        } catch (error) {
+            console.error("Error fetching PDFs: ", error);
+            throw new Error("Failed to fetch PDFs");
+        }
+    };
+
     return (
         <FirebaseContext.Provider value={{
             user,
@@ -162,9 +189,10 @@ export const FirebaseProvider = (props) => {
             signinWithGoogle,
             handleLogout,
             sendPReset,
-            uploadPDFToFirebase // Make the PDF upload function available
+            uploadPDFToFirebase,
+            fetchUserPDFs
         }}>
             {props.children}
         </FirebaseContext.Provider>
     );
-}
+};
