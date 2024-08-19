@@ -2,6 +2,7 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home'
 import Calc from './pages/Calc'
+import EmissionEstimate from './pages/EmissionEstimate'
 import Display from './pages/Display'
 import Login from './pages/Login'
 import Register from './pages/Register'
