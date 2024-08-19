@@ -10,7 +10,28 @@ function EmissionEstimate() {
     output: ''
   });
 
+  const handleNeutralise = async () => {
+    if (!results){
+      alert("Please utilise the Emission Calculator to calculate your emissions first");
+      return;
+    }
+    const response = await fetch('http://localhost:5000/neutralise', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        emissions: results?.totalEmissions || 0, // Using results if available
+        transportation: formData.transportation,
+        fuel: formData.fuel,
+      }),
+    });
+    const result = await response.json();
+    setNeutralisationResults(result);
+  };
+
   const [results, setResults] = useState(null);
+  const [neutralisationResults, setNeutralisationResults] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -120,6 +141,26 @@ function EmissionEstimate() {
             <p>Total Emissions: <span className="font-bold">{results.totalEmissions.toFixed(2)} kg CO2</span></p>
             <p>Per Capita Emissions: <span className="font-bold">{results.perCapitaEmissions.toFixed(2)} kg CO2 per worker</span></p>
             <p>Per Output Emissions: <span className="font-bold">{results.perOutputEmissions.toFixed(2)} kg CO2 per ton</span></p>
+          </div>
+        )}
+      </div><br></br>
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-center">Explore Carbon Neutralization Pathways</h2>
+        <p className="text-lg mb-4">
+              To mitigate the impact of your emissions, we can explore various neutralisation strategies. 
+              Click the button below to get recommendations for reducing your carbon footprint through 
+              different pathways such as afforestation and clean technologies.
+        </p>
+        <button className="w-full bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" 
+        onClick = {handleNeutralise}>Suggest Neutralisation Pathways</button>
+        {neutralisationResults && (
+          <div className="mt-8 bg-gray-50 p-4 rounded-lg">
+            <h3 className="text-xl font-semibold mb-4">Neutralisation Pathways:</h3>
+            <p>Transportation CO2 Reduction: <span className="font-bold">{neutralisationResults.transportation_co2_reduction?.toFixed(2) || 0} kg CO2</span></p>
+            <p>Fuel CO2 Reduction: <span className="font-bold">{neutralisationResults.fuel_co2_reduction?.toFixed(2) || 0} kg CO2</span></p>
+            <p>Remaining Emissions After Reduction: <span className="font-bold">{neutralisationResults.remaining_emissions_after_reduction?.toFixed(2) || 0} kg CO2</span></p>
+            <p>Land Required for Afforestation: <span className="font-bold">{neutralisationResults.land_required_for_afforestation_hectares?.toFixed(2) || 0} hectares</span></p>
+            <p>Estimated Electricity Savings: <span className="font-bold">{neutralisationResults.estimated_electricity_savings_mwh?.toFixed(2) || 0} MWh</span></p>
           </div>
         )}
       </div>
