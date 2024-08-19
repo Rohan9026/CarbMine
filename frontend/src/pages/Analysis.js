@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import { useFirebase } from '../context/Firebase';
 
-function EmissionEstimate() {
+function Analysis() {
   const [formData, setFormData] = useState({
     excavation: '',
     transportation: '',
@@ -11,6 +14,9 @@ function EmissionEstimate() {
   });
 
   const [results, setResults] = useState(null);
+  const formRef = useRef();
+
+  const { uploadPDFToFirebase } = useFirebase();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,9 +35,26 @@ function EmissionEstimate() {
     setResults(result);
   };
 
+  const handleGenerateAndStorePDF = async () => {
+    try {
+      const canvas = await html2canvas(formRef.current);
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, 'PNG', 0, 0);
+      const pdfBlob = pdf.output('blob');
+
+      const downloadURL = await uploadPDFToFirebase(pdfBlob);
+      alert(`PDF generated and stored successfully! View it here: ${downloadURL}`);
+    } catch (error) {
+      console.error("Error generating or storing PDF:", error);
+      alert("There was an error generating the PDF. Please try again.");
+    }
+  };
+
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md" ref={formRef}>
         <h2 className="text-2xl font-bold mb-6 text-center">Carbon Emission Estimator</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -123,8 +146,15 @@ function EmissionEstimate() {
           </div>
         )}
       </div>
+
+      <button
+        onClick={handleGenerateAndStorePDF}
+        className="mt-4 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+      >
+        Generate and Store PDF
+      </button>
     </div>
   );
 }
 
-export default EmissionEstimate;
+export default Analysis;

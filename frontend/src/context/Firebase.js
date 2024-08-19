@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import { initializeApp } from "firebase/app";
-import { createContext, useContext } from "react";
 import {
     getAuth,
     createUserWithEmailAndPassword,
@@ -10,12 +9,11 @@ import {
     signInWithPopup,
     signOut,
     sendPasswordResetEmail
-} from 'firebase/auth'
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+} from 'firebase/auth';
+import { getFirestore, doc, setDoc, addDoc, collection } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-
-const FirebaseContext = createContext(null);
-
+// Firebase configuration
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -23,14 +21,17 @@ const firebaseConfig = {
     storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
     messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
     appId: process.env.REACT_APP_FIREBASE_APPID,
-
 };
 
-
+// Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 export const firebaseAuth = getAuth(firebaseApp);
 const googleProvider = new GoogleAuthProvider();
 export const firestore = getFirestore(firebaseApp);
+const storage = getStorage(firebaseApp);
+
+// Create Context
+const FirebaseContext = createContext(null);
 
 export const useFirebase = () => {
     const firebase = useContext(FirebaseContext);
@@ -41,7 +42,6 @@ export const useFirebase = () => {
 }
 
 export const FirebaseProvider = (props) => {
-
     const [user, setUser] = useState(null);
 
     useEffect(() => {
@@ -55,32 +55,27 @@ export const FirebaseProvider = (props) => {
 
     const isLoggedIn = user ? true : false;
 
-
+    // Function to add a user to Firestore
     const addUser = async (CoalName, email, password) => {
         try {
-            // Create a new user with email and password
             const userCredential = await createUserWithEmailAndPassword(firebaseAuth, email, password);
             const loggedInUser = userCredential.user;
 
-            // Create a user document in Firestore
-            const user = {
+            const userDoc = {
                 CoalName,
                 email,
                 userId: loggedInUser.uid,
             };
-            const userDocRef = doc(firestore, 'users', loggedInUser.uid);
 
-            await setDoc(userDocRef, user);
+            const userDocRef = doc(firestore, 'users', loggedInUser.uid);
+            await setDoc(userDocRef, userDoc);
             console.log('User document created with UID: ', loggedInUser.uid);
 
-            // Update the state with the new user
             onAuthStateChanged(firebaseAuth, (user) => {
                 if (user) {
                     console.log('User is logged in:', user);
-
                 } else {
                     console.log('No user is logged in');
-
                 }
             });
 
@@ -89,17 +84,13 @@ export const FirebaseProvider = (props) => {
         }
     };
 
-
+    // Function to sign in with email and password
     const signinUserWithEmailAndPassword = async (email, password) => {
         try {
-            // Sign in with email and password
             const userCredential = await signInWithEmailAndPassword(firebaseAuth, email, password);
-            // Return userCredential or a success message
             return userCredential;
         } catch (error) {
-            // Handle and throw specific Firebase authentication errors
             let errorMessage = 'An error occurred during sign-in.';
-
             switch (error.code) {
                 case 'auth/invalid-email':
                     errorMessage = 'Invalid email address.';
@@ -114,25 +105,51 @@ export const FirebaseProvider = (props) => {
                     errorMessage = 'Failed to sign in. Please check your credentials and try again.';
                     break;
             }
-
-            // Throw an error with a specific message
             throw new Error(errorMessage);
         }
     };
 
+    // Function to sign in with Google
     const signinWithGoogle = () => {
         signInWithPopup(firebaseAuth, googleProvider);
-    }
+    };
 
+    // Function to send password reset email
     const sendPReset = (email) => {
         sendPasswordResetEmail(firebaseAuth, email);
-    }
+    };
 
+    // Function to log out the user
     const handleLogout = async () => {
         try {
             await signOut(firebaseAuth);
         } catch (error) {
             console.error('Error occurred during logout:', error);
+        }
+    };
+
+    // Function to upload PDF to Firebase Storage and save metadata to Firestore
+    const uploadPDFToFirebase = async (pdfBlob) => {
+        try {
+            // Step 1: Upload PDF to Firebase Storage
+            const storageRef = ref(storage, `pdfs/emission-estimate-${Date.now()}.pdf`);
+            const snapshot = await uploadBytes(storageRef, pdfBlob);
+
+            // Step 2: Get the download URL of the uploaded PDF
+            const downloadURL = await getDownloadURL(snapshot.ref);
+
+            // Step 3: Store PDF metadata or URL in Firestore
+            await addDoc(collection(firestore, "analysis"), {
+                url: downloadURL,
+                createdAt: new Date(),
+                userId: user ? user.uid : null,
+            });
+
+            console.log('PDF uploaded and metadata saved successfully');
+            return downloadURL;
+        } catch (error) {
+            console.error("Error uploading PDF to Firebase:", error);
+            throw new Error('Failed to upload PDF to Firebase');
         }
     };
 
@@ -144,10 +161,10 @@ export const FirebaseProvider = (props) => {
             signinUserWithEmailAndPassword,
             signinWithGoogle,
             handleLogout,
-            sendPReset
-        }
-        }>
+            sendPReset,
+            uploadPDFToFirebase // Make the PDF upload function available
+        }}>
             {props.children}
         </FirebaseContext.Provider>
-    )
+    );
 }

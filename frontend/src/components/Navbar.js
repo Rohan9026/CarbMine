@@ -58,6 +58,9 @@ const Navbar = () => {
                 <li>
                     <Link to="/main" className="text-black font-bold text-2xl hover:text-red-400 transition">Try</Link>
                 </li>
+                <li>
+                    <Link to="/estimate" className="text-black font-bold text-2xl hover:text-red-400 transition">Estimate</Link>
+                </li>
                 <li className="relative">
                     {!loggedIn && (
                         <Link

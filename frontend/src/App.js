@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
+import Analysis from './pages/Analysis';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/calculation' element={<ProtectedRoute element={Display} />} />
         <Route path='/main' element={<ProtectedRoute element={Calc} />} />
+        <Route path='/estimate' element={<ProtectedRoute element={Analysis} />} />
       </Routes>
     </Layout>
   );
