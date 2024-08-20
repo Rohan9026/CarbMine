@@ -36,7 +36,7 @@ def calculate_emissions():
     equipment_per_output = equipment_emissions / output
 
 
-   return jsonify({
+    return jsonify({
         'totalEmissions': total_emissions,
         'excavationEmissions': excavation_emissions,
         'transportationEmissions': transportation_emissions,
