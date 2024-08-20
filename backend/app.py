@@ -25,13 +25,30 @@ def calculate_emissions():
     equipment_emissions = equipment * EQUIPMENT_FACTOR
 
     total_emissions = excavation_emissions + transportation_emissions + equipment_emissions
-    per_capita_emissions = total_emissions / workers
-    per_output_emissions = total_emissions / output
+    # Individual per capita emissions
+    excavation_per_capita = excavation_emissions / workers
+    transportation_per_capita = transportation_emissions / workers
+    equipment_per_capita = equipment_emissions / workers
 
-    return jsonify({
+    # Individual per output emissions
+    excavation_per_output = excavation_emissions / output
+    transportation_per_output = transportation_emissions / output
+    equipment_per_output = equipment_emissions / output
+
+
+   return jsonify({
         'totalEmissions': total_emissions,
-        'perCapitaEmissions': per_capita_emissions,
-        'perOutputEmissions': per_output_emissions
+        'excavationEmissions': excavation_emissions,
+        'transportationEmissions': transportation_emissions,
+        'equipmentEmissions': equipment_emissions,
+        'excavationPerCapita': excavation_per_capita,
+        'transportationPerCapita': transportation_per_capita,
+        'equipmentPerCapita': equipment_per_capita,
+        'excavationPerOutput': excavation_per_output,
+        'transportationPerOutput': transportation_per_output,
+        'equipmentPerOutput': equipment_per_output,
+        'perCapitaEmissions': total_emissions / workers,
+        'perOutputEmissions': total_emissions / output
     })
 
 
