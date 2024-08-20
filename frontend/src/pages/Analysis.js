@@ -84,8 +84,8 @@ function Analysis() {
 
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center" ref={formRef}>
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md" ref={formRef}>
+    <div className="min-h-screen w-screen bg-gray-100 flex flex-col justify-center items-center">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Carbon Emission Estimator</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -169,11 +169,40 @@ function Analysis() {
         </form>
 
         {results && (
-          <div className="mt-8 bg-gray-50 p-4 rounded-lg">
+          <div className="mt-8">
             <h3 className="text-xl font-semibold mb-4">Results:</h3>
-            <p>Total Emissions: <span className="font-bold">{results.totalEmissions.toFixed(2)} kg CO2</span></p>
-            <p>Per Capita Emissions: <span className="font-bold">{results.perCapitaEmissions.toFixed(2)} kg CO2 per worker</span></p>
-            <p>Per Output Emissions: <span className="font-bold">{results.perOutputEmissions.toFixed(2)} kg CO2 per ton</span></p>
+
+            {/* Excavation Results */}
+            <div className="bg-blue-100 p-4 rounded-lg mb-4">
+              <h4 className="text-lg font-semibold text-blue-800">Excavation</h4>
+              <p>Total Emissions: <span className="font-bold">{results.excavationEmissions.toFixed(2)} kg CO2</span></p>
+              <p>Per Capita Emissions: <span className="font-bold">{results.excavationPerCapita.toFixed(2)} kg CO2 per worker</span></p>
+              <p>Per Output Emissions: <span className="font-bold">{results.excavationPerOutput.toFixed(2)} kg CO2 per ton</span></p>
+            </div>
+
+            {/* Transportation Results */}
+            <div className="bg-green-100 p-4 rounded-lg mb-4">
+              <h4 className="text-lg font-semibold text-green-800">Transportation</h4>
+              <p>Total Emissions: <span className="font-bold">{results.transportationEmissions.toFixed(2)} kg CO2</span></p>
+              <p>Per Capita Emissions: <span className="font-bold">{results.transportationPerCapita.toFixed(2)} kg CO2 per worker</span></p>
+              <p>Per Output Emissions: <span className="font-bold">{results.transportationPerOutput.toFixed(2)} kg CO2 per ton</span></p>
+            </div>
+
+            {/* Equipment Results */}
+            <div className="bg-yellow-100 p-4 rounded-lg mb-4">
+              <h4 className="text-lg font-semibold text-yellow-800">Equipment</h4>
+              <p>Total Emissions: <span className="font-bold">{results.equipmentEmissions.toFixed(2)} kg CO2</span></p>
+              <p>Per Capita Emissions: <span className="font-bold">{results.equipmentPerCapita.toFixed(2)} kg CO2 per worker</span></p>
+              <p>Per Output Emissions: <span className="font-bold">{results.equipmentPerOutput.toFixed(2)} kg CO2 per ton</span></p>
+            </div>
+
+            {/* Total Results */}
+            <div className="bg-gray-100 p-4 rounded-lg">
+              <h4 className="text-lg font-semibold text-gray-800">Total</h4>
+              <p>Total Emissions: <span className="font-bold">{results.totalEmissions.toFixed(2)} kg CO2</span></p>
+              <p>Total Per Capita Emissions: <span className="font-bold">{results.perCapitaEmissions.toFixed(2)} kg CO2 per worker</span></p>
+              <p>Total Per Output Emissions: <span className="font-bold">{results.perOutputEmissions.toFixed(2)} kg CO2 per ton</span></p>
+            </div>
           </div>
         )}
       </div><br></br>
