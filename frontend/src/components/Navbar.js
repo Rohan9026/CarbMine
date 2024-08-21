@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { IoLogOutOutline } from "react-icons/io5";
+import { IoLogOutOutline } from "react-icons/io5/index";
 import { Link } from 'react-router-dom';
 import { useFirebase } from '../context/Firebase';
 

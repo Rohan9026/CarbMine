@@ -4,6 +4,7 @@ import html2canvas from 'html2canvas';
 import { useFirebase } from '../context/Firebase';
 import { Link } from 'react-router-dom';
 
+
 function Analysis() {
   const [formData, setFormData] = useState({
     excavation: '',
@@ -13,6 +14,12 @@ function Analysis() {
     workers: '',
     output: ''
   });
+
+  // useStates related to Neutralisation Pathways
+  const [neutralisationResults, setNeutralisationResults] = useState(null);
+  const [evConversionPercentage, setEvConversionPercentage] = useState(100);
+  const [neutralizePercentage, setNeutralizePercentage] = useState(100);
+  const [greenFuelPercentage, setGreenFuelPercentage] = useState(100);
 
   const handleNeutralise = async () => {
     if (!results) {
@@ -25,13 +32,16 @@ function Analysis() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        green_fuel_percentage: greenFuelPercentage,
+        neutralise_percentage: neutralizePercentage,
+        ev_transportaion_percentage: evConversionPercentage,
         emissions: results?.totalEmissions || 0,
         transportation: formData.transportation,
         fuel: formData.fuel,
       }),
     });
-    const result = await response.json();
-    setNeutralisationResults(result);
+    const neutraliseResult = await response.json();
+    setNeutralisationResults(neutraliseResult);
   };
 
   const [results, setResults] = useState(null);
@@ -42,8 +52,8 @@ function Analysis() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  
 
-  const [neutralisationResults, setNeutralisationResults] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -205,24 +215,82 @@ function Analysis() {
             </div>
           </div>
         )}
-      </div><br></br>
+      </div>
+      <br></br>
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Explore Carbon Neutralization Pathways</h2>
-        <p className="text-lg mb-4">
+        <p className="text-lg mb-4 text-justify">
           To mitigate the impact of your emissions, we can explore various neutralisation strategies.
           Click the button below to get recommendations for reducing your carbon footprint through
           different pathways such as afforestation and clean technologies.
         </p>
+        <label className="block text-sm font-medium text-gray-700">
+          Percentage of Footprint to Neutralise:
+        </label>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value={neutralizePercentage}
+          onChange={(e) => setNeutralizePercentage(e.target.value)}
+          className="w-full h-2 bg-gray-200 appearance-none rounded-lg cursor-pointer range-slider-green"
+        />
+        <p>{neutralizePercentage}%</p>
+        <label className="block text-sm font-medium text-gray-700 mt-4">
+          Percentage of Transportation to Convert to EV:
+        </label>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value={evConversionPercentage}
+          onChange={(e) => setEvConversionPercentage(e.target.value)}
+          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+        />
+        <p>{evConversionPercentage}%</p>
+
+        <label className="block text-sm font-medium text-gray-700 mt-4">
+          Percentage of Fuel to Shift to Green Fuel:
+        </label>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value={greenFuelPercentage}
+          onChange={(e) => setGreenFuelPercentage(e.target.value)}
+          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+        />
+        <p>{greenFuelPercentage}%</p>
+        <br></br>
+      
         <button className="w-full bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
           onClick={handleNeutralise}>Suggest Neutralisation Pathways</button>
         {neutralisationResults && (
-          <div className="mt-8 bg-gray-50 p-4 rounded-lg">
-            <h3 className="text-xl font-semibold mb-4">Neutralisation Pathways:</h3>
-            <p>Transportation CO2 Reduction: <span className="font-bold">{neutralisationResults.transportation_co2_reduction?.toFixed(2) || 0} kg CO2</span></p>
-            <p>Fuel CO2 Reduction: <span className="font-bold">{neutralisationResults.fuel_co2_reduction?.toFixed(2) || 0} kg CO2</span></p>
-            <p>Remaining Emissions After Reduction: <span className="font-bold">{neutralisationResults.remaining_emissions_after_reduction?.toFixed(2) || 0} kg CO2</span></p>
-            <p>Land Required for Afforestation: <span className="font-bold">{neutralisationResults.land_required_for_afforestation_hectares?.toFixed(2) || 0} hectares</span></p>
-            <p>Estimated Electricity Savings: <span className="font-bold">{neutralisationResults.estimated_electricity_savings_mwh?.toFixed(2) || 0} MWh</span></p>
+          <div className="mt-8">
+            <h3 className="text-xl font-semibold mb-4">Neutralisation Pathways To Achieve {neutralizePercentage}% Of The Carbon Footprint</h3>
+            <p >Total Carbon Footprint: <span className="font-bold">{neutralisationResults.emissions?.toFixed(2) || 0} kg CO2</span></p>
+            <p className = 'py-2'>Target Carbon Footprint To Be Neutralised: <span className="font-bold">{neutralisationResults.emissions_to_be_neutralised?.toFixed(2) || 0} kg CO2</span></p>
+            
+            <div className="bg-blue-100 p-4 rounded-lg mb-4">
+              <h4 className="text-lg font-semibold text-blue-800">EV Transportation</h4>
+              <p>CO2 Reduction Obtained By Converting {evConversionPercentage}% Of Transportation to EV: <span className="font-bold">{neutralisationResults.transportation_footprint_reduction?.toFixed(2) || 0} kg CO2</span></p>
+            </div>
+
+            <div className="bg-yellow-100 p-4 rounded-lg mb-4">
+              <h4 className="text-lg font-semibold text-yellow-800">Green Fuel</h4>
+              <p>CO2 Reduction Obtained By Replacing {greenFuelPercentage}% Fuel With Green Fuel: <span className="font-bold">{neutralisationResults.fuel_footprint_reduction?.toFixed(2) || 0} kg CO2</span></p>
+            </div>
+
+            <p className = 'py-2'>Remaining Emissions After Reduction: <span className="font-bold">{neutralisationResults.remaining_footprint_after_reduction?.toFixed(2) || 0} kg CO2</span></p>
+            
+            <div className="bg-green-100 p-4 rounded-lg mb-4">
+              <h4 className="text-lg font-semibold text-green-800">Afforestation</h4>
+              <p>Land Required for Afforestation To Neutralise The Remaining Emissions: <span className="font-bold">{neutralisationResults.land_required_for_afforestation_hectares?.toFixed(2) || 0} hectares</span></p>
+            </div>
+
+            <p className = 'py-2'>Estimated Electricity Savings: <span className="font-bold">{neutralisationResults.estimated_electricity_savings_mwh?.toFixed(2) || 0} MWh</span></p>
+            
+            <p>Remaining Emissions After Following Complete Steps: <span className="font-bold">{neutralisationResults.overall_reamaining_footprint?.toFixed(2) || 0} kg CO2</span> </p>
           </div>
         )}
       </div>

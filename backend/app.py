@@ -74,20 +74,37 @@ def calculate_neutralisation_pathways():
     emissions = float(data['emissions'])
     transportation = float(data['transportation'])
     fuel = float(data['fuel'])
+    
+    # Get the user-specified percentages
+    green_fuel_percentage = float(data['green_fuel_percentage']) / 100
+    neutralise_percentage = float(data['neutralise_percentage']) / 100
+    ev_transportation_percentage = float(data['ev_transportaion_percentage']) / 100
 
-    transportation_reduction = transportation * EV_CONSTANT
-    fuel_reduction = fuel * GREEN_FUEL_CONSTANT
-    remaining_emissions = emissions - (transportation_reduction + fuel_reduction)
+    #Calculate Emissions to be neutralised
+    emissions_to_be_neutralised = emissions*neutralise_percentage
 
+    # Calculate reductions based on the user input percentages
+    transportation_reduction = transportation * EV_CONSTANT * ev_transportation_percentage
+    fuel_reduction = fuel * GREEN_FUEL_CONSTANT * green_fuel_percentage
+    
+    # Calculate the remaining emissions after applying reductions
+    remaining_emissions = emissions_to_be_neutralised - (transportation_reduction + fuel_reduction)
+    
+    # Calculate the required land for afforestation and electricity savings
     land_required = remaining_emissions / SEQUESTRATION_RATE
-    electricity_consumption = emissions * ELECTRICITY_REDUCTION_RATE 
+    electricity_consumption = emissions_to_be_neutralised * ELECTRICITY_REDUCTION_RATE
+    
+    overall_remaining_emissions = emissions - emissions_to_be_neutralised
 
     result = {
+        'emissions': emissions,
+        'emissions_to_be_neutralised': emissions_to_be_neutralised,
         'transportation_footprint_reduction': transportation_reduction,
         'fuel_footprint_reduction': fuel_reduction,
         'remaining_footprint_after_reduction': remaining_emissions,
         'land_required_for_afforestation_hectares': land_required,
         'estimated_electricity_savings_mwh': electricity_consumption,
+        'overall_remianing_footprint': overall_remaining_emissions,
         'message': 'Carbon footprint neutralization pathways calculated successfully.'
     }
     
