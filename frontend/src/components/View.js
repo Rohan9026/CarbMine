@@ -19,7 +19,7 @@ function View() {
     }, [fetchUserPDFs]);
 
     return (
-        <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
+        <div className="min-h-screen bg-white flex flex-col items-center pt-16">
             <h2 className="text-2xl font-bold mb-6 text-center">Your Stored PDFs</h2>
             <div className="w-full max-w-2xl space-y-4">
                 {pdfs.length > 0 ? (
