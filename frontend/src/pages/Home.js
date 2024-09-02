@@ -3,106 +3,81 @@ import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import Footer from '../components/Footer'; // Ensure you have a Footer component
 
+// Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
+  // Refs for hero elements
   const heroTextRef = useRef(null);
   const heroImgRef = useRef(null);
   const heroImgBgRef = useRef(null);
-  const sectionsRef = useRef([]);
-
-  //Trigger animations everytime on scroll and fix the first section
 
   useEffect(() => {
-    // GSAP Animations
-    const initialAnimation = () => {
-      gsap.to('.reveal-hero-text', {
+    // Hero Section Animations on Page Load
+    gsap.fromTo(
+      '.reveal-hero-text',
+      { opacity: 0, y: 50 },
+      { opacity: 1, y: 0, duration: 0.8, stagger: 0.5, ease: 'power3.out' }
+    );
+
+    gsap.fromTo(
+      '.reveal-hero-img',
+      { opacity: 0, y: 50 },
+      { opacity: 1, y: 0, duration: 0.8, delay: 0.4, ease: 'power3.out' }
+    );
+
+    gsap.fromTo(
+      '#hero-img-bg',
+      { scale: 0 },
+      { scale: 1, duration: 0.8, delay: 0.4, ease: 'power3.out' }
+    );
+
+    const sections = document.querySelectorAll('.reveal-up');
+
+    sections.forEach(section => {
+      const revealUptimeline = gsap.timeline({
+        paused: true,
+        scrollTrigger: {
+          trigger: section,
+          start: "10% 80%", // Animation starts when 10% of the section is within 80% of the viewport
+          end: "20% 90%",   // Animation ends when 20% of the section is within 90% of the viewport
+          // markers: true,  // Uncomment this line if you want to see the start and end markers
+          // scrub: 1,       // Uncomment this line if you want to make the animation linked to scroll speed
+          toggleActions: 'play none none reset', // Play the animation when it enters the viewport
+        }
+      });
+
+      revealUptimeline.fromTo(section, {
         opacity: 0,
-        y: '50%', // Changed from 100% to 50% for upward animation
-      });
-
-      gsap.to('.reveal-hero-img', {
-        opacity: 0,
-        y: '50%', // Changed from 100% to 50% for upward animation
-      });
-
-      gsap.to('#hero-img-bg', {
-        scale: 0,
-      });
-
-      gsap.to('.reveal-up', {
-        opacity: 0,
-        y: '50%', // Changed from 100% to 50% for upward animation
-      });
-    };
-
-    const loadAnimation = () => {
-      gsap.to('.reveal-hero-text', {
+        y: 100, // Start from 100 pixels below its normal position
+      }, {
         opacity: 1,
-        y: '0%',
-        duration: 0.8,
-        stagger: 0.5,
+        y: "0%", // Animate to its normal position
+        duration: 0.8, // Adjust duration for smoother animation
+        stagger: 0.2,  // Apply a stagger effect if there are multiple '.reveal-up' elements inside the section
       });
+    });
 
-      gsap.to('.reveal-hero-img', {
-        opacity: 1,
-        y: '0%',
-      });
 
-      gsap.to('#hero-img-bg', {
-        scale: 1,
-        duration: 0.8,
-        delay: 0.4,
-      });
-    };
-
-    const sectionAnimations = () => {
-      const sections = gsap.utils.toArray('section');
-
-      sections.forEach((sec) => {
-        const revealUptimeline = gsap.timeline({
-          paused: true,
-          scrollTrigger: {
-            trigger: sec,
-            start: '10% 80%',
-            end: '20% 90%',
-          },
-        });
-
-        revealUptimeline.to(sec.querySelectorAll('.reveal-up'), {
-          opacity: 1,
-          duration: 0.8,
-          y: '0%',
-          stagger: 0.2,
-        });
-      });
-    };
-
-    // Initial animation setup
-    initialAnimation();
-
-    // Load animation setup
-    window.addEventListener('load', loadAnimation);
-
-    // Set up scroll-triggered animations
-    sectionAnimations();
-
-    // Cleanup on component unmount
+    // Cleanup ScrollTriggers on Unmount
     return () => {
-      window.removeEventListener('load', loadAnimation);
-      gsap.globalTimeline.clear(); // Clear all animations
+      ScrollTrigger.getAll().forEach((st) => st.kill());
     };
   }, []);
 
   return (
     <div className="flex min-h-[100vh] flex-col bg-[#fff]">
+      {/* Hero Section */}
       <section className="relative flex min-h-[100vh] w-full max-w-[100vw] flex-col overflow-hidden max-lg:p-4 max-md:mt-[50px]">
         <div className="flex h-full min-h-[100vh] w-full place-content-center gap-6 p-[5%] max-xl:place-items-center max-lg:flex-col">
           <div className="flex flex-col place-content-center">
-            <div ref={heroTextRef} className="flex flex-wrap text-6xl font-semibold uppercase leading-[80px] max-lg:text-4xl max-md:leading-snug">
-              <span className="reveal-hero-text">Negotiation better</span>
+            <div
+              ref={heroTextRef}
+              className="reveal-hero-text flex flex-wrap text-6xl font-semibold uppercase leading-[80px] max-lg:text-4xl max-md:leading-snug"
+            >
+              <span>Negotiation better</span>
               <br />
-              <span className="reveal-hero-text">with AI.</span>
+              <span>with AI.</span>
             </div>
             <div className="reveal-hero-text mt-2 max-w-[450px] p-2 text-justify max-lg:max-w-full">
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error adipisci corrupti accusamus reiciendis similique assumenda nostrum fuga dicta vitae ipsum.
@@ -118,8 +93,17 @@ const Home = () => {
           </div>
           <div className="flex w-full max-w-[50%] place-content-center place-items-center overflow-hidden max-lg:max-w-[unset]">
             <div className="relative flex max-h-[580px] min-h-[450px] min-w-[350px] max-w-[650px] overflow-hidden max-lg:h-fit max-lg:max-h-[320px] max-lg:min-h-[180px] max-lg:w-[320px] max-lg:min-w-[320px]">
-              <img ref={heroImgRef} src="./assets/s1.jfif" alt="app" className="reveal-hero-img z-[1] w-[430px] h-[250px] object-cover rounded-full" />
-              <div ref={heroImgBgRef} className="absolute bottom-0 left-1/2 h-[80%] w-[80%] -translate-x-1/2 rounded-full bg-secondary" id="hero-img-bg"></div>
+              <img
+                ref={heroImgRef}
+                src="./assets/s1.jfif"
+                alt="app"
+                className="reveal-hero-img z-[1] w-[430px] h-[250px] object-cover rounded-full"
+              />
+              <div
+                ref={heroImgBgRef}
+                className="absolute bottom-0 left-1/2 h-[80%] w-[80%] -translate-x-1/2 rounded-full bg-secondary"
+                id="hero-img-bg"
+              ></div>
             </div>
           </div>
         </div>
@@ -129,7 +113,8 @@ const Home = () => {
 
 
 
-      <section ref={(el) => sectionsRef.current[0] = el} className="relative flex w-full max-w-[100vw] flex-col overflow-hidden p-6">
+      {/* Example of a Scroll-Triggered Section */}
+      <section className="relative flex w-full max-w-[100vw] flex-col overflow-hidden p-6">
         <div className="reveal-up flex min-h-[60vh] place-content-center place-items-center gap-[10%] max-lg:flex-col max-lg:gap-10">
           <div className="flex">
             <div className="h-[450px] w-[300px]">
@@ -145,9 +130,7 @@ const Home = () => {
                 DDOS protection
               </h4>
               <span className="text-xl">
-                Lorem ipsum dolor sit amet, consectetur adipisicing
-                elit. Reiciendis commodi temporibus at? Aspernatur,
-                a necessitatibus?
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis commodi temporibus at? Aspernatur, a necessitatibus?
               </span>
             </div>
             <div className="mt-4 flex flex-col gap-3">
@@ -156,15 +139,12 @@ const Home = () => {
                 CSRF protection
               </h4>
               <span className="text-xl">
-                Lorem ipsum dolor sit amet, consectetur adipisicing
-                elit. Reiciendis commodi temporibus at? Aspernatur,
-                a necessitatibus?
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis commodi temporibus at? Aspernatur, a necessitatibus?
               </span>
             </div>
           </div>
         </div>
       </section>
-
 
 
 
