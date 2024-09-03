@@ -1,9 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect} from 'react';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { useFirebase } from '../context/Firebase';
 import { Link } from 'react-router-dom';
-
+import Footer from '../components/Footer'; 
 
 function Analysis() {
   const [formData, setFormData] = useState({
@@ -21,6 +21,7 @@ function Analysis() {
   const [neutralizePercentage, setNeutralizePercentage] = useState(100);
   const [greenFuelPercentage, setGreenFuelPercentage] = useState(100);
 
+  //fetch function for Neutralisation Pathways 
   const handleNeutralise = async () => {
     if (!results) {
       alert("Please utilise the Emission Calculator to calculate your emissions first");
@@ -44,6 +45,13 @@ function Analysis() {
     setNeutralisationResults(neutraliseResult);
   };
 
+  // useEffect that listens to changes in slider values
+  useEffect(() => {
+    if (neutralisationResults) {
+      handleNeutralise();
+    }
+  }, [evConversionPercentage, neutralizePercentage, greenFuelPercentage]);
+
   const [results, setResults] = useState(null);
   const formRef = useRef();
 
@@ -53,7 +61,7 @@ function Analysis() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   
-
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -94,7 +102,7 @@ function Analysis() {
 
 
   return (
-    <div className="min-h-screen w-screen bg-gray-100 flex flex-col justify-center items-center">
+    <div className="min-h-screen min-w-screen bg-gray-100 flex flex-col justify-center items-center py-2">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Carbon Emission Estimator</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -262,7 +270,7 @@ function Analysis() {
         />
         <p>{greenFuelPercentage}%</p>
         <br></br>
-      
+        
         <button className="w-full bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
           onClick={handleNeutralise}>Suggest Neutralisation Pathways</button>
         {neutralisationResults && (
@@ -309,6 +317,11 @@ function Analysis() {
           View Data
         </button>
       </Link>
+      <hr className="w-full border-t border-gray-300 my-4" />
+
+      <div className="w-full bg-gray-800 ">
+        <Footer />
+      </div>
     </div>
   );
 }
