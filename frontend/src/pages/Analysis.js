@@ -1,9 +1,9 @@
-import React, { useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { useFirebase } from '../context/Firebase';
 import { Link } from 'react-router-dom';
-import Footer from '../components/Footer'; 
+import Footer from '../components/Footer';
 
 function Analysis() {
   const [formData, setFormData] = useState({
@@ -60,8 +60,8 @@ function Analysis() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  
- 
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -270,15 +270,15 @@ function Analysis() {
         />
         <p>{greenFuelPercentage}%</p>
         <br></br>
-        
+
         <button className="w-full bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
           onClick={handleNeutralise}>Suggest Neutralisation Pathways</button>
         {neutralisationResults && (
           <div className="mt-8">
             <h3 className="text-xl font-semibold mb-4">Neutralisation Pathways To Achieve {neutralizePercentage}% Of The Carbon Footprint</h3>
             <p >Total Carbon Footprint: <span className="font-bold">{neutralisationResults.emissions?.toFixed(2) || 0} kg CO2</span></p>
-            <p className = 'py-2'>Target Carbon Footprint To Be Neutralised: <span className="font-bold">{neutralisationResults.emissions_to_be_neutralised?.toFixed(2) || 0} kg CO2</span></p>
-            
+            <p className='py-2'>Target Carbon Footprint To Be Neutralised: <span className="font-bold">{neutralisationResults.emissions_to_be_neutralised?.toFixed(2) || 0} kg CO2</span></p>
+
             <div className="bg-blue-100 p-4 rounded-lg mb-4">
               <h4 className="text-lg font-semibold text-blue-800">EV Transportation</h4>
               <p>CO2 Reduction Obtained By Converting {evConversionPercentage}% Of Transportation to EV: <span className="font-bold">{neutralisationResults.transportation_footprint_reduction?.toFixed(2) || 0} kg CO2</span></p>
@@ -289,15 +289,15 @@ function Analysis() {
               <p>CO2 Reduction Obtained By Replacing {greenFuelPercentage}% Fuel With Green Fuel: <span className="font-bold">{neutralisationResults.fuel_footprint_reduction?.toFixed(2) || 0} kg CO2</span></p>
             </div>
 
-            <p className = 'py-2'>Remaining Emissions After Reduction: <span className="font-bold">{neutralisationResults.remaining_footprint_after_reduction?.toFixed(2) || 0} kg CO2</span></p>
-            
+            <p className='py-2'>Remaining Emissions After Reduction: <span className="font-bold">{neutralisationResults.remaining_footprint_after_reduction?.toFixed(2) || 0} kg CO2</span></p>
+
             <div className="bg-green-100 p-4 rounded-lg mb-4">
               <h4 className="text-lg font-semibold text-green-800">Afforestation</h4>
               <p>Land Required for Afforestation To Neutralise The Remaining Emissions: <span className="font-bold">{neutralisationResults.land_required_for_afforestation_hectares?.toFixed(2) || 0} hectares</span></p>
             </div>
 
-            <p className = 'py-2'>Estimated Electricity Savings: <span className="font-bold">{neutralisationResults.estimated_electricity_savings_mwh?.toFixed(2) || 0} MWh</span></p>
-            
+            <p className='py-2'>Estimated Electricity Savings: <span className="font-bold">{neutralisationResults.estimated_electricity_savings_mwh?.toFixed(2) || 0} MWh</span></p>
+
             <p>Remaining Emissions After Following Complete Steps: <span className="font-bold">{neutralisationResults.overall_reamaining_footprint?.toFixed(2) || 0} kg CO2</span> </p>
           </div>
         )}

@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import Footer from '../components/Footer'; // Ensure you have a Footer component
+import Footer from '../components/Footer';
+import { Link } from 'react-router-dom';
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
@@ -49,11 +50,11 @@ const Home = () => {
 
       revealUptimeline.fromTo(section, {
         opacity: 0,
-        y: 100, // Start from 100 pixels below its normal position
+        y: 200, // Start from 100 pixels below its normal position
       }, {
         opacity: 1,
         y: "0%", // Animate to its normal position
-        duration: 0.8, // Adjust duration for smoother animation
+        duration: 1.0, // Adjust duration for smoother animation
         stagger: 0.2,  // Apply a stagger effect if there are multiple '.reveal-up' elements inside the section
       });
     });
@@ -68,48 +69,48 @@ const Home = () => {
   return (
     <div className="flex min-h-[100vh] flex-col bg-[#fff]">
       {/* Hero Section */}
-      <section className="relative flex min-h-[100vh] w-full max-w-[100vw] flex-col overflow-hidden max-lg:p-4 max-md:mt-[50px]">
+      <section className="relative flex min-h-[100vh] w-full max-w-[100vw] flex-col overflow-hidden ">
         <div className="flex h-full min-h-[100vh] w-full place-content-center gap-6 p-[5%] max-xl:place-items-center max-lg:flex-col">
-          <div className="flex flex-col place-content-center">
+          <div className="flex flex-col place-content-center lg:mt-[-160px]">
             <div
               ref={heroTextRef}
               className="reveal-hero-text flex flex-wrap text-6xl font-semibold uppercase leading-[80px] max-lg:text-4xl max-md:leading-snug"
             >
-              <span>Negotiation better</span>
+              <span>Empowering India's</span>
               <br />
-              <span>with AI.</span>
+              <span>Coal Industry</span>
             </div>
-            <div className="reveal-hero-text mt-2 max-w-[450px] p-2 text-justify max-lg:max-w-full">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error adipisci corrupti accusamus reiciendis similique assumenda nostrum fuga dicta vitae ipsum.
+            <div className="reveal-hero-text text-xl  text-slate-700 mt-2 max-w-[450px] p-2 pt-7 pb-7  max-lg:max-w-full">
+              Revolutionizing India's coal industry with smart climate solutions. Our platform empowers mine operators to reduce carbon footprints, explore carbon-neutral strategies, calculate carbon credits, and lead the way to a sustainable future.
             </div>
-            <div className="reveal-hero-text mt-4 flex place-items-center gap-4 overflow-hidden p-2">
-              <a className="h-[50px] max-w-[150px]" href="/">
-                <img src="./assets/images/brand-logos/app-store-badge.png" alt="app store" className="h-full w-full" />
-              </a>
-              <a className="h-[50px] max-w-[150px]" href="/">
-                <img src="./assets/images/brand-logos/google-play-badge.png" alt="google play" className="h-full w-full" />
-              </a>
+
+            <div className="reveal-hero-text mt-4 flex place-items-center gap-4 overflow-hidden p-2 ">
+
+              <Link to="/estimate" className="bg-[#00F020] text-white text-lg font-semibold py-3 px-6 rounded-lg transition-all hover:bg-green-600 hover:shadow-lg">
+                Explore Carbon Solutions
+              </Link>
+              <Link to="/calculation" className="bg-white text-[#00F020] text-lg font-semibold py-3 px-6 rounded-lg transition-all hover:bg-green-600 border border-[#00F020] hover:shadow-lg">
+                View
+              </Link>
+
             </div>
+
           </div>
+
           <div className="flex w-full max-w-[50%] place-content-center place-items-center overflow-hidden max-lg:max-w-[unset]">
-            <div className="relative flex max-h-[580px] min-h-[450px] min-w-[350px] max-w-[650px] overflow-hidden max-lg:h-fit max-lg:max-h-[320px] max-lg:min-h-[180px] max-lg:w-[320px] max-lg:min-w-[320px]">
+            <div className="flex h-[430px] w-[430px] max-h-[430px] max-w-[430px] overflow-hidden rounded-full max-lg:h-[320px] max-lg:w-[320px] lg:mt-[-150px]">
               <img
                 ref={heroImgRef}
                 src="./assets/s1.jfif"
                 alt="app"
-                className="reveal-hero-img z-[1] w-[430px] h-[250px] object-cover rounded-full"
+                className="reveal-hero-img z-[1] h-full w-full object-cover rounded-full"
               />
-              <div
-                ref={heroImgBgRef}
-                className="absolute bottom-0 left-1/2 h-[80%] w-[80%] -translate-x-1/2 rounded-full bg-secondary"
-                id="hero-img-bg"
-              ></div>
             </div>
           </div>
+
+
         </div>
       </section>
-
-
 
 
 

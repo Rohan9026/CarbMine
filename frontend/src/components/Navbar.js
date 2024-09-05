@@ -36,10 +36,10 @@ const Navbar = () => {
     }, [menuRef]);
 
     return (
-        <nav className="flex flex-col lg:flex-row justify-between items-center w-full p-4 bg-white border-b border-gray-300 shadow-md">
+        <nav className="flex flex-col lg:flex-row justify-between items-center w-full p-4 bg-white shadow-md">
             <div className="flex items-center justify-between w-full lg:w-auto">
                 {/* <img src="/assets/logo.jpg" alt="Logo" className="h-12" /> */}
-                <p className="text-black text-2xl font-bold hover:text-green-400 transition">CarbMine</p>
+                <p className="text-[#00F020] text-2xl font-bold hover:text-green-400 transition">CarbMine</p>
                 <button
                     onClick={toggleNav}
                     className="lg:hidden text-black focus:outline-none"
@@ -50,18 +50,18 @@ const Navbar = () => {
                 </button>
             </div>
             <ul className={`flex flex-col lg:flex-row lg:space-x-6 mt-4 lg:mr-10 ${isNavOpen ? 'block' : 'hidden'} lg:flex`}>
-                <div className="flex flex-col lg:flex-row lg:justify-center lg:flex-grow lg:mr-4">
+                <div className="flex flex-col lg:flex-row lg:justify-center lg:flex-grow lg:mr-[450px] ">
                     <li className="lg:mr-6">
-                        <Link to="/" className="text-black text-xl hover:text-green-400 transition">Home</Link>
+                        <Link to="/" className="text-black text-xl hover:text-[#00F020] transition">Home</Link>
                     </li>
                     <li className="lg:mr-6">
-                        <Link to="/calculation" className="text-black text-xl hover:text-green-400 transition">Calculation</Link>
+                        <Link to="/calculation" className="text-black text-xl hover:text-[#00F020] transition">Calculation</Link>
                     </li>
                     <li className="lg:mr-6">
-                        <Link to="/main" className="text-black text-xl hover:text-green-400 transition">Try</Link>
+                        <Link to="/main" className="text-black text-xl hover:text-[#00F020] transition">Try</Link>
                     </li>
                     <li className="lg:mr-6">
-                        <Link to="/estimate" className="text-black text-xl hover:text-green-400 transition">Estimate</Link>
+                        <Link to="/estimate" className="text-black text-xl hover:text-[#00F020] transition">Estimate</Link>
                     </li>
                 </div>
                 <li className="relative lg:ml-auto">
