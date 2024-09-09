@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import DoughnutChart from '../components/DoughnutChart';
 import Footer from '../components/Footer';
 
-
 function Analysis() {
   //Base parameters for estimation
   const [formData, setFormData] = useState({
@@ -34,8 +33,10 @@ function Analysis() {
       body: JSON.stringify(formData),
     });
     const result = await response.json();
-    setResults(result)    
+    setResults(result)   
   };
+
+  
 
 
   // useStates related to Neutralisation Pathways
@@ -46,10 +47,10 @@ function Analysis() {
 
   //fetch function for Neutralisation Pathways 
   const handleNeutralise = async () => {
-    if (!results) {
-      alert("Please utilise the Emission Calculator to calculate your emissions first");
-      return;
-    }
+    // if (!results) {
+    //   alert("Please utilise the Emission Calculator to calculate your emissions first");
+    //   return;
+    // }
     const response = await fetch('http://localhost:5000/neutralise', {
       method: 'POST',
       headers: {
@@ -73,7 +74,7 @@ function Analysis() {
     if (results) {
       handleNeutralise();
     }
-  }, [evConversionPercentage, neutralizePercentage, greenFuelPercentage]);
+  }, [evConversionPercentage, neutralizePercentage, greenFuelPercentage, results]);
   
   //handling section transition of the form
   const sections = useRef([]);
@@ -378,10 +379,32 @@ function Analysis() {
         <p className="text-sm text-gray-600">{greenFuelPercentage}%</p>
 
         {neutralisationResults && (
-          <>
-            <h3 className="text-lg font-bold mt-6 mb-2">Neutralisation Results</h3>
-            <p>Required Land for Afforestation: {neutralisationResults.land_required_for_afforestation_hectares} hectares</p>
-          </>
+          <div className="mt-8">
+            <h3 className="text-xl font-semibold mb-4">Neutralisation Pathways To Achieve {neutralizePercentage}% Of The Carbon Footprint</h3>
+            <p >Total Carbon Footprint: <span className="font-bold">{neutralisationResults.emissions?.toFixed(2) || 0} kg CO2</span></p>
+            <p className = 'py-2'>Target Carbon Footprint To Be Neutralised: <span className="font-bold">{neutralisationResults.emissions_to_be_neutralised?.toFixed(2) || 0} kg CO2</span></p>
+            
+            <div className="bg-blue-100 p-4 rounded-lg mb-4">
+              <h4 className="text-lg font-semibold text-blue-800">EV Transportation</h4>
+              <p>CO2 Reduction Obtained By Converting {evConversionPercentage}% Of Transportation to EV: <span className="font-bold">{neutralisationResults.transportation_footprint_reduction?.toFixed(2) || 0} kg CO2</span></p>
+            </div>
+
+            <div className="bg-yellow-100 p-4 rounded-lg mb-4">
+              <h4 className="text-lg font-semibold text-yellow-800">Green Fuel</h4>
+              <p>CO2 Reduction Obtained By Replacing {greenFuelPercentage}% Fuel With Green Fuel: <span className="font-bold">{neutralisationResults.fuel_footprint_reduction?.toFixed(2) || 0} kg CO2</span></p>
+            </div>
+
+            <p className = 'py-2'>Remaining Emissions After Reduction: <span className="font-bold">{neutralisationResults.remaining_footprint_after_reduction?.toFixed(2) || 0} kg CO2</span></p>
+            
+            <div className="bg-green-100 p-4 rounded-lg mb-4">
+              <h4 className="text-lg font-semibold text-green-800">Afforestation</h4>
+              <p>Land Required for Afforestation To Neutralise The Remaining Emissions: <span className="font-bold">{neutralisationResults.land_required_for_afforestation_hectares?.toFixed(2) || 0} hectares</span></p>
+            </div>
+
+            <p className = 'py-2'>Estimated Electricity Savings: <span className="font-bold">{neutralisationResults.estimated_electricity_savings_mwh?.toFixed(2) || 0} MWh</span></p>
+            
+            <p>Remaining Emissions After Following Complete Steps: <span className="font-bold">{neutralisationResults.overall_reamaining_footprint?.toFixed(2) || 0} kg CO2</span> </p>
+          </div>
         )}
       </>
     )}
