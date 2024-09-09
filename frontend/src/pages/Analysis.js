@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 
 function Analysis() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useSta
     excavation: '',
     transportation: '',
     fuel: '',
@@ -262,38 +262,10 @@ function Analysis() {
         {results && (
           <div className="mt-8">
             <h3 className="text-xl font-semibold mb-4">Results:</h3>
-
-            {/* Excavation Results */}
-            <div className="bg-blue-100 p-4 rounded-lg mb-4">
-              <h4 className="text-lg font-semibold text-blue-800">Excavation</h4>
-              <p>Total Emissions: <span className="font-bold">{results.excavationEmissions.toFixed(2)} kg CO2</span></p>
-              <p>Per Capita Emissions: <span className="font-bold">{results.excavationPerCapita.toFixed(2)} kg CO2 per worker</span></p>
-              <p>Per Output Emissions: <span className="font-bold">{results.excavationPerOutput.toFixed(2)} kg CO2 per ton</span></p>
-            </div>
-
-            {/* Transportation Results */}
-            <div className="bg-green-100 p-4 rounded-lg mb-4">
-              <h4 className="text-lg font-semibold text-green-800">Transportation</h4>
-              <p>Total Emissions: <span className="font-bold">{results.transportationEmissions.toFixed(2)} kg CO2</span></p>
-              <p>Per Capita Emissions: <span className="font-bold">{results.transportationPerCapita.toFixed(2)} kg CO2 per worker</span></p>
-              <p>Per Output Emissions: <span className="font-bold">{results.transportationPerOutput.toFixed(2)} kg CO2 per ton</span></p>
-            </div>
-
-            {/* Equipment Results */}
-            <div className="bg-yellow-100 p-4 rounded-lg mb-4">
-              <h4 className="text-lg font-semibold text-yellow-800">Equipment</h4>
-              <p>Total Emissions: <span className="font-bold">{results.equipmentEmissions.toFixed(2)} kg CO2</span></p>
-              <p>Per Capita Emissions: <span className="font-bold">{results.equipmentPerCapita.toFixed(2)} kg CO2 per worker</span></p>
-              <p>Per Output Emissions: <span className="font-bold">{results.equipmentPerOutput.toFixed(2)} kg CO2 per ton</span></p>
-            </div>
-
-            {/* Total Results */}
-            <div className="bg-gray-100 p-4 rounded-lg">
-              <h4 className="text-lg font-semibold text-gray-800">Total</h4>
-              <p>Total Emissions: <span className="font-bold">{results.totalEmissions.toFixed(2)} kg CO2</span></p>
-              <p>Total Per Capita Emissions: <span className="font-bold">{results.perCapitaEmissions.toFixed(2)} kg CO2 per worker</span></p>
-              <p>Total Per Output Emissions: <span className="font-bold">{results.perOutputEmissions.toFixed(2)} kg CO2 per ton</span></p>
-            </div>
+ {/* Display Results */}
+            {/* ... */}
+            {/* Add the DoughnutChart component */}
+            <DoughnutChart data={results} />
           </div>
         )}
         <h3 className="text-lg font-bold mt-6 mb-2">Explore Neutralisation Pathways</h3>

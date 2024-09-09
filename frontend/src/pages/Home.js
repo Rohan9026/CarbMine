@@ -81,7 +81,7 @@ const Home = () => {
               <span>Coal Industry</span>
             </div>
             <div className="reveal-hero-text text-xl  text-slate-700 mt-2 max-w-[450px] p-2 pt-7 pb-7  max-lg:max-w-full">
-              Revolutionizing India's coal industry with smart climate solutions. Our platform empowers mine operators to reduce carbon footprints, explore carbon-neutral strategies, calculate carbon credits, and lead the way to a sustainable future.
+              Our platform empowers mine operators to reduce carbon footprints, explore carbon-neutral strategies, calculate carbon credits, and lead the way to a sustainable future.
             </div>
 
             <div className="reveal-hero-text mt-4 flex place-items-center gap-4 overflow-hidden p-2 ">
@@ -92,11 +92,8 @@ const Home = () => {
               <Link to="/calculation" className="bg-white text-[#00F020] text-lg font-semibold py-3 px-6 rounded-lg transition-all hover:bg-green-600 border border-[#00F020] hover:shadow-lg">
                 View
               </Link>
-
             </div>
-
           </div>
-
           <div className="flex w-full max-w-[50%] place-content-center place-items-center overflow-hidden max-lg:max-w-[unset]">
             <div className="flex h-[430px] w-[430px] max-h-[430px] max-w-[430px] overflow-hidden rounded-full max-lg:h-[320px] max-lg:w-[320px] lg:mt-[-150px]">
               <img
@@ -107,40 +104,105 @@ const Home = () => {
               />
             </div>
           </div>
-
-
         </div>
       </section>
 
 
 
-      {/* Example of a Scroll-Triggered Section */}
-      <section className="relative flex w-full max-w-[100vw] flex-col overflow-hidden p-6">
+      {/* Features */}
+      <section className='reveal-up lg:mt-[-30px]'>
+        <h1 className='text-3xl font-bold text-center my-9'>Features</h1>
+        <div className=" flex flex-wrap justify-center gap-6">
+
+          {/* First Div */}
+          <div className="w-full sm:w-1/2 lg:w-1/4 p-4 flex flex-col items-center">
+            <div className="bg-white shadow-lg rounded-full w-44 h-44 flex items-center justify-center">
+              <img
+                src="assets/estimate.jpg"
+                alt="Placeholder"
+                className="rounded-full w-32 h-32 object-cover"
+              />
+            </div>
+            <h3 className="mt-4 text-center font-bold text-lg">Carbon Footprints</h3>
+          </div>
+
+          {/* Second Div */}
+          <div className="w-full sm:w-1/2 lg:w-1/4 p-4 flex flex-col items-center">
+            <div className="bg-white shadow-lg rounded-full w-44 h-44 flex items-center justify-center">
+              <img
+                src="assets/neuta.png"
+                alt="Placeholder"
+                className="rounded-full w-32 h-32 object-cover"
+              />
+            </div>
+            <h3 className="mt-4 text-center font-bold text-lg">Carbon Neutralization</h3>
+          </div>
+
+          {/* Third Div */}
+          <div className="w-full sm:w-1/2 lg:w-1/4 p-4 flex flex-col items-center">
+            <div className="bg-white shadow-lg rounded-full w-44 h-44 flex items-center justify-center">
+              <img
+                src="assets/dataviz.png"
+                alt="Placeholder"
+                className="rounded-full w-32 h-32 object-cover"
+              />
+            </div>
+            <h3 className="mt-4 text-center font-bold text-lg">Data Visualization</h3>
+          </div>
+
+          {/* Fourth Div */}
+          <div className="w-full sm:w-1/2 lg:w-1/4 p-4 flex flex-col items-center">
+            <div className="bg-white shadow-lg rounded-full w-44 h-44 flex items-center justify-center">
+              <img
+                src="assets/credits.png"
+                alt="Placeholder"
+                className="rounded-full w-24 h-24 object-cover"
+              />
+            </div>
+            <h3 className="mt-4 text-center font-bold text-lg">Carbon Credits</h3>
+          </div>
+
+        </div>
+      </section>
+
+
+      {/* Footprint */}
+      <section className="relative flex w-full max-w-[100vw] flex-col overflow-hidden p-6 lg:mt-32">
         <div className="reveal-up flex min-h-[60vh] place-content-center place-items-center gap-[10%] max-lg:flex-col max-lg:gap-10">
+
           <div className="flex">
             <div className="h-[450px] w-[300px]">
-              <img src="./assets/images/home/2.png" alt="product1" className="h-full w-full object-contain" />
+              <img src="./assets/images/home/coal-mine.png" alt="Coal Mine Emissions" className="h-full w-full object-contain" />
             </div>
           </div>
           <div className="mt-6 flex max-w-[450px] flex-col gap-4">
-            <h3 className="text-4xl font-medium">Highly secure</h3>
+            <h3 className="text-4xl font-medium">Coal Mine Carbon Emission Estimation</h3>
 
             <div className="mt-4 flex flex-col gap-3">
               <h4 className="text-xl font-medium">
                 <i className="bi bi-check-all !text-2xl"></i>
-                DDOS protection
+                Excavation Impact
               </h4>
               <span className="text-xl">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis commodi temporibus at? Aspernatur, a necessitatibus?
+                Measure carbon emissions produced from coal excavation processes, including the use of heavy machinery and energy-intensive operations.
               </span>
             </div>
             <div className="mt-4 flex flex-col gap-3">
               <h4 className="text-xl font-medium">
                 <i className="bi bi-check-all !text-2xl"></i>
-                CSRF protection
+                Transportation Emissions
               </h4>
               <span className="text-xl">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis commodi temporibus at? Aspernatur, a necessitatibus?
+                Calculate the emissions from transporting coal, including vehicle fuel consumption and distances traveled between sites.
+              </span>
+            </div>
+            <div className="mt-4 flex flex-col gap-3">
+              <h4 className="text-xl font-medium">
+                <i className="bi bi-check-all !text-2xl"></i>
+                Workforce Contribution
+              </h4>
+              <span className="text-xl">
+                Factor in the number of workers and their activities, including the energy used for worker transportation and facilities.
               </span>
             </div>
           </div>
@@ -149,244 +211,84 @@ const Home = () => {
 
 
 
-
-
-
-
-
-
-
-
-      <section className="relative flex w-full max-w-[100vw] flex-col overflow-hidden p-6">
+      {/* Carbon Neutralization */}
+      <section className="relative flex w-full max-w-[100vw] flex-col overflow-hidden p-6 lg:mt-10">
         <div className="reveal-up flex min-h-[60vh] place-content-center place-items-center gap-[10%] max-lg:flex-col max-lg:gap-10">
           <div className="mt-6 flex max-w-[450px] flex-col gap-4">
-            <h3 className="text-4xl font-medium">Lightning speed</h3>
+            <h3 className="text-4xl font-medium">Carbon Neutralization Solutions</h3>
 
             <div className="mt-4 flex flex-col gap-3">
               <h4 className="text-xl font-medium">
                 <i className="bi bi-check-all !text-2xl"></i>
-                10x Speed
+                Afforestation Initiatives
               </h4>
               <span className="text-xl">
-                Lorem ipsum dolor sit amet, consectetur adipisicing
-                elit. Reiciendis commodi temporibus at? Aspernatur,
-                a necessitatibus?
+                We suggest calculating the amount of land required for afforestation to effectively capture CO₂ and enhance carbon sequestration.
               </span>
             </div>
+
             <div className="mt-4 flex flex-col gap-3">
               <h4 className="text-xl font-medium">
                 <i className="bi bi-check-all !text-2xl"></i>
-                CSRF protection
+                Electric Vehicle (EV) Adoption
               </h4>
               <span className="text-xl">
-                Lorem ipsum dolor sit amet, consectetur adipisicing
-                elit. Reiciendis commodi temporibus at? Aspernatur,
-                a necessitatibus?
+                Transition your fleet to EVs to reduce emissions from conventional fuel sources.
+              </span>
+            </div>
+
+            <div className="mt-4 flex flex-col gap-3">
+              <h4 className="text-xl font-medium">
+                <i className="bi bi-check-all !text-2xl"></i>
+                Green Fuel Solutions
+              </h4>
+              <span className="text-xl">
+                Shift to green fuels to lower emissions and support sustainable energy use.
               </span>
             </div>
           </div>
+
           <div className="flex">
             <div className="h-[450px] w-[300px]">
-              <img src="./assets/images/home/3.png" alt="product1" className="h-full w-full object-contain" />
+              <img src="./assets/images/home/carbon-neutral.png" alt="Carbon Neutralization" className="h-full w-full object-contain" />
             </div>
           </div>
         </div>
       </section>
 
-      <section className="relative flex w-full max-w-[100vw] flex-col overflow-hidden p-6">
+
+      {/* Carbon Credits Calculation */}
+      <section className="relative flex w-full max-w-[100vw] flex-col overflow-hidden p-6 lg:mt-10">
         <div className="reveal-up flex min-h-[60vh] place-content-center place-items-center gap-[10%] max-lg:flex-col max-lg:gap-10">
           <div className="flex">
             <div className="h-[450px] w-[300px]">
-              <img src="./assets/images/home/4.png" alt="product1" className="h-full w-full object-contain" />
+              <img src="./assets/images/home/carbon-credits.png" alt="Carbon Credits" className="h-full w-full object-contain" />
             </div>
           </div>
           <div className="mt-6 flex max-w-[450px] flex-col gap-4">
-            <h3 className="text-4xl font-medium">Easy to use</h3>
+            <h3 className="text-4xl font-medium">Carbon Credits</h3>
 
             <div className="mt-4 flex flex-col gap-3">
               <h4 className="text-xl font-medium">
                 <i className="bi bi-check-all !text-2xl"></i>
-                User-friendly
+                Carbon Credits Estimation
               </h4>
               <span className="text-xl">
-                Lorem ipsum dolor sit amet, consectetur adipisicing
-                elit. Reiciendis commodi temporibus at? Aspernatur,
-                a necessitatibus?
+                Our system calculates the number of carbon credits you can generate based on Neutralization solutions.
               </span>
             </div>
             <div className="mt-4 flex flex-col gap-3">
               <h4 className="text-xl font-medium">
                 <i className="bi bi-check-all !text-2xl"></i>
-                Seamless integration
+                Pricing Information
               </h4>
               <span className="text-xl">
-                Lorem ipsum dolor sit amet, consectetur adipisicing
-                elit. Reiciendis commodi temporibus at? Aspernatur,
-                a necessitatibus?
+                We provide an estimated market value for the generated carbon credits, helping you understand the financial benefits of your sustainability efforts.
               </span>
             </div>
           </div>
         </div>
       </section>
-
-      <section className="mt-8 flex flex-col place-items-center gap-5">
-        <div className="reveal-up mt-5 flex flex-col gap-3 text-center">
-          <h2 className="text-4xl font-semibold">
-            Take your negotiation to next level
-          </h2>
-        </div>
-        <div className="mt-6 flex max-w-[60%] flex-wrap place-content-center gap-2 max-lg:flex-col">
-          <div className="reveal-up flex h-[150px] w-[350px] flex-col gap-2 p-4">
-            {/* <img src="./assets/images/home/sample.jpg" alt="feature1"> */}
-            <div className="flex gap-1">
-              <i className="bi bi-boombox-fill text-2xl"></i>
-              <h3 className="text-2xl font-semibold">
-                Feature 1
-              </h3>
-            </div>
-            <div className="text-[#595959]">
-              Lorem ipsum dolor sit amet, consectetur adipisicing
-              elit.
-            </div>
-          </div>
-          <div className="reveal-up flex h-[150px] w-[350px] flex-col gap-2 p-4">
-            {/* <img src="./assets/images/home/sample.jpg" alt="feature1"> */}
-            <div className="flex gap-1">
-              <i className="bi bi-0-circle-fill text-2xl"></i>
-              <h3 className="text-2xl font-semibold">
-                Feature 2
-              </h3>
-            </div>
-            <div className="text-[#595959]">
-              Lorem ipsum dolor sit amet, consectetur adipisicing
-              elit.
-            </div>
-          </div>
-          <div className="reveal-up flex h-[150px] w-[350px] flex-col gap-2 p-4">
-            {/* <img src="./assets/images/home/sample.jpg" alt="feature1"> */}
-            <div className="flex gap-1">
-              <i className="bi bi-0-square-fill text-2xl"></i>
-              <h3 className="text-2xl font-semibold">
-                Feature 3
-              </h3>
-            </div>
-            <div className="text-[#595959]">
-              Lorem ipsum dolor sit amet, consectetur adipisicing
-              elit.
-            </div>
-          </div>
-          <div className="reveal-up flex h-[150px] w-[350px] flex-col gap-2 p-4">
-            {/* <img src="./assets/images/home/sample.jpg" alt="feature1"> */}
-            <div className="flex gap-1">
-              <i className="bi bi-airplane-engines-fill text-2xl"></i>
-              <h3 className="text-2xl font-semibold">
-                Feature 4
-              </h3>
-            </div>
-            <div className="text-[#595959]">
-              Lorem ipsum dolor sit amet, consectetur adipisicing
-              elit.
-            </div>
-          </div>
-          <div className="reveal-up flex h-[150px] w-[350px] flex-col gap-2 p-4">
-            {/* <img src="./assets/images/home/sample.jpg" alt="feature1"> */}
-            <div className="flex gap-1">
-              <i className="bi bi-cake-fill text-2xl"></i>
-              <h3 className="text-2xl font-semibold">
-                Feature 5
-              </h3>
-            </div>
-            <div className="text-[#595959]">
-              Lorem ipsum dolor sit amet, consectetur adipisicing
-              elit.
-            </div>
-          </div>
-          <div className="reveal-up flex h-[150px] w-[350px] flex-col gap-2 p-4">
-            {/* <img src="./assets/images/home/sample.jpg" alt="feature1"> */}
-            <div className="flex gap-1">
-              <i className="bi bi-shield-fill text-2xl"></i>
-              <h3 className="text-2xl font-semibold">
-                Feature 6
-              </h3>
-            </div>
-            <div className="text-[#595959]">
-              Lorem ipsum dolor sit amet, consectetur adipisicing
-              elit.
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      <section className="mt-5 flex min-h-[60vh] w-full flex-col place-content-center 
-    place-items-center bg-black p-[2%] text-white max-lg:min-h-[40vh]">
-        <h3 className="reveal-up text-5xl font-medium max-md:text-2xl">
-          Clients love us
-        </h3>
-        {/* Testimonials */}
-        <div className="reveal-up max-w-[750px] max-md:max-w-[100vw]">
-          <div className="swiper mt-8 flex flex-col gap-10 space-y-8">
-            <div className="swiper-wrapper">
-              <div className="swiper-slide flex place-content-center">
-                <div className="flex h-fit max-w-[750px] place-content-center 
-              place-items-center gap-10 rounded-lg p-4 shadow-lg">
-                  <div className="flex place-items-center">
-                    <div className="h-[150px] w-[150px] overflow-hidden rounded-full 
-                  max-lg:h-[80px] max-lg:w-[80px]">
-                      <img src="./assets/images/people/women.jpg"
-                        className="h-full w-full object-cover" alt="women" />
-                    </div>
-                  </div>
-                  <div className="flex max-w-[450px] flex-col gap-4">
-                    <p className="mt-4 italic text-gray-200">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate,
-                      sequi sunt velit aut omnis nulla ut, autem corrupti nemo optio
-                      ipsam amet ducimus illum? Repellendus itaque autem alias eos quis.
-                    </p>
-                    <b>- Ferman</b>
-                  </div>
-                </div>
-              </div>
-              <div className="swiper-slide flex place-content-center">
-                <div className="flex h-fit max-w-[750px] place-content-center 
-              place-items-center gap-10 rounded-lg p-4 shadow-lg">
-                  <div className="flex place-items-center">
-                    <div className="h-[150px] w-[150px] overflow-hidden rounded-full 
-                  max-lg:h-[80px] max-lg:w-[80px]">
-                      <img src="./assets/images/people/women.jpg"
-                        className="h-full w-full object-cover" alt="women" />
-                    </div>
-                  </div>
-                  <div className="flex max-w-[450px] flex-col gap-4">
-                    <p className="mt-4 italic text-gray-200">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate,
-                      sequi sunt velit aut omnis nulla ut, autem corrupti nemo optio
-                      ipsam amet ducimus illum? Repellendus itaque autem alias eos quis.
-                    </p>
-                    <b>- Ferman</b>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="pagination-container flex place-content-center"></div>
-
-            <div className="flex place-content-center gap-6">
-              <div className="testmonial-prev flex h-[40px] w-[40px] place-content-center 
-            place-items-center rounded-full border-2 border-solid 
-            border-gray-300 text-2xl">
-                <i className="bi bi-arrow-left"></i>
-              </div>
-              <div className="testmonial-next flex h-[40px] w-[40px] place-content-center 
-            place-items-center rounded-full border-2 border-solid 
-            border-gray-300 text-2xl">
-                <i className="bi bi-arrow-right"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
 
       <hr className='text-white min-w-screen'></hr>
       <div className='bg-gray-800'>

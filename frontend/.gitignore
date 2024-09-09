@@ -23,3 +23,19 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+#virtual environment 
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environment directory
+.venv/
+venv/
+env/
+
+# Ignore other common files
+.DS_Store
+*.log
+.env
