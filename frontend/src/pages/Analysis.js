@@ -1,8 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import { useFirebase } from '../context/Firebase';
+import { Link } from 'react-router-dom';
+import DoughnutChart from '../components/DoughnutChart';
+import Footer from '../components/Footer';
+
 
 function Analysis() {
-  const [formData, setFormData] = useSta
+  //Base parameters for estimation
+  const [formData, setFormData] = useState({
     excavation: '',
     transportation: '',
     fuel: '',
@@ -10,28 +18,8 @@ function Analysis() {
     workers: '',
     output: ''
   });
-
-  const [neutralisationResults, setNeutralisationResults] = useState(null);
-  const [evConversionPercentage, setEvConversionPercentage] = useState(100);
-  const [neutralizePercentage, setNeutralizePercentage] = useState(100);
-  const [greenFuelPercentage, setGreenFuelPercentage] = useState(100);
-
   const [results, setResults] = useState(null);
-  const sections = useRef([]);
-  const [currentSection, setCurrentSection] = useState(0);
-
-  const showNextSection = () => {
-    if (currentSection < sections.current.length - 1) {
-      setCurrentSection(currentSection + 1);
-    }
-  };
-
-  const showPreviousSection = () => {
-    if (currentSection > 0) {
-      setCurrentSection(currentSection - 1);
-    }
-  };
-
+  const formRef = useRef();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -46,23 +34,17 @@ function Analysis() {
       body: JSON.stringify(formData),
     });
     const result = await response.json();
-    setResults(result);
+    setResults(result)    
   };
 
-  useEffect(() => {
-    if (results) {
-      handleNeutralise();
-    }
-  }, [evConversionPercentage, neutralizePercentage, greenFuelPercentage]);
 
-  useEffect(() => {
-    gsap.fromTo(
-      sections.current[currentSection],
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.5 }
-    );
-  }, [currentSection]);
+  // useStates related to Neutralisation Pathways
+  const [neutralisationResults, setNeutralisationResults] = useState(null);
+  const [evConversionPercentage, setEvConversionPercentage] = useState(100);
+  const [neutralizePercentage, setNeutralizePercentage] = useState(100);
+  const [greenFuelPercentage, setGreenFuelPercentage] = useState(100);
 
+  //fetch function for Neutralisation Pathways 
   const handleNeutralise = async () => {
     if (!results) {
       alert("Please utilise the Emission Calculator to calculate your emissions first");
@@ -86,8 +68,71 @@ function Analysis() {
     setNeutralisationResults(neutraliseResult);
   };
 
+  //handles change in slider values
+  useEffect(() => {
+    if (results) {
+      handleNeutralise();
+    }
+  }, [evConversionPercentage, neutralizePercentage, greenFuelPercentage]);
+  
+  //handling section transition of the form
+  const sections = useRef([]);
+  const [currentSection, setCurrentSection] = useState(0);
+
+  const showNextSection = () => {
+    if (currentSection < sections.current.length - 1) {
+      setCurrentSection(currentSection + 1);
+    }
+  };
+
+  const showPreviousSection = () => {
+    if (currentSection > 0) {
+      setCurrentSection(currentSection - 1);
+    }
+  };
+
+  useEffect(() => {
+    gsap.fromTo(
+      sections.current[currentSection],
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.5 }
+    );
+  }, [currentSection]);
+
+
+  //pdf upload handling section
+  const { uploadPDFToFirebase } = useFirebase();
+
+  const handleGenerateAndStorePDF = async () => {
+    try {
+      const canvas = await html2canvas(formRef.current, {
+        scale: 2, // Increase scale for higher resolution
+        useCORS: true, // Enable CORS if your images are from a different origin
+      });
+
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4'); // Change the format to 'a4' for better fitting
+      const imgWidth = pdf.internal.pageSize.getWidth();
+      const imgHeight = (canvas.height * imgWidth) / canvas.width; // Maintain aspect ratio
+
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+
+      const pdfBlob = pdf.output('blob');
+
+      const downloadURL = await uploadPDFToFirebase(pdfBlob);
+      alert(`PDF generated and stored successfully! View it here: ${downloadURL}`);
+    } catch (error) {
+      console.error("Error generating or storing PDF:", error);
+      alert("There was an error generating the PDF. Please try again.");
+    }
+  };
+
+
+
+  
+
   return (
-    <div className="min-h-screen min-w-screen bg-gray-100 flex flex-col justify-center items-center py-4">
+    <div className="min-h-screen min-w-screen bg-gray-100 flex flex-col justify-center items-center">
       {/* Title and Image Section */}
       <div className="w-full bg-gray-50 p-8 shadow-lg flex justify-between items-center mb-8">
         <div className="text-left">
@@ -261,12 +306,41 @@ function Analysis() {
         <h2 className="text-xl font-bold mb-4">Emission Results</h2>
         {results && (
           <div className="mt-8">
-            <h3 className="text-xl font-semibold mb-4">Results:</h3>
- {/* Display Results */}
-            {/* ... */}
-            {/* Add the DoughnutChart component */}
-            <DoughnutChart data={results} />
+          <h3 className="text-xl font-semibold mb-4">Results:</h3>
+
+          {/* Excavation Results */}
+          <div className="bg-blue-100 p-4 rounded-lg mb-4">
+            <h4 className="text-lg font-semibold text-blue-800">Excavation</h4>
+            <p>Total Emissions: <span className="font-bold">{results.excavationEmissions.toFixed(2)} kg CO2</span></p>
+            <p>Per Capita Emissions: <span className="font-bold">{results.excavationPerCapita.toFixed(2)} kg CO2 per worker</span></p>
+            <p>Per Output Emissions: <span className="font-bold">{results.excavationPerOutput.toFixed(2)} kg CO2 per ton</span></p>
           </div>
+
+          {/* Transportation Results */}
+          <div className="bg-green-100 p-4 rounded-lg mb-4">
+            <h4 className="text-lg font-semibold text-green-800">Transportation</h4>
+            <p>Total Emissions: <span className="font-bold">{results.transportationEmissions.toFixed(2)} kg CO2</span></p>
+            <p>Per Capita Emissions: <span className="font-bold">{results.transportationPerCapita.toFixed(2)} kg CO2 per worker</span></p>
+            <p>Per Output Emissions: <span className="font-bold">{results.transportationPerOutput.toFixed(2)} kg CO2 per ton</span></p>
+          </div>
+
+          {/* Equipment Results */}
+          <div className="bg-yellow-100 p-4 rounded-lg mb-4">
+            <h4 className="text-lg font-semibold text-yellow-800">Equipment</h4>
+            <p>Total Emissions: <span className="font-bold">{results.equipmentEmissions.toFixed(2)} kg CO2</span></p>
+            <p>Per Capita Emissions: <span className="font-bold">{results.equipmentPerCapita.toFixed(2)} kg CO2 per worker</span></p>
+            <p>Per Output Emissions: <span className="font-bold">{results.equipmentPerOutput.toFixed(2)} kg CO2 per ton</span></p>
+          </div>
+
+          {/* Total Results */}
+          <div className="bg-gray-100 p-4 rounded-lg">
+            <h4 className="text-lg font-semibold text-gray-800">Total</h4>
+            <p>Total Emissions: <span className="font-bold">{results.totalEmissions.toFixed(2)} kg CO2</span></p>
+            <p>Total Per Capita Emissions: <span className="font-bold">{results.perCapitaEmissions.toFixed(2)} kg CO2 per worker</span></p>
+            <p>Total Per Output Emissions: <span className="font-bold">{results.perOutputEmissions.toFixed(2)} kg CO2 per ton</span></p>
+          </div>
+          <DoughnutChart data={results} /> */}
+        </div>
         )}
         <h3 className="text-lg font-bold mt-6 mb-2">Explore Neutralisation Pathways</h3>
 
@@ -312,7 +386,25 @@ function Analysis() {
       </>
     )}
   </div>
-</div>
+
+  <button
+        onClick={handleGenerateAndStorePDF}
+        className="mt-4 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+      >
+        Generate and Store PDF
+      </button>
+      <Link to="/view">
+        <button
+          className="mt-4 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+        >
+          View Data
+        </button>
+      </Link>
+    <hr className="w-full border-t border-gray-300 my-4" />
+    <div className="w-full bg-gray-800 ">
+      <Footer />
+    </div>
+  </div>
 ); }
 
 export default Analysis;
