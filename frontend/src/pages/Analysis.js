@@ -340,7 +340,7 @@ function Analysis() {
             <p>Total Per Capita Emissions: <span className="font-bold">{results.perCapitaEmissions.toFixed(2)} kg CO2 per worker</span></p>
             <p>Total Per Output Emissions: <span className="font-bold">{results.perOutputEmissions.toFixed(2)} kg CO2 per ton</span></p>
           </div>
-          <DoughnutChart data={results} /> */}
+          <DoughnutChart data={results} />
         </div>
         )}
         <h3 className="text-lg font-bold mt-6 mb-2">Explore Neutralisation Pathways</h3>
