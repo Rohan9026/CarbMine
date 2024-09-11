@@ -25,24 +25,24 @@ const DoughnutChart = ({ data }) => {
     ['#FF6384', '#36A2EB', '#FFCE56']
   );
 
-  const perCapitaEmissionsData = createChartData(
-    ['Excavation', 'Transportation', 'Equipment'],
-    [data.excavationPerCapita, data.transportationPerCapita, data.equipmentPerCapita],
-    ['#FF0000', '#FFFF00', '#0000FF']
-  );
+  // const perCapitaEmissionsData = createChartData(
+  //   ['Excavation', 'Transportation', 'Equipment'],
+  //   [data.excavationPerCapita, data.transportationPerCapita, data.equipmentPerCapita],
+  //   ['#FF0000', '#FFFF00', '#0000FF']
+  // );
 
-  const perOutputEmissionsData = createChartData(
-    ['Excavation', 'Transportation', 'Equipment'],
-    [data.excavationPerOutput, data.transportationPerOutput, data.equipmentPerOutput],
-   ['#008000', '#800080', '#FFA500']
-  );
+  // const perOutputEmissionsData = createChartData(
+  //   ['Excavation', 'Transportation', 'Equipment'],
+  //   [data.excavationPerOutput, data.transportationPerOutput, data.equipmentPerOutput],
+  //  ['#008000', '#800080', '#FFA500']
+  // );
 
-  const totalEmissions=createChartData(
-    ['Excavation', 'Transportation', 'Equipment'],
-    [data.totalEmissions,data.perCapitaEmissions,data.perOutputEmissions],
-       ['#008000', '#800080', '#FFA500']
+  // const totalEmissions=createChartData(
+  //   ['Excavation', 'Transportation', 'Equipment'],
+  //   [data.totalEmissions,data.perCapitaEmissions,data.perOutputEmissions],
+  //      ['#008000', '#800080', '#FFA500']
  
-  )
+  // )
 
 
   const options = {
@@ -81,7 +81,7 @@ const DoughnutChart = ({ data }) => {
         <Pie data={totalEmissionsData} options={options} width={150} height={150} />
       </div>
 
-      <div className="chart">
+      {/* <div className="chart">
         <h3 className="text-xl font-semibold mb-4">Per Capita Emissions Breakdown</h3>
         <Pie data={perCapitaEmissionsData} options={options} width={150} height={150} />
       </div>
@@ -89,7 +89,7 @@ const DoughnutChart = ({ data }) => {
       <div className="chart">
         <h3 className="text-xl font-semibold mb-4">Per Output Emissions Breakdown</h3>
         <Pie data={perOutputEmissionsData} options={options} width={150} height={150} />
-      </div>
+      </div> */}
     </div>
   );
 };

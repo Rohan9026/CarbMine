@@ -36,9 +36,6 @@ function Analysis() {
     setResults(result)   
   };
 
-  
-
-
   // useStates related to Neutralisation Pathways
   const [neutralisationResults, setNeutralisationResults] = useState(null);
   const [evConversionPercentage, setEvConversionPercentage] = useState(100);
@@ -133,25 +130,35 @@ function Analysis() {
   
 
   return (
-    <div className="min-h-screen min-w-screen bg-gray-100 flex flex-col justify-center items-center">
+    <div className="min-h-screen min-w-screen flex flex-col justify-center items-center bg-[#fff]">
       {/* Title and Image Section */}
-      <div className="w-full bg-gray-50 p-8 shadow-lg flex justify-between items-center mb-8">
+        
+      <div className="w-full p-8  flex justify-between items-center mb-8">
         <div className="text-left">
-          <h1 className="text-4xl font-bold text-indigo-600 mb-2">Estimate, Analyse, and Neutralise</h1>
+          <h1 className="text-4xl font-bold  mb-2">
+          <span>ESTIMATE, ANALYSE,</span>
+              <br />
+              <span>AND NEUTRALISE</span></h1>
           <p className="text-lg text-gray-700">A comprehensive approach to carbon footprint management</p>
         </div>
-        <div className="w-1/3">
-          <img src="/path/to/your/image.jpg" alt="Carbon Neutral" className="rounded-lg shadow-md" />
+        <div className="flex w-full max-w-[50%] place-content-center place-items-center overflow-hidden max-lg:max-w-[unset]">
+            <div className="flex h-[430px] w-[430px] max-h-[430px] max-w-[430px] overflow-hidden rounded-full max-lg:h-[320px] max-lg:w-[320px] lg:mt-[-150px]">
+              <img
+                src="./assets/s1.jfif"
+                alt="app"
+                className="z-[1] h-full w-full object-cover rounded-full"
+              />
+            </div>
         </div>
       </div>
 
       {/* Estimation Section */}
       <hr className="border-gray-300 my-6 w-full" />
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Carbon Emission Estimator</h2>
-
+      
         {!results ? (
+          <div className="bg-[#fff] p-8 rounded-lg shadow-lg w-full max-w-md">
           <form onSubmit={handleSubmit}>
+            <h2 className="text-2xl font-bold mb-6 text-center">Carbon Emission Estimator</h2>
             {/* Section for Excavation */}
             <div ref={(el) => (sections.current[0] = el)} style={{ display: currentSection === 0 ? 'block' : 'none' }}>
               <label className="block text-sm font-medium text-gray-700">Excavation (tons):</label>
@@ -289,7 +296,7 @@ function Analysis() {
             <button
               type="button"
               onClick={showPreviousSection}
-              className="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700"
+              className="bg-[#00F020] text-white py-2 px-4 rounded-md hover:bg-gray-700"
             >
               Previous
             </button>
@@ -302,23 +309,24 @@ function Analysis() {
           </div>
         </div>
       </form>
+      </div>
     ) : (
       <>
-        <h2 className="text-xl font-bold mb-4">Emission Results</h2>
         {results && (
-          <div className="mt-8">
-          <h3 className="text-xl font-semibold mb-4">Results:</h3>
-
+           
+        <div className="mt-8 bg-white-800 px-6 py-6 block rounded-md shadow-md">
+          <h2 className="text-2xl font-bold mb-6 text-center ">Emission Estimation Results</h2>
+          <div className = "mt-8 space-y-8 px-6 max-w-4xl mx-auto grid grid-cols-4 grid-rows-3 gap-6">
           {/* Excavation Results */}
-          <div className="bg-blue-100 p-4 rounded-lg mb-4">
-            <h4 className="text-lg font-semibold text-blue-800">Excavation</h4>
+          <div className="mt-8 bg-blue-100 p-4 rounded-lg mb-4 row-start-1 col-start-1 min-h-50">
+            <h4 className="text-lg font-semibold text-blue-800 ">Excavation</h4>
             <p>Total Emissions: <span className="font-bold">{results.excavationEmissions.toFixed(2)} kg CO2</span></p>
             <p>Per Capita Emissions: <span className="font-bold">{results.excavationPerCapita.toFixed(2)} kg CO2 per worker</span></p>
             <p>Per Output Emissions: <span className="font-bold">{results.excavationPerOutput.toFixed(2)} kg CO2 per ton</span></p>
           </div>
 
           {/* Transportation Results */}
-          <div className="bg-green-100 p-4 rounded-lg mb-4">
+          <div className=" mt-8 bg-green-100 p-4 rounded-lg mb-4 row-start-1 col-start-2 min-h-40">
             <h4 className="text-lg font-semibold text-green-800">Transportation</h4>
             <p>Total Emissions: <span className="font-bold">{results.transportationEmissions.toFixed(2)} kg CO2</span></p>
             <p>Per Capita Emissions: <span className="font-bold">{results.transportationPerCapita.toFixed(2)} kg CO2 per worker</span></p>
@@ -326,7 +334,7 @@ function Analysis() {
           </div>
 
           {/* Equipment Results */}
-          <div className="bg-yellow-100 p-4 rounded-lg mb-4">
+          <div className=" mt-8 bg-yellow-100 p-4 rounded-lg mb-4 row-start-1 col-start-3 min-h-40">
             <h4 className="text-lg font-semibold text-yellow-800">Equipment</h4>
             <p>Total Emissions: <span className="font-bold">{results.equipmentEmissions.toFixed(2)} kg CO2</span></p>
             <p>Per Capita Emissions: <span className="font-bold">{results.equipmentPerCapita.toFixed(2)} kg CO2 per worker</span></p>
@@ -334,16 +342,20 @@ function Analysis() {
           </div>
 
           {/* Total Results */}
-          <div className="bg-gray-100 p-4 rounded-lg">
+          <div className="mt-8 bg-gray-100 p-4 rounded-lg row-start-1 col-start-4 min-h-50">
             <h4 className="text-lg font-semibold text-gray-800">Total</h4>
             <p>Total Emissions: <span className="font-bold">{results.totalEmissions.toFixed(2)} kg CO2</span></p>
             <p>Total Per Capita Emissions: <span className="font-bold">{results.perCapitaEmissions.toFixed(2)} kg CO2 per worker</span></p>
             <p>Total Per Output Emissions: <span className="font-bold">{results.perOutputEmissions.toFixed(2)} kg CO2 per ton</span></p>
           </div>
-          <DoughnutChart data={results} />
-        </div>
-        )}
-        <h3 className="text-lg font-bold mt-6 mb-2">Explore Neutralisation Pathways</h3>
+          <div className="col-start-1 col-span-2 row-2 row-span-2 rounded-md shadow-md bg-[#9BEC00] flex items-center justify-center">
+            <h1 className="text-lg font-semibold text-[#fff] text-center">Analysis</h1>
+          </div>
+          <div className = "col-start-3 col-span-2 row-2 row-span-2 w-full"><DoughnutChart data={results} /></div>
+          </div>
+          <br></br>
+        <div>
+        <h3 className="text-2xl font-bold mb-6 text-center ">Explore Neutralisation Pathways</h3>
 
         <label className="block text-sm font-medium text-gray-700 mt-2">Electric Vehicle Conversion:</label>
         <input
@@ -406,19 +418,24 @@ function Analysis() {
             <p>Remaining Emissions After Following Complete Steps: <span className="font-bold">{neutralisationResults.overall_reamaining_footprint?.toFixed(2) || 0} kg CO2</span> </p>
           </div>
         )}
+        </div>
+          
+        </div>
+        )}
+        
       </>
     )}
-  </div>
+
 
   <button
         onClick={handleGenerateAndStorePDF}
-        className="mt-4 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+        className="mt-4 bg-[#00F020] text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
       >
         Generate and Store PDF
       </button>
       <Link to="/view">
         <button
-          className="mt-4 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+          className="mt-4 bg-[#00F020] text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
         >
           View Data
         </button>
