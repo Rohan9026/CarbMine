@@ -7,7 +7,15 @@ CORS(app)
 EXCAVATION_FACTOR = 0.1  # Example emission factor for excavation
 TRANSPORTATION_FACTOR = 2.5  # Example emission factor for transportation
 EQUIPMENT_FACTOR = 3.2  # Example emission factor for equipment usage
-
+GWP_METHANE = 25  # Global Warming Potential for Methane
+COAL_CO2_EMISSION_FACTOR = 2.2  # Example value, tons CO2 per ton of coal
+cost_per_cc = 42 #average cost per carbon credit is 42$ it may vary according to various conditions
+emissionFactors = {
+  'coal': 2.42,        # kg CO2 per kg of coal
+  'oil': 3.17,         # kg CO2 per liter of oil
+  'naturalGas': 2.75,  # kg CO2 per cubic meter of natural gas
+  'biomass': 0         # kg CO2 per kg of biomass
+};
 @app.route('/calculate', methods=['POST'])
 def calculate_emissions():
     data = request.json
@@ -18,7 +26,13 @@ def calculate_emissions():
     equipment = float(data['equipment'])
     workers = int(data['workers'])
     output = float(data['output'])
-
+    baselineemissions = float(data['baseline'])
+    annualcoal = float(data['annualcoal'])
+    fueltype = data.get('fuelType', 'coal')
+    methaneemissions = float(data['methaneemissions'])
+    energy = float(data['energy'])
+    reduced = float(data['reduction'])
+    
     # Emission calculations
     excavation_emissions = excavation * EXCAVATION_FACTOR
     transportation_emissions = transportation * TRANSPORTATION_FACTOR * fuel
@@ -35,6 +49,14 @@ def calculate_emissions():
     transportation_per_output = transportation_emissions / output
     equipment_per_output = equipment_emissions / output
 
+    # calculated carbon credits
+    fuel_emission_factor = emissionFactors.get(fueltype, COAL_CO2_EMISSION_FACTOR)
+    fuel_emissions = fuel * fuel_emission_factor
+    methane_co2e = methaneemissions * GWP_METHANE
+    total_emissions = baselineemissions + annualcoal * COAL_CO2_EMISSION_FACTOR + fuel_emissions + methane_co2e
+    carboncredits = baselineemissions - reduced
+    worth = carboncredits * cost_per_cc
+
 
     return jsonify({
         'totalEmissions': total_emissions,
@@ -48,7 +70,12 @@ def calculate_emissions():
         'transportationPerOutput': transportation_per_output,
         'equipmentPerOutput': equipment_per_output,
         'perCapitaEmissions': total_emissions / workers,
-        'perOutputEmissions': total_emissions / output
+        'perOutputEmissions': total_emissions / output,
+        'baseline': baselineemissions,
+        'totalemissions': total_emissions,
+        'carboncredits': carboncredits,
+        'reduced': reduced,
+        'worth': worth
     })
 
 

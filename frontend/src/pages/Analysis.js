@@ -15,7 +15,9 @@ function Analysis() {
     fuel: '',
     equipment: '',
     workers: '',
-    output: ''
+    output: '',
+    coalemissions: '',
+    methaneemission: ''
   });
   const [results, setResults] = useState(null);
   const formRef = useRef();
@@ -283,12 +285,14 @@ function Analysis() {
                   Previous
                 </button>
                 <button type="button" onClick={showNextSection} className="bg-indigo-600 text-white py-2 px-4 rounded-md hover" > Next </button> </div> </div>
-            <div ref={(el) => (sections.current[5] = el)} style={{ display: currentSection === 5 ? 'block' : 'none' }}>
-              <label className="block text-sm font-medium text-gray-700">Output (tons):</label>
+        
+         {/* section for baseline emissions */}
+         <div ref={(el) => (sections.current[5] = el)} style={{ display: currentSection === 5 ? 'block' : 'none' }}>
+              <label className="block text-sm font-medium text-gray-700">Baseline Emissions :</label>
               <input
                 type="number"
-                name="output"
-                value={formData.output}
+                name="baseline"
+                value={formData.baseline}
                 onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               />
@@ -296,34 +300,217 @@ function Analysis() {
                 <button
                   type="button"
                   onClick={showPreviousSection}
-                  className="bg-[#00F020] text-white py-2 px-4 rounded-md hover:bg-gray-700"
+                  className="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700"
                 >
                   Previous
                 </button>
                 <button
-                  type="submit"
-                  className="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"
+                  type="button"
+                  onClick={showNextSection}
+                  className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
                 >
-                  Submit
+                  Next
                 </button>
               </div>
             </div>
-          </form>
-        </div>
-      ) : (
-        <>
-          {results && (
 
-            <div className="mt-8 bg-white-800 px-6 py-6 block rounded-md shadow-md">
-              <h2 className="text-2xl font-bold mb-6 text-center ">Emission Estimation Results</h2>
-              <div className="mt-8 space-y-8 px-6 max-w-4xl mx-auto grid grid-cols-4 grid-rows-3 gap-6">
-                {/* Excavation Results */}
-                <div className="mt-8 bg-blue-100 p-4 rounded-lg mb-4 row-start-1 col-start-1 min-h-50">
-                  <h4 className="text-lg font-semibold text-blue-800 ">Excavation</h4>
-                  <p>Total Emissions: <span className="font-bold">{results.excavationEmissions.toFixed(2)} kg CO2</span></p>
-                  <p>Per Capita Emissions: <span className="font-bold">{results.excavationPerCapita.toFixed(2)} kg CO2 per worker</span></p>
-                  <p>Per Output Emissions: <span className="font-bold">{results.excavationPerOutput.toFixed(2)} kg CO2 per ton</span></p>
-                </div>
+           
+
+          {/* Section for annual coal production */}
+          <div ref={(el) => (sections.current[6] = el)} style={{ display: currentSection === 6 ? 'block' : 'none' }}>
+              <label className="block text-sm font-medium text-gray-700">Annual coal production :</label>
+              <input
+                type="number"
+                name="annualcoal"
+                value={formData.annualcoal}
+                onChange={handleChange}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+              />
+              <div className="flex justify-between mt-4">
+                <button
+                  type="button"
+                  onClick={showPreviousSection}
+                  className="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700"
+                >
+                  Previous
+                </button>
+                <button
+                  type="button"
+                  onClick={showNextSection}
+                  className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+
+
+             {/* Section for fuel type */}
+          <div ref={(el) => (sections.current[7] = el)} style={{ display: currentSection === 7 ? 'block' : 'none' }}>
+              <label className="block text-sm font-medium text-gray-700">Fuel Type :</label>
+              <select
+                  name="fuelType"
+                  value={formData.fuelType}
+                  onChange={handleChange}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+                >
+                  <option value="">Select Fuel Type</option>
+                  <option value="coal">Coal</option>
+                  <option value="oil">Oil</option>
+                  <option value="naturalGas">Natural Gas</option>
+                  <option value="biomass">Biomass</option>
+                </select>
+
+              <div className="flex justify-between mt-4">
+                <button
+                  type="button"
+                  onClick={showPreviousSection}
+                  className="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700"
+                >
+                  Previous
+                </button>
+                <button
+                  type="button"
+                  onClick={showNextSection}
+                  className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+
+            
+          {/* Section for methane emissions */}
+          <div ref={(el) => (sections.current[8] = el)} style={{ display: currentSection === 8 ? 'block' : 'none' }}>
+              <label className="block text-sm font-medium text-gray-700">Methane Emissions :</label>
+              <input
+                type="number"
+                name="methaneemissions"
+                value={formData.methaneemissions}
+                onChange={handleChange}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+              />
+              <div className="flex justify-between mt-4">
+                <button
+                  type="button"
+                  onClick={showPreviousSection}
+                  className="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700"
+                >
+                  Previous
+                </button>
+                <button
+                  type="button"
+                  onClick={showNextSection}
+                  className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+
+
+             {/* Section for Energy consumption */}
+          <div ref={(el) => (sections.current[9] = el)} style={{ display: currentSection === 9 ? 'block' : 'none' }}>
+              <label className="block text-sm font-medium text-gray-700">Total Energy consumed :</label>
+              <input
+                type="number"
+                name="energy"
+                value={formData.energy}
+                onChange={handleChange}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+              />
+              <div className="flex justify-between mt-4">
+                <button
+                  type="button"
+                  onClick={showPreviousSection}
+                  className="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700"
+                >
+                  Previous
+                </button>
+                <button
+                  type="button"
+                  onClick={showNextSection}
+                  className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+
+
+
+          {/* Section for Emission after mitigation policies */}
+          <div ref={(el) => (sections.current[10] = el)} style={{ display: currentSection === 10 ? 'block' : 'none' }}>
+              <label className="block text-sm font-medium text-gray-700">Emissions after Mitigation policies :</label>
+              <input
+                type="number"
+                name="reduction"
+                value={formData.reduction}
+                onChange={handleChange}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+              />
+              <div className="flex justify-between mt-4">
+                <button
+                  type="button"
+                  onClick={showPreviousSection}
+                  className="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700"
+                >
+                  Previous
+                </button>
+                <button
+                  type="button"
+                  onClick={showNextSection}
+                  className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+
+           
+
+
+        <div ref={(el) => (sections.current[11] = el)} style={{ display: currentSection === 11 ? 'block' : 'none' }}>
+          <label className="block text-sm font-medium text-gray-700">Output (tons):</label>
+          <input
+            type="number"
+            name="output"
+            value={formData.output}
+            onChange={handleChange}
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+          />
+          <div className="flex justify-between mt-4">
+            <button
+              type="button"
+              onClick={showPreviousSection}
+              className="bg-[#00F020] text-white py-2 px-4 rounded-md hover:bg-gray-700"
+            >
+              Previous
+            </button>
+            <button
+              type="submit"
+              className="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </form>
+      </div>
+    ) : (
+      <>
+        {results && (
+           
+        <div className="mt-8 bg-white-800 px-6 py-6 block rounded-md shadow-md">
+          <h2 className="text-2xl font-bold mb-6 text-center ">Emission Estimation Results</h2>
+          <div className = "mt-8 space-y-8 px-6 max-w-4xl mx-auto grid grid-cols-4 grid-rows-3 gap-6">
+          {/* Excavation Results */}
+          <div className="mt-8 bg-blue-100 p-4 rounded-lg mb-4 row-start-1 col-start-1 min-h-50">
+            <h4 className="text-lg font-semibold text-blue-800 ">Excavation</h4>
+            <p>Total Emissions: <span className="font-bold">{results.excavationEmissions.toFixed(2)} kg CO2</span></p>
+            <p>Per Capita Emissions: <span className="font-bold">{results.excavationPerCapita.toFixed(2)} kg CO2 per worker</span></p>
+            <p>Per Output Emissions: <span className="font-bold">{results.excavationPerOutput.toFixed(2)} kg CO2 per ton</span></p>
+          </div>
 
                 {/* Transportation Results */}
                 <div className=" mt-8 bg-green-100 p-4 rounded-lg mb-4 row-start-1 col-start-2 min-h-40">
@@ -333,13 +520,23 @@ function Analysis() {
                   <p>Per Output Emissions: <span className="font-bold">{results.transportationPerOutput.toFixed(2)} kg CO2 per ton</span></p>
                 </div>
 
-                {/* Equipment Results */}
-                <div className=" mt-8 bg-yellow-100 p-4 rounded-lg mb-4 row-start-1 col-start-3 min-h-40">
-                  <h4 className="text-lg font-semibold text-yellow-800">Equipment</h4>
-                  <p>Total Emissions: <span className="font-bold">{results.equipmentEmissions.toFixed(2)} kg CO2</span></p>
-                  <p>Per Capita Emissions: <span className="font-bold">{results.equipmentPerCapita.toFixed(2)} kg CO2 per worker</span></p>
-                  <p>Per Output Emissions: <span className="font-bold">{results.equipmentPerOutput.toFixed(2)} kg CO2 per ton</span></p>
-                </div>
+          {/* Equipment Results */}
+          <div className=" mt-8 bg-yellow-100 p-4 rounded-lg mb-4 row-start-1 col-start-3 min-h-40">
+            <h4 className="text-lg font-semibold text-yellow-800">Equipment</h4>
+            <p>Total Emissions: <span className="font-bold">{results.equipmentEmissions.toFixed(2)} kg CO2</span></p>
+            <p>Per Capita Emissions: <span className="font-bold">{results.equipmentPerCapita.toFixed(2)} kg CO2 per worker</span></p>
+            <p>Per Output Emissions: <span className="font-bold">{results.equipmentPerOutput.toFixed(2)} kg CO2 per ton</span></p>
+          </div>
+
+          {/* Carbon credits  Results */}
+          <div className=" mt-8 bg-yellow-100 p-4 rounded-lg mb-4 row-start-1 col-start-3 min-h-40">
+            <h4 className="text-lg font-semibold text-yellow-800">Carbon credits</h4>
+            <p>Baseline Emissions: <span className="font-bold">{results.baseline.toFixed(2)} kg CO2</span></p>
+            <p>Total Emissions: <span className="font-bold">{results.totalEmissions.toFixed(2)} kg CO2 equivalents</span></p>
+            <p>Emissions after taking mitigation policies: <span className="font-bold">{results.reduced.toFixed(2)} kg CO2 per ton</span></p>
+            <p>Total carbon credits: <span className="font-bold">{results.carboncredits.toFixed(2)} per ton</span></p>
+            <p>The net worth of the carbon credits are: <span className="font-bold">{results.worth.toFixed(2)}$ per ton</span></p>
+          </div>
 
                 {/* Total Results */}
                 <div className="mt-8 bg-gray-100 p-4 rounded-lg row-start-1 col-start-4 min-h-50">
