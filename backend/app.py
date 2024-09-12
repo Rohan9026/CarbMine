@@ -28,63 +28,50 @@ emissionFactors = {
 def calculate_emissions():
     data = request.json
     
-    excavation = float(data['excavation'])
-    transportation = float(data['transportation'])
-    fuel = float(data['fuel'])
-    equipment = float(data['equipment'])
-    workers = int(data['workers'])
-    output = float(data['output'])
-    baselineemissions = float(data['baseline'])
-    annualcoal = float(data['annualcoal'])
-    fueltype = data.get('fuelType', 'coal')
-    methaneemissions = float(data['methaneemissions'])
-    energy = float(data['energy'])
-    reduced = float(data['reduction'])
-    
-    # Emission calculations
-    excavation_emissions = excavation * EXCAVATION_FACTOR
-    transportation_emissions = transportation * TRANSPORTATION_FACTOR * fuel
-    equipment_emissions = equipment * EQUIPMENT_FACTOR
+    # Inputs
+    excavation_tons = float(data['excavation'])  # Tons of coal mined
+    transportation_km = float(data['transportation'])  # Distance in kilometers for transportation
+    fuel_liters = float(data['fuel'])  # Fuel consumption in liters
+    equipment_hours = float(data['equipment'])  # Hours of equipment operation
+    workers = int(data['workers'])  # Number of workers
+    output_tons = float(data['output'])  # Total output in tons of coal mined
 
-    total_emissions = excavation_emissions + transportation_emissions + equipment_emissions
-    # Individual per capita emissions
-    excavation_per_capita = excavation_emissions / workers
-    transportation_per_capita = transportation_emissions / workers
-    equipment_per_capita = equipment_emissions / workers
+    # Emission calculations based on activity and emission factors (CO2 in kg)
+    excavation_emissions = excavation_tons * EXCAVATION_FACTOR  # kg CO2 from excavation
+    transportation_emissions = excavation_tons * transportation_km * TRANSPORTATION_FACTOR  # kg CO2 from transportation
+    fuel_emissions = fuel_liters * FUEL_CONSUMPTION_FACTOR  # kg CO2 from fuel consumption
+    equipment_emissions = equipment_hours * EQUIPMENT_FACTOR  # kg CO2 from equipment usage
 
-    # Individual per output emissions
-    excavation_per_output = excavation_emissions / output
-    transportation_per_output = transportation_emissions / output
-    equipment_per_output = equipment_emissions / output
+    # Total emissions in kg CO2
+    total_emissions = excavation_emissions + transportation_emissions + fuel_emissions + equipment_emissions
 
-    # calculated carbon credits
-    fuel_emission_factor = emissionFactors.get(fueltype, COAL_CO2_EMISSION_FACTOR)
-    fuel_emissions = fuel * fuel_emission_factor
-    methane_co2e = methaneemissions * GWP_METHANE
-    total_emissions = baselineemissions + annualcoal * COAL_CO2_EMISSION_FACTOR + fuel_emissions + methane_co2e
-    carboncredits = baselineemissions - reduced
-    worth = carboncredits * cost_per_cc
+    # Per capita (per worker) emissions
+    excavation_per_capita = excavation_emissions / workers if workers > 0 else 0
+    transportation_per_capita = transportation_emissions / workers if workers > 0 else 0
+    equipment_per_capita = equipment_emissions / workers if workers > 0 else 0
+    per_capita_emissions = total_emissions / workers if workers > 0 else 0
 
+    # Per output emissions (e.g., per ton of coal mined)
+    excavation_per_output = excavation_emissions / output_tons if output_tons > 0 else 0
+    transportation_per_output = transportation_emissions / output_tons if output_tons > 0 else 0
+    equipment_per_output = equipment_emissions / output_tons if output_tons > 0 else 0
+    per_output_emissions = total_emissions / output_tons if output_tons > 0 else 0
 
     return jsonify({
-        'totalEmissions': total_emissions,
-        'excavationEmissions': excavation_emissions,
-        'transportationEmissions': transportation_emissions,
-        'equipmentEmissions': equipment_emissions,
-        'excavationPerCapita': excavation_per_capita,
-        'transportationPerCapita': transportation_per_capita,
-        'equipmentPerCapita': equipment_per_capita,
-        'excavationPerOutput': excavation_per_output,
-        'transportationPerOutput': transportation_per_output,
-        'equipmentPerOutput': equipment_per_output,
-        'perCapitaEmissions': total_emissions / workers,
-        'perOutputEmissions': total_emissions / output,
-        'baseline': baselineemissions,
-        'totalemissions': total_emissions,
-        'carboncredits': carboncredits,
-        'reduced': reduced,
-        'worth': worth
+        'totalEmissions': total_emissions,  # Total in kg CO2
+        'excavationEmissions': excavation_emissions,  # kg CO2 for excavation
+        'transportationEmissions': transportation_emissions,  # kg CO2 for transportation
+        'equipmentEmissions': equipment_emissions,  # kg CO2 for equipment usage
+        'excavationPerCapita': excavation_per_capita,  # kg CO2 per worker for excavation
+        'transportationPerCapita': transportation_per_capita,  # kg CO2 per worker for transportation
+        'equipmentPerCapita': equipment_per_capita,  # kg CO2 per worker for equipment
+        'excavationPerOutput': excavation_per_output,  # kg CO2 per ton of coal mined
+        'transportationPerOutput': transportation_per_output,  # kg CO2 per ton of coal mined
+        'equipmentPerOutput': equipment_per_output,  # kg CO2 per ton of coal mined
+        'perCapitaEmissions': per_capita_emissions,  # kg CO2 per worker
+        'perOutputEmissions': per_output_emissions  # kg CO2 per ton of coal mined
     })
+
 
 
 # Defining standard constants for exploring Carbon Footprint Neutralization Pathways
