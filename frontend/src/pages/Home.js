@@ -118,9 +118,9 @@ const Home = () => {
           <div className="w-full sm:w-1/2 lg:w-1/4 p-4 flex flex-col items-center">
             <div className="bg-white shadow-lg rounded-full w-44 h-44 flex items-center justify-center">
               <img
-                src="assets/estimate.jpg"
+                src="assets/nemission.svg"
                 alt="Placeholder"
-                className="rounded-full w-32 h-32 object-cover"
+                className="rounded-full w-28 h-28 object-cover"
               />
             </div>
             <h3 className="mt-4 text-center font-bold text-lg">Carbon Footprints</h3>
@@ -130,7 +130,7 @@ const Home = () => {
           <div className="w-full sm:w-1/2 lg:w-1/4 p-4 flex flex-col items-center">
             <div className="bg-white shadow-lg rounded-full w-44 h-44 flex items-center justify-center">
               <img
-                src="assets/neuta.png"
+                src="assets/nneutral.svg"
                 alt="Placeholder"
                 className="rounded-full w-32 h-32 object-cover"
               />
@@ -142,7 +142,7 @@ const Home = () => {
           <div className="w-full sm:w-1/2 lg:w-1/4 p-4 flex flex-col items-center">
             <div className="bg-white shadow-lg rounded-full w-44 h-44 flex items-center justify-center">
               <img
-                src="assets/dataviz.png"
+                src="assets/nvisual.svg"
                 alt="Placeholder"
                 className="rounded-full w-32 h-32 object-cover"
               />
@@ -154,7 +154,7 @@ const Home = () => {
           <div className="w-full sm:w-1/2 lg:w-1/4 p-4 flex flex-col items-center">
             <div className="bg-white shadow-lg rounded-full w-44 h-44 flex items-center justify-center">
               <img
-                src="assets/credits.png"
+                src="assets/ncredits.svg"
                 alt="Placeholder"
                 className="rounded-full w-24 h-24 object-cover"
               />
@@ -171,8 +171,8 @@ const Home = () => {
         <div className="reveal-up flex min-h-[60vh] place-content-center place-items-center gap-[10%] max-lg:flex-col max-lg:gap-10">
 
           <div className="flex">
-            <div className="h-[450px] w-[300px]">
-              <img src="./assets/images/home/coal-mine.png" alt="Coal Mine Emissions" className="h-full w-full object-contain" />
+            <div className="h-[1100px] w-[450px]">
+              <img src="./assets/coal.jpg" alt="Coal Mine Emissions" className="h-full w-full object-contain" />
             </div>
           </div>
           <div className="mt-6 flex max-w-[450px] flex-col gap-4">
@@ -250,7 +250,7 @@ const Home = () => {
 
           <div className="flex">
             <div className="h-[450px] w-[300px]">
-              <img src="./assets/images/home/carbon-neutral.png" alt="Carbon Neutralization" className="h-full w-full object-contain" />
+              <img src="./assets/neutral.webp" alt="Carbon Neutralization" className="h-full w-full object-contain" />
             </div>
           </div>
         </div>
@@ -262,7 +262,7 @@ const Home = () => {
         <div className="reveal-up flex min-h-[60vh] place-content-center place-items-center gap-[10%] max-lg:flex-col max-lg:gap-10">
           <div className="flex">
             <div className="h-[450px] w-[300px]">
-              <img src="./assets/images/home/carbon-credits.png" alt="Carbon Credits" className="h-full w-full object-contain" />
+              <img src="./assets/carbcredits.webp" alt="Carbon Credits" className="h-full w-full object-contain" />
             </div>
           </div>
           <div className="mt-6 flex max-w-[450px] flex-col gap-4">

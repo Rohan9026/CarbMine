@@ -36,7 +36,7 @@ const Navbar = () => {
     }, [menuRef]);
 
     return (
-        <nav className="flex flex-col lg:flex-row justify-between items-center fixed w-full p-4 bg-white z-50">
+        <nav className="flex flex-col lg:flex-row justify-between items-center fixed w-full p-1 bg-white z-50">
 
             <div className="flex items-center justify-between w-full lg:w-auto">
                 {/* <img src="/assets/logo.jpg" alt="Logo" className="h-12" /> */}
