@@ -36,7 +36,8 @@ const Navbar = () => {
     }, [menuRef]);
 
     return (
-        <nav className="flex flex-col lg:flex-row justify-between items-center w-full p-4 bg-white shadow-md">
+        <nav className="flex flex-col lg:flex-row justify-between items-center fixed w-full p-4 bg-white z-50">
+
             <div className="flex items-center justify-between w-full lg:w-auto">
                 {/* <img src="/assets/logo.jpg" alt="Logo" className="h-12" /> */}
                 <p className="text-[#00F020] text-2xl font-bold hover:text-green-400 transition">CarbMine</p>
@@ -57,9 +58,7 @@ const Navbar = () => {
                     <li className="lg:mr-6">
                         <Link to="/calculation" className="text-black text-xl hover:text-[#00F020] transition">Calculation</Link>
                     </li>
-                    <li className="lg:mr-6">
-                        <Link to="/main" className="text-black text-xl hover:text-[#00F020] transition">Try</Link>
-                    </li>
+
                     <li className="lg:mr-6">
                         <Link to="/estimate" className="text-black text-xl hover:text-[#00F020] transition">Estimate</Link>
                     </li>
@@ -103,22 +102,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
-
-{/* <header className="absolute top-0 z-20 flex h-[60px] w-full bg-opacity-0 px-[5%] max-lg:mr-auto max-lg:px-4 lg:justify-around">
-    <a className="h-[50px] w-[50px] p-[4px]" href="/">
-        <img src="./assets/logo.png" alt="logo" className="object h-full w-full" />
-    </a>
-    <div className="collapsible-header animated-collapse max-lg:shadow-md" id="collapsed-header-items">
-        <div className="flex h-full w-max gap-5 text-base text-black max-lg:mt-[30px] max-lg:flex-col max-lg:place-items-end max-lg:gap-5 lg:mx-auto lg:place-items-center">
-            <a className="header-links" href="/">About us</a>
-            <a className="header-links" href="#pricing">Pricing</a>
-            <a className="header-links" href="/">Features</a>
-            <a className="header-links" href="/">Blog</a>
-            <a className="header-links" href="/">Contact us</a>
-        </div>
-
-    </div>
-    <button className="bi bi-list absolute right-3 top-3 z-50 text-3xl text-black lg:hidden" onClick={toggleHeader} aria-label="menu" id="collapse-btn"></button>
-</header> */}

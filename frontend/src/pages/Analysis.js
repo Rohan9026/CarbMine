@@ -8,7 +8,7 @@ import DoughnutChart from '../components/DoughnutChart';
 import Footer from '../components/Footer';
 
 function Analysis() {
-  const [formData, setFormData] = useSta
+  const [formData, setFormData] = useState({
     excavation: '',
     transportation: '',
     fuel: '',
@@ -191,7 +191,7 @@ function Analysis() {
         {results && (
           <div className="mt-8">
             <h3 className="text-xl font-semibold mb-4">Results:</h3>
- {/* Display Results */}
+            {/* Display Results */}
             {/* ... */}
             {/* Add the DoughnutChart component */}
             <DoughnutChart data={results} />
