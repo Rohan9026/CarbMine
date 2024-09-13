@@ -6,7 +6,7 @@ import { useFirebase } from '../context/Firebase';
 import { Link } from 'react-router-dom';
 import DoughnutChart from '../components/DoughnutChart';
 import Footer from '../components/Footer';
-
+import NeutralizationChart from '../components/NeutralizationChart';
 function Analysis() {
   //Base parameters for estimation
   const [formData, setFormData] = useState({
@@ -608,6 +608,10 @@ function Analysis() {
                     <p className='py-2'>Estimated Electricity Savings: <span className="font-bold">{neutralisationResults.estimated_electricity_savings_mwh?.toFixed(2) || 0} MWh</span></p>
 
                     <p>Remaining Emissions After Following Complete Steps: <span className="font-bold">{neutralisationResults.overall_reamaining_footprint?.toFixed(2) || 0} kg CO2</span> </p>
+                  <div className='mt-8'>
+                    <h3 className='text-lg font-semibold text-center'>Neutralisation Pathway Chart</h3>
+                    {neutralisationResults && <NeutralizationChart data={neutralisationResults}/>}
+                    </div>
                   </div>
                 )}
               </div>
