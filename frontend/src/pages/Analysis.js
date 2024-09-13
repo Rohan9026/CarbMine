@@ -59,7 +59,7 @@ function Analysis() {
         green_fuel_percentage: greenFuelPercentage,
         neutralise_percentage: neutralizePercentage,
         ev_transportaion_percentage: evConversionPercentage,
-        emissions: results?.totalEmissions || 0,
+        emissions: results?.output || 0,
         transportation: formData.transportation,
         fuel: formData.fuel,
       }),
@@ -437,8 +437,6 @@ function Analysis() {
               </div>
             </div>
 
-
-
             {/* Section for Emission after mitigation policies */}
             <div ref={(el) => (sections.current[10] = el)} style={{ display: currentSection === 10 ? 'block' : 'none' }}>
               <label className="block text-sm font-medium text-gray-700">Emissions after Mitigation policies :</label>
@@ -466,9 +464,6 @@ function Analysis() {
                 </button>
               </div>
             </div>
-
-
-
 
             <div ref={(el) => (sections.current[11] = el)} style={{ display: currentSection === 11 ? 'block' : 'none' }}>
               <label className="block text-sm font-medium text-gray-700">Output (tons):</label>
