@@ -6,7 +6,7 @@ import { useFirebase } from '../context/Firebase';
 import { Link } from 'react-router-dom';
 import DoughnutChart from '../components/DoughnutChart';
 import Footer from '../components/Footer';
-
+import NeutralizationChart from '../components/NeutralizationChart';
 function Analysis() {
   //Base parameters for estimation
   const [formData, setFormData] = useState({
@@ -71,6 +71,7 @@ function Analysis() {
   //handles change in slider values
   useEffect(() => {
     if (results) {
+      console.log("Results: ", results);
       handleNeutralise();
     }
   }, [evConversionPercentage, neutralizePercentage, greenFuelPercentage, results]);
@@ -80,9 +81,11 @@ function Analysis() {
   const [currentSection, setCurrentSection] = useState(0);
 
   const showNextSection = () => {
-    if (currentSection < sections.current.length - 1) {
-      setCurrentSection(currentSection + 1);
-    }
+    
+      if (currentSection < sections.current.length - 1) {
+        setCurrentSection(currentSection + 1);
+      }
+    
   };
 
   const showPreviousSection = () => {
@@ -169,6 +172,7 @@ function Analysis() {
                 name="excavation"
                 value={formData.excavation}
                 onChange={handleChange}
+                required
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               />
               <div className="flex justify-between mt-4">
@@ -190,6 +194,7 @@ function Analysis() {
                 name="transportation"
                 value={formData.transportation}
                 onChange={handleChange}
+                required
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               />
               <div className="flex justify-between mt-4">
@@ -217,6 +222,7 @@ function Analysis() {
                 type="number"
                 name="fuel"
                 value={formData.fuel}
+                required
                 onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               />
@@ -245,6 +251,7 @@ function Analysis() {
                 type="number"
                 name="equipment"
                 value={formData.equipment}
+                required
                 onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               />
@@ -273,6 +280,7 @@ function Analysis() {
                 type="number"
                 name="workers"
                 value={formData.workers}
+                required
                 onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               />
@@ -293,6 +301,7 @@ function Analysis() {
                 type="number"
                 name="baseline"
                 value={formData.baseline}
+                required
                 onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               />
@@ -323,6 +332,7 @@ function Analysis() {
                 type="number"
                 name="annualcoal"
                 value={formData.annualcoal}
+                required
                 onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               />
@@ -351,6 +361,7 @@ function Analysis() {
               <select
                 name="fuelType"
                 value={formData.fuelType}
+                required
                 onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               >
@@ -387,6 +398,7 @@ function Analysis() {
                 type="number"
                 name="methaneemissions"
                 value={formData.methaneemissions}
+                required
                 onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               />
@@ -416,6 +428,7 @@ function Analysis() {
                 type="number"
                 name="energy"
                 value={formData.energy}
+                required
                 onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               />
@@ -436,8 +449,6 @@ function Analysis() {
                 </button>
               </div>
             </div>
-
-
 
             {/* Section for Emission after mitigation policies */}
             <div ref={(el) => (sections.current[10] = el)} style={{ display: currentSection === 10 ? 'block' : 'none' }}>
@@ -446,6 +457,7 @@ function Analysis() {
                 type="number"
                 name="reduction"
                 value={formData.reduction}
+                required
                 onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               />
@@ -467,15 +479,13 @@ function Analysis() {
               </div>
             </div>
 
-
-
-
             <div ref={(el) => (sections.current[11] = el)} style={{ display: currentSection === 11 ? 'block' : 'none' }}>
               <label className="block text-sm font-medium text-gray-700">Output (tons):</label>
               <input
                 type="number"
                 name="output"
                 value={formData.output}
+                required
                 onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               />
@@ -513,7 +523,7 @@ function Analysis() {
                 </div>
 
                 {/* Transportation Results */}
-                <div className=" mt-8 bg-green-100 p-4 rounded-lg mb-4 row-start-1 col-start-2 min-h-40">
+                <div className=" mt-8 bg-green-100 p-4 rounded-lg mb-4 row-start-1 col-start-2 min-h-50">
                   <h4 className="text-lg font-semibold text-green-800">Transportation</h4>
                   <p>Total Emissions: <span className="font-bold">{results.transportationEmissions.toFixed(2)} kg CO2</span></p>
                   <p>Per Capita Emissions: <span className="font-bold">{results.transportationPerCapita.toFixed(2)} kg CO2 per worker</span></p>
@@ -521,34 +531,48 @@ function Analysis() {
                 </div>
 
                 {/* Equipment Results */}
-                <div className=" mt-8 bg-yellow-100 p-4 rounded-lg mb-4 row-start-1 col-start-3 min-h-40">
+                <div className=" mt-8 bg-yellow-100 p-4 rounded-lg mb-4 row-start-1 col-start-3 min-h-50">
                   <h4 className="text-lg font-semibold text-yellow-800">Equipment</h4>
                   <p>Total Emissions: <span className="font-bold">{results.equipmentEmissions.toFixed(2)} kg CO2</span></p>
                   <p>Per Capita Emissions: <span className="font-bold">{results.equipmentPerCapita.toFixed(2)} kg CO2 per worker</span></p>
                   <p>Per Output Emissions: <span className="font-bold">{results.equipmentPerOutput.toFixed(2)} kg CO2 per ton</span></p>
                 </div>
 
-                {/* Carbon credits  Results */}
-                <div className=" mt-8 bg-yellow-100 p-4 rounded-lg mb-4 row-start-1 col-start-3 min-h-40">
-                  <h4 className="text-lg font-semibold text-yellow-800">Carbon credits</h4>
-                  <p>Baseline Emissions: <span className="font-bold">{results.baseline.toFixed(2)} kg CO2</span></p>
-                  <p>Total Emissions: <span className="font-bold">{results.totalEmissions.toFixed(2)} kg CO2 equivalents</span></p>
-                  <p>Emissions after taking mitigation policies: <span className="font-bold">{results.reduced.toFixed(2)} kg CO2 per ton</span></p>
-                  <p>Total carbon credits: <span className="font-bold">{results.carboncredits.toFixed(2)} per ton</span></p>
-                  <p>The net worth of the carbon credits are: <span className="font-bold">{results.worth.toFixed(2)}$ per ton</span></p>
-                </div>
-
                 {/* Total Results */}
-                <div className="mt-8 bg-gray-100 p-4 rounded-lg row-start-1 col-start-4 min-h-50">
+                <div className="mt-8 bg-gray-100 p-4 rounded-lg mb-4 row-start-1 col-start-4 min-h-50">
                   <h4 className="text-lg font-semibold text-gray-800">Total</h4>
                   <p>Total Emissions: <span className="font-bold">{results.totalEmissions.toFixed(2)} kg CO2</span></p>
                   <p>Total Per Capita Emissions: <span className="font-bold">{results.perCapitaEmissions.toFixed(2)} kg CO2 per worker</span></p>
                   <p>Total Per Output Emissions: <span className="font-bold">{results.perOutputEmissions.toFixed(2)} kg CO2 per ton</span></p>
                 </div>
-                <div className="col-start-1 col-span-2 row-2 row-span-2 rounded-md shadow-md bg-[#9BEC00] flex items-center justify-center">
-                  <h1 className="text-lg font-semibold text-[#fff] text-center">Analysis</h1>
+                <div className="col-start-1 col-span-2 row-2 row-span-2 rounded-md block shadow-md bg-[#fff] p-4 rounded-lg ">
+                <div className="rounded-md shadow-md bg-gradient-to-r from-pink-200 to-pink-400  mt-4 p-4 rounded-lg mb-4 min-h-40">
+                <h4 className="text-lg font-semibold text-[#fff]">Collected Info</h4>
+                  <p>Excavation (tons): <span className="font-bold">{formData.excavation}</span></p>
+                  <p>Transportation (km):<span className="font-bold"> {formData.transportation}</span></p>
+                  <p>Fuel Consumption (liters): <span className="font-bold">{formData.fuel}</span></p>
+                  <p>Equipment Usage (hours): <span className="font-bold">{formData.equipment}</span></p>
+                  <p>Number of Workers: <span className="font-bold">{formData.workers}</span></p>
+                  <p>Baseline Emissions: <span className="font-bold">{formData.baseline}</span></p>
+                  <p>Annual Coal Production: <span className="font-bold">{formData.annualcoal}</span></p>
+                  <p>Fuel Type: <span className="font-bold">{formData.fuelType}</span></p>
+                  <p>Methane Emissions: <span className="font-bold">{formData.methaneemissions}</span></p>
+                  <p>Total Energy Consumed: <span className="font-bold">{formData.energy}</span></p>
+                  </div>
+                  <div className="rounded-md shadow-md bg-gradient-to-tr from-blue-200 to-blue-400 mt-8 p-4 rounded-lg mb-4 min-h-40">
+                  {/* Carbon credits  Results */}
+                  <h4 className="text-lg font-semibold text-[#fff]">Carbon credits</h4>
+                  <p>Baseline Emissions: <span className="font-bold">{results.baseline.toFixed(2)} kg CO2</span></p>
+                  <p>Total Emissions: <span className="font-bold">{results.totalEmissions.toFixed(2)} kg CO2 equivalents</span></p>
+                  <p>Emissions after taking mitigation policies: <span className="font-bold">{results.reduced.toFixed(2)} kg CO2 per ton</span></p>
+                  <p>Total carbon credits: <span className="font-bold">{results.carboncredits.toFixed(2)} per ton</span></p>
+                  <p>The net worth of the carbon credits are: <span className="font-bold">{results.worth.toFixed(2)}$ per ton</span></p>
+               
+                </div>
                 </div>
                 <div className="col-start-3 col-span-2 row-2 row-span-2 w-full"><DoughnutChart data={results} /></div>
+                
+                
               </div>
               <br></br>
               <div>
@@ -613,6 +637,10 @@ function Analysis() {
                     <p className='py-2'>Estimated Electricity Savings: <span className="font-bold">{neutralisationResults.estimated_electricity_savings_mwh?.toFixed(2) || 0} MWh</span></p>
 
                     <p>Remaining Emissions After Following Complete Steps: <span className="font-bold">{neutralisationResults.overall_reamaining_footprint?.toFixed(2) || 0} kg CO2</span> </p>
+                  <div className='mt-8'>
+                    <h3 className='text-lg font-semibold text-center'>Neutralisation Pathway Chart</h3>
+                    {neutralisationResults && <NeutralizationChart data={neutralisationResults}/>}
+                    </div>
                   </div>
                 )}
               </div>

@@ -4,9 +4,16 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-EXCAVATION_FACTOR = 0.1  # Example emission factor for excavation
-TRANSPORTATION_FACTOR = 2.5  # Example emission factor for transportation
-EQUIPMENT_FACTOR = 3.2  # Example emission factor for equipment usage
+# Defining standard emission factors for emission estimation
+# References
+''' 2006 IPCC Guidelines for National Greenhouse Gas Inventories
+    Link - https://www.ipcc-nggip.iges.or.jp/public/2006gl/pdf/2_Volume2/V2_3_Ch3_Mobile_Combustion.pdf
+           https://www.ipcc-nggip.iges.or.jp/public/2006gl/pdf/2_Volume2/V2_2_Ch2_Stationary_Combustion.pdf '''
+# Emission factors for coal mining activities (in kg CO2)
+EXCAVATION_FACTOR = 94.6  # kg CO2 per ton of coal mined
+TRANSPORTATION_FACTOR = 74.1  # kg CO2 per ton per km (for diesel-powered transportation)
+EQUIPMENT_FACTOR = 73.3  # kg CO2 per hour of equipment operation
+
 GWP_METHANE = 25  # Global Warming Potential for Methane
 COAL_CO2_EMISSION_FACTOR = 2.2  # Example value, tons CO2 per ton of coal
 cost_per_cc = 42 #average cost per carbon credit is 42$ it may vary according to various conditions
@@ -20,6 +27,7 @@ emissionFactors = {
 def calculate_emissions():
     data = request.json
     
+    # Inputs
     excavation = float(data['excavation'])
     transportation = float(data['transportation'])
     fuel = float(data['fuel'])
@@ -32,7 +40,7 @@ def calculate_emissions():
     methaneemissions = float(data['methaneemissions'])
     energy = float(data['energy'])
     reduced = float(data['reduction'])
-    
+
     # Emission calculations
     excavation_emissions = excavation * EXCAVATION_FACTOR
     transportation_emissions = transportation * TRANSPORTATION_FACTOR * fuel
@@ -56,8 +64,6 @@ def calculate_emissions():
     total_emissions = baselineemissions + annualcoal * COAL_CO2_EMISSION_FACTOR + fuel_emissions + methane_co2e
     carboncredits = baselineemissions - reduced
     worth = carboncredits * cost_per_cc
-
-
     return jsonify({
         'totalEmissions': total_emissions,
         'excavationEmissions': excavation_emissions,
@@ -77,6 +83,7 @@ def calculate_emissions():
         'reduced': reduced,
         'worth': worth
     })
+
 
 
 # Defining standard constants for exploring Carbon Footprint Neutralization Pathways
