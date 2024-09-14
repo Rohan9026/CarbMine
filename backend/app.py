@@ -22,7 +22,7 @@ emissionFactors = {
   'oil': 3.17,         # kg CO2 per liter of oil
   'naturalGas': 2.75,  # kg CO2 per cubic meter of natural gas
   'biomass': 0         # kg CO2 per kg of biomass
-};
+}
 @app.route('/calculate', methods=['POST'])
 def calculate_emissions():
     data = request.json
@@ -34,11 +34,8 @@ def calculate_emissions():
     equipment = float(data['equipment'])
     workers = int(data['workers'])
     output = float(data['output'])
-    baselineemissions = float(data['baseline'])
     annualcoal = float(data['annualcoal'])
     fueltype = data.get('fuelType', 'coal')
-    methaneemissions = float(data['methaneemissions'])
-    energy = float(data['energy'])
     reduced = float(data['reduction'])
 
     # Emission calculations
@@ -60,8 +57,8 @@ def calculate_emissions():
     # calculated carbon credits
     fuel_emission_factor = emissionFactors.get(fueltype, COAL_CO2_EMISSION_FACTOR)
     fuel_emissions = fuel * fuel_emission_factor
-    methane_co2e = methaneemissions * GWP_METHANE
-    total_emissions = baselineemissions + annualcoal * COAL_CO2_EMISSION_FACTOR + fuel_emissions + methane_co2e
+    total_emissions =  annualcoal * COAL_CO2_EMISSION_FACTOR + fuel_emissions 
+    baselineemissions = total_emissions
     carboncredits = baselineemissions - reduced
     worth = carboncredits * cost_per_cc
     return jsonify({
@@ -78,7 +75,6 @@ def calculate_emissions():
         'perCapitaEmissions': total_emissions / workers,
         'perOutputEmissions': total_emissions / output,
         'baseline': baselineemissions,
-        'totalemissions': total_emissions,
         'carboncredits': carboncredits,
         'reduced': reduced,
         'worth': worth

@@ -16,8 +16,9 @@ function Analysis() {
     equipment: '',
     workers: '',
     output: '',
-    coalemissions: '',
-    methaneemission: ''
+    annualcoal: '',
+    fuelType: '',
+    reduction: ''
   });
   const [results, setResults] = useState(null);
   const formRef = useRef();
@@ -286,38 +287,8 @@ function Analysis() {
                 </button>
                 <button type="button" onClick={showNextSection} className="bg-indigo-600 text-white py-2 px-4 rounded-md hover" > Next </button> </div> </div>
 
-            {/* section for baseline emissions */}
-            <div ref={(el) => (sections.current[5] = el)} style={{ display: currentSection === 5 ? 'block' : 'none' }}>
-              <label className="block text-sm font-medium text-gray-700">Baseline Emissions :</label>
-              <input
-                type="number"
-                name="baseline"
-                value={formData.baseline}
-                onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
-              />
-              <div className="flex justify-between mt-4">
-                <button
-                  type="button"
-                  onClick={showPreviousSection}
-                  className="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700"
-                >
-                  Previous
-                </button>
-                <button
-                  type="button"
-                  onClick={showNextSection}
-                  className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
-                >
-                  Next
-                </button>
-              </div>
-            </div>
-
-
-
             {/* Section for annual coal production */}
-            <div ref={(el) => (sections.current[6] = el)} style={{ display: currentSection === 6 ? 'block' : 'none' }}>
+            <div ref={(el) => (sections.current[5] = el)} style={{ display: currentSection === 5 ? 'block' : 'none' }}>
               <label className="block text-sm font-medium text-gray-700">Annual coal production :</label>
               <input
                 type="number"
@@ -346,7 +317,7 @@ function Analysis() {
 
 
             {/* Section for fuel type */}
-            <div ref={(el) => (sections.current[7] = el)} style={{ display: currentSection === 7 ? 'block' : 'none' }}>
+            <div ref={(el) => (sections.current[6] = el)} style={{ display: currentSection === 6 ? 'block' : 'none' }}>
               <label className="block text-sm font-medium text-gray-700">Fuel Type :</label>
               <select
                 name="fuelType"
@@ -379,66 +350,8 @@ function Analysis() {
               </div>
             </div>
 
-
-            {/* Section for methane emissions */}
-            <div ref={(el) => (sections.current[8] = el)} style={{ display: currentSection === 8 ? 'block' : 'none' }}>
-              <label className="block text-sm font-medium text-gray-700">Methane Emissions :</label>
-              <input
-                type="number"
-                name="methaneemissions"
-                value={formData.methaneemissions}
-                onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
-              />
-              <div className="flex justify-between mt-4">
-                <button
-                  type="button"
-                  onClick={showPreviousSection}
-                  className="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700"
-                >
-                  Previous
-                </button>
-                <button
-                  type="button"
-                  onClick={showNextSection}
-                  className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
-                >
-                  Next
-                </button>
-              </div>
-            </div>
-
-
-            {/* Section for Energy consumption */}
-            <div ref={(el) => (sections.current[9] = el)} style={{ display: currentSection === 9 ? 'block' : 'none' }}>
-              <label className="block text-sm font-medium text-gray-700">Total Energy consumed :</label>
-              <input
-                type="number"
-                name="energy"
-                value={formData.energy}
-                onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
-              />
-              <div className="flex justify-between mt-4">
-                <button
-                  type="button"
-                  onClick={showPreviousSection}
-                  className="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700"
-                >
-                  Previous
-                </button>
-                <button
-                  type="button"
-                  onClick={showNextSection}
-                  className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
-                >
-                  Next
-                </button>
-              </div>
-            </div>
-
             {/* Section for Emission after mitigation policies */}
-            <div ref={(el) => (sections.current[10] = el)} style={{ display: currentSection === 10 ? 'block' : 'none' }}>
+            <div ref={(el) => (sections.current[7] = el)} style={{ display: currentSection === 7 ? 'block' : 'none' }}>
               <label className="block text-sm font-medium text-gray-700">Emissions after Mitigation policies :</label>
               <input
                 type="number"
@@ -465,7 +378,7 @@ function Analysis() {
               </div>
             </div>
 
-            <div ref={(el) => (sections.current[11] = el)} style={{ display: currentSection === 11 ? 'block' : 'none' }}>
+            <div ref={(el) => (sections.current[8] = el)} style={{ display: currentSection === 8 ? 'block' : 'none' }}>
               <label className="block text-sm font-medium text-gray-700">Output (tons):</label>
               <input
                 type="number"
@@ -527,7 +440,6 @@ function Analysis() {
                 <div className=" mt-8 bg-yellow-100 p-4 rounded-lg mb-4 row-start-1 col-start-3 min-h-40">
                   <h4 className="text-lg font-semibold text-yellow-800">Carbon credits</h4>
                   <p>Baseline Emissions: <span className="font-bold">{results.baseline.toFixed(2)} kg CO2</span></p>
-                  <p>Total Emissions: <span className="font-bold">{results.totalEmissions.toFixed(2)} kg CO2 equivalents</span></p>
                   <p>Emissions after taking mitigation policies: <span className="font-bold">{results.reduced.toFixed(2)} kg CO2 per ton</span></p>
                   <p>Total carbon credits: <span className="font-bold">{results.carboncredits.toFixed(2)} per ton</span></p>
                   <p>The net worth of the carbon credits are: <span className="font-bold">{results.worth.toFixed(2)}$ per ton</span></p>
