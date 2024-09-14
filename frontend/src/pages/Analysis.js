@@ -294,38 +294,8 @@ function Analysis() {
                 </button>
                 <button type="button" onClick={showNextSection} className="bg-indigo-600 text-white py-2 px-4 rounded-md hover" > Next </button> </div> </div>
 
-            {/* Section for annual coal production */}
-            <div ref={(el) => (sections.current[5] = el)} style={{ display: currentSection === 5 ? 'block' : 'none' }}>
-              <label className="block text-sm font-medium text-gray-700">Annual coal production :</label>
-              <input
-                type="number"
-                name="annualcoal"
-                value={formData.annualcoal}
-                required
-                onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
-              />
-              <div className="flex justify-between mt-4">
-                <button
-                  type="button"
-                  onClick={showPreviousSection}
-                  className="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700"
-                >
-                  Previous
-                </button>
-                <button
-                  type="button"
-                  onClick={showNextSection}
-                  className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
-                >
-                  Next
-                </button>
-              </div>
-            </div>
-
-
             {/* Section for fuel type */}
-            <div ref={(el) => (sections.current[6] = el)} style={{ display: currentSection === 6 ? 'block' : 'none' }}>
+            <div ref={(el) => (sections.current[5] = el)} style={{ display: currentSection === 5 ? 'block' : 'none' }}>
               <label className="block text-sm font-medium text-gray-700">Fuel Type :</label>
               <select
                 name="fuelType"
@@ -361,7 +331,7 @@ function Analysis() {
 
 
             {/* Section for Emission after mitigation policies */}
-            <div ref={(el) => (sections.current[7] = el)} style={{ display: currentSection === 7 ? 'block' : 'none' }}>
+            <div ref={(el) => (sections.current[6] = el)} style={{ display: currentSection === 6 ? 'block' : 'none' }}>
               <label className="block text-sm font-medium text-gray-700">Emissions after Mitigation policies :</label>
               <input
                 type="number"
@@ -389,8 +359,8 @@ function Analysis() {
               </div>
             </div>
 
-            <div ref={(el) => (sections.current[8] = el)} style={{ display: currentSection === 8 ? 'block' : 'none' }}>
-              <label className="block text-sm font-medium text-gray-700">Output (tons):</label>
+            <div ref={(el) => (sections.current[7] = el)} style={{ display: currentSection === 7 ? 'block' : 'none' }}>
+              <label className="block text-sm font-medium text-gray-700">Annual Coal Production (tons):</label>
               <input
                 type="number"
                 name="output"
@@ -449,15 +419,6 @@ function Analysis() {
                   <p>Per Output Emissions: <span className="font-bold">{results.equipmentPerOutput.toFixed(2)} kg CO2 per ton</span></p>
                 </div>
 
-                {/* Carbon credits  Results */}
-                <div className=" mt-8 bg-yellow-100 p-4 rounded-lg mb-4 row-start-1 col-start-3 min-h-40">
-                  <h4 className="text-lg font-semibold text-yellow-800">Carbon credits</h4>
-                  <p>Baseline Emissions: <span className="font-bold">{results.baseline.toFixed(2)} kg CO2</span></p>
-                  <p>Emissions after taking mitigation policies: <span className="font-bold">{results.reduced.toFixed(2)} kg CO2 per ton</span></p>
-                  <p>Total carbon credits: <span className="font-bold">{results.carboncredits.toFixed(2)} per ton</span></p>
-                  <p>The net worth of the carbon credits are: <span className="font-bold">{results.worth.toFixed(2)}$ per ton</span></p>
-                </div>
-
                 {/* Total Results */}
                 <div className="mt-8 bg-gray-100 p-4 rounded-lg mb-4 row-start-1 col-start-4 min-h-50">
                   <h4 className="text-lg font-semibold text-gray-800">Total</h4>
@@ -473,11 +434,9 @@ function Analysis() {
                     <p>Fuel Consumption (liters): <span className="font-bold">{formData.fuel}</span></p>
                     <p>Equipment Usage (hours): <span className="font-bold">{formData.equipment}</span></p>
                     <p>Number of Workers: <span className="font-bold">{formData.workers}</span></p>
-                    <p>Baseline Emissions: <span className="font-bold">{formData.baseline}</span></p>
-                    <p>Annual Coal Production: <span className="font-bold">{formData.annualcoal}</span></p>
                     <p>Fuel Type: <span className="font-bold">{formData.fuelType}</span></p>
-                    <p>Methane Emissions: <span className="font-bold">{formData.methaneemissions}</span></p>
-                    <p>Total Energy Consumed: <span className="font-bold">{formData.energy}</span></p>
+                    <p>Emissions After Mitigation Policy: <span className="font-bold">{formData.reduction}</span></p>
+                    <p>Annual Coal Production: <span className="font-bold">{formData.output}</span></p>
                   </div>
                   <div className="shadow-md bg-gradient-to-tr from-blue-200 to-blue-400 mt-8 p-4 rounded-lg mb-4 min-h-40">
                     {/* Carbon credits  Results */}
@@ -514,7 +473,7 @@ function Analysis() {
                   type="range"
                   value={neutralizePercentage}
                   onChange={(e) => setNeutralizePercentage(Number(e.target.value))}
-                  min="0"
+                  min="10"
                   max="100"
                   className="mt-1 w-full"
                 />
@@ -539,7 +498,7 @@ function Analysis() {
 
                     <div className="bg-blue-100 p-4 rounded-lg mb-4">
                       <h4 className="text-lg font-semibold text-blue-800">EV Transportation</h4>
-                      <p>CO2 Reduction Obtained By Converting {evConversionPercentage}% Of Transportation to EV: <span className="font-bold">{(neutralisationResults.transportation_footprint_reduction?? 0).toFixed(2)} kg CO2</span></p>
+                      <p>CO2 Reduction Obtained By Converting {evConversionPercentage}% Of Transportation To EV: <span className="font-bold">{(neutralisationResults.transportation_footprint_reduction?? 0).toFixed(2)} kg CO2</span></p>
                     </div>
 
                     <div className="bg-yellow-100 p-4 rounded-lg mb-4">
@@ -547,11 +506,11 @@ function Analysis() {
                       <p>CO2 Reduction Obtained By Replacing {greenFuelPercentage}% Fuel With Green Fuel: <span className="font-bold">{(neutralisationResults.fuel_footprint_reduction?? 0).toFixed(2)} kg CO2</span></p>
                     </div>
 
-                    <p className='py-2'>Remaining Emissions After Reduction: <span className="font-bold">{(neutralisationResults.remaining_footprint_after_reduction?? 0).toFixed(2)} kg CO2</span></p>
+                    <p className='py-2'>Remaining Emissions To Be Reduced After Following Above Steps: <span className="font-bold">{(neutralisationResults.remaining_footprint_after_reduction?? 0).toFixed(2)} kg CO2</span></p>
 
                     <div className="bg-green-100 p-4 rounded-lg mb-4">
                       <h4 className="text-lg font-semibold text-green-800">Afforestation</h4>
-                      <p>Land Required for Afforestation To Neutralise The Remaining Emissions: <span className="font-bold">{(neutralisationResults.land_required_for_afforestation_hectares?? 0).toFixed(2)} hectares</span></p>
+                      <p>Land Required For Afforestation To Neutralise The Remaining Emissions: <span className="font-bold">{(neutralisationResults.land_required_for_afforestation_hectares?? 0).toFixed(2)} hectares</span></p>
                     </div>
 
                     <p className='py-2'>Estimated Electricity Savings: <span className="font-bold">{(neutralisationResults.estimated_electricity_savings_mwh?? 0).toFixed(2)} MWh</span></p>
