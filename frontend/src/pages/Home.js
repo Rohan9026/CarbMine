@@ -299,32 +299,3 @@ const Home = () => {
 }
 
 export default Home;
-
-
-
-// const handleGenerateAndStorePDF = async () => {
-//   try {
-//     const canvas = await html2canvas(formRef.current, {
-//       scale: 2, // Increase scale for higher resolution
-//       useCORS: true, // Enable CORS if your images are from a different origin
-//     });
-
-//     const imgData = canvas.toDataURL('image/png');
-//     const pdf = new jsPDF('p', 'mm', 'a4'); // Change the format to 'a4' for better fitting
-//     const imgWidth = pdf.internal.pageSize.getWidth();
-//     const imgHeight = (canvas.height * imgWidth) / canvas.width; // Maintain aspect ratio
-
-//     pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-
-//     const pdfBlob = pdf.output('blob');
-
-//     const downloadURL = await uploadPDFToFirebase(pdfBlob);
-//     alert(`PDF generated and stored successfully! View it here: ${downloadURL}`);
-//   } catch (error) {
-//     console.error("Error generating or storing PDF:", error);
-//     alert("There was an error generating the PDF. Please try again.");
-//   }
-// };
-
-
-//  const { uploadPDFToFirebase } = useFirebase();

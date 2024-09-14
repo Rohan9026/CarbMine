@@ -133,12 +133,11 @@ function Analysis() {
 
 
 
-
   return (
-    <div className="min-h-screen min-w-screen flex flex-col justify-center items-center bg-[#fff]">
+    <div className=" min-w-screen flex flex-col justify-center items-center bg-[#fff]">
       {/* Title and Image Section */}
 
-      <div className="w-full p-8  flex justify-between items-center mb-8">
+      <div className=" p-4 flex justify-between items-center">
         <div className="text-left">
           <h1 className="text-4xl font-bold  mb-2">
             <span>ESTIMATE, ANALYSE,</span>
@@ -664,10 +663,6 @@ function Analysis() {
 
         </>
       )}
-      <hr className="w-full border-t border-gray-300 my-4" />
-      <div className="w-full bg-gray-800 ">
-        <Footer />
-      </div>
     </div>
   );
 }
