@@ -54,10 +54,11 @@ def calculate_emissions():
     equipment_per_output = equipment_emissions / output
 
     # calculated carbon credits
+    annualcoal = output
     fuel_emission_factor = emissionFactors.get(fueltype, COAL_CO2_EMISSION_FACTOR)
     fuel_emissions = fuel * fuel_emission_factor
-    total_emissions =  output * COAL_CO2_EMISSION_FACTOR + fuel_emissions 
-    baselineemissions = total_emissions
+    total =  annualcoal * COAL_CO2_EMISSION_FACTOR + fuel_emissions 
+    baselineemissions = total
     carboncredits = baselineemissions - reduced
     worth = carboncredits * cost_per_cc
     return jsonify({
@@ -76,7 +77,8 @@ def calculate_emissions():
         'baseline': baselineemissions,
         'carboncredits': carboncredits,
         'reduced': reduced,
-        'worth': worth
+        'worth': worth,
+        'total': total
     })
 
 
