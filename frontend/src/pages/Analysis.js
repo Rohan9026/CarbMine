@@ -6,7 +6,7 @@ import { useFirebase } from '../context/Firebase';
 import { Link } from 'react-router-dom';
 import DoughnutChart from '../components/DoughnutChart';
 import Footer from '../components/Footer';
-
+import NeutralizationChart from '../components/NeutralizationChart';
 function Analysis() {
   //Base parameters for estimation
   const [formData, setFormData] = useState({
@@ -59,8 +59,8 @@ function Analysis() {
       body: JSON.stringify({
         green_fuel_percentage: greenFuelPercentage,
         neutralise_percentage: neutralizePercentage,
-        ev_transportaion_percentage: evConversionPercentage,
-        emissions: results?.output || 0,
+        ev_transportation_percentage: evConversionPercentage,
+        emissions: results?.totalEmissions || 0,
         transportation: formData.transportation,
         fuel: formData.fuel,
       }),
@@ -72,6 +72,7 @@ function Analysis() {
   //handles change in slider values
   useEffect(() => {
     if (results) {
+      console.log("Results: ", results);
       handleNeutralise();
     }
   }, [evConversionPercentage, neutralizePercentage, greenFuelPercentage, results]);
@@ -81,9 +82,11 @@ function Analysis() {
   const [currentSection, setCurrentSection] = useState(0);
 
   const showNextSection = () => {
+
     if (currentSection < sections.current.length - 1) {
       setCurrentSection(currentSection + 1);
     }
+
   };
 
   const showPreviousSection = () => {
@@ -131,12 +134,11 @@ function Analysis() {
 
 
 
-
   return (
-    <div className="min-h-screen min-w-screen flex flex-col justify-center items-center bg-[#fff]">
+    <div className=" min-w-screen flex flex-col justify-center items-center bg-[#fff]">
       {/* Title and Image Section */}
 
-      <div className="w-full p-8  flex justify-between items-center mb-8">
+      <div className=" p-4 flex justify-between items-center">
         <div className="text-left">
           <h1 className="text-4xl font-bold  mb-2">
             <span>ESTIMATE, ANALYSE,</span>
@@ -170,6 +172,7 @@ function Analysis() {
                 name="excavation"
                 value={formData.excavation}
                 onChange={handleChange}
+                required
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               />
               <div className="flex justify-between mt-4">
@@ -191,6 +194,7 @@ function Analysis() {
                 name="transportation"
                 value={formData.transportation}
                 onChange={handleChange}
+                required
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               />
               <div className="flex justify-between mt-4">
@@ -218,6 +222,7 @@ function Analysis() {
                 type="number"
                 name="fuel"
                 value={formData.fuel}
+                required
                 onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               />
@@ -246,6 +251,7 @@ function Analysis() {
                 type="number"
                 name="equipment"
                 value={formData.equipment}
+                required
                 onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               />
@@ -274,6 +280,7 @@ function Analysis() {
                 type="number"
                 name="workers"
                 value={formData.workers}
+                required
                 onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               />
@@ -294,6 +301,7 @@ function Analysis() {
                 type="number"
                 name="annualcoal"
                 value={formData.annualcoal}
+                required
                 onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               />
@@ -322,6 +330,7 @@ function Analysis() {
               <select
                 name="fuelType"
                 value={formData.fuelType}
+                required
                 onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               >
@@ -350,6 +359,7 @@ function Analysis() {
               </div>
             </div>
 
+
             {/* Section for Emission after mitigation policies */}
             <div ref={(el) => (sections.current[7] = el)} style={{ display: currentSection === 7 ? 'block' : 'none' }}>
               <label className="block text-sm font-medium text-gray-700">Emissions after Mitigation policies :</label>
@@ -357,6 +367,7 @@ function Analysis() {
                 type="number"
                 name="reduction"
                 value={formData.reduction}
+                required
                 onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               />
@@ -384,6 +395,7 @@ function Analysis() {
                 type="number"
                 name="output"
                 value={formData.output}
+                required
                 onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
               />
@@ -409,28 +421,29 @@ function Analysis() {
         <>
           {results && (
 
-            <div className="mt-8 bg-white-800 px-6 py-6 block rounded-md shadow-md">
+            <div ref={formRef} className="mt-8 bg-white-800 px-6 py-6 block rounded-md shadow-md">
               <h2 className="text-2xl font-bold mb-6 text-center ">Emission Estimation Results</h2>
               <div className="mt-8 space-y-8 px-6 max-w-4xl mx-auto grid grid-cols-4 grid-rows-3 gap-6">
                 {/* Excavation Results */}
                 <div className="mt-8 bg-blue-100 p-4 rounded-lg mb-4 row-start-1 col-start-1 min-h-50">
                   <h4 className="text-lg font-semibold text-blue-800 ">Excavation</h4>
-                  <p>Total Emissions: <span className="font-bold">{results.excavationEmissions.toFixed(2)} kg CO2</span></p>
-                  <p>Per Capita Emissions: <span className="font-bold">{results.excavationPerCapita.toFixed(2)} kg CO2 per worker</span></p>
-                  <p>Per Output Emissions: <span className="font-bold">{results.excavationPerOutput.toFixed(2)} kg CO2 per ton</span></p>
+                  <p>Total Emissions: <span className="font-bold">{(results.excavationEmissions ?? 0).toFixed(2)} kg CO2</span></p>
+                  <p>Per Capita Emissions: <span className="font-bold">{(results.excavationPerCapita?? 0).toFixed(2)} kg CO2 per worker</span></p>
+                  <p>Per Output Emissions: <span className="font-bold">{(results.excavationPerOutput?? 0).toFixed(2)} kg CO2 per ton</span></p>
                 </div>
 
                 {/* Transportation Results */}
-                <div className=" mt-8 bg-green-100 p-4 rounded-lg mb-4 row-start-1 col-start-2 min-h-40">
+                <div className=" mt-8 bg-green-100 p-4 rounded-lg mb-4 row-start-1 col-start-2 min-h-50">
                   <h4 className="text-lg font-semibold text-green-800">Transportation</h4>
-                  <p>Total Emissions: <span className="font-bold">{results.transportationEmissions.toFixed(2)} kg CO2</span></p>
-                  <p>Per Capita Emissions: <span className="font-bold">{results.transportationPerCapita.toFixed(2)} kg CO2 per worker</span></p>
-                  <p>Per Output Emissions: <span className="font-bold">{results.transportationPerOutput.toFixed(2)} kg CO2 per ton</span></p>
+                  <p>Total Emissions: <span className="font-bold">{(results.transportationEmissions?? 0).toFixed(2)} kg CO2</span></p>
+                  <p>Per Capita Emissions: <span className="font-bold">{(results.transportationPerCapita?? 0).toFixed(2)} kg CO2 per worker</span></p>
+                  <p>Per Output Emissions: <span className="font-bold">{(results.transportationPerOutput?? 0).toFixed(2)} kg CO2 per ton</span></p>
                 </div>
 
                 {/* Equipment Results */}
-                <div className=" mt-8 bg-yellow-100 p-4 rounded-lg mb-4 row-start-1 col-start-3 min-h-40">
+                <div className=" mt-8 bg-yellow-100 p-4 rounded-lg mb-4 row-start-1 col-start-3 min-h-50">
                   <h4 className="text-lg font-semibold text-yellow-800">Equipment</h4>
+
                   <p>Total Emissions: <span className="font-bold">{results.equipmentEmissions.toFixed(2)} kg CO2</span></p>
                   <p>Per Capita Emissions: <span className="font-bold">{results.equipmentPerCapita.toFixed(2)} kg CO2 per worker</span></p>
                   <p>Per Output Emissions: <span className="font-bold">{results.equipmentPerOutput.toFixed(2)} kg CO2 per ton</span></p>
@@ -446,16 +459,40 @@ function Analysis() {
                 </div>
 
                 {/* Total Results */}
-                <div className="mt-8 bg-gray-100 p-4 rounded-lg row-start-1 col-start-4 min-h-50">
+                <div className="mt-8 bg-gray-100 p-4 rounded-lg mb-4 row-start-1 col-start-4 min-h-50">
                   <h4 className="text-lg font-semibold text-gray-800">Total</h4>
-                  <p>Total Emissions: <span className="font-bold">{results.totalEmissions.toFixed(2)} kg CO2</span></p>
-                  <p>Total Per Capita Emissions: <span className="font-bold">{results.perCapitaEmissions.toFixed(2)} kg CO2 per worker</span></p>
-                  <p>Total Per Output Emissions: <span className="font-bold">{results.perOutputEmissions.toFixed(2)} kg CO2 per ton</span></p>
+                  <p>Total Emissions: <span className="font-bold">{(results.totalEmissions?? 0).toFixed(2)} kg CO2</span></p>
+                  <p>Total Per Capita Emissions: <span className="font-bold">{(results.perCapitaEmissions?? 0).toFixed(2)} kg CO2 per worker</span></p>
+                  <p>Total Per Output Emissions: <span className="font-bold">{(results.perOutputEmissions?? 0).toFixed(2)} kg CO2 per ton</span></p>
                 </div>
-                <div className="col-start-1 col-span-2 row-2 row-span-2 rounded-md shadow-md bg-[#9BEC00] flex items-center justify-center">
-                  <h1 className="text-lg font-semibold text-[#fff] text-center">Analysis</h1>
+                <div className="col-start-1 col-span-2 row-2 row-span-2 block shadow-md bg-[#fff] p-4 rounded-lg ">
+                  <div className="shadow-md bg-gradient-to-r from-pink-200 to-pink-400  mt-4 p-4 rounded-lg mb-4 min-h-40">
+                    <h4 className="text-lg font-semibold text-[#fff]">Collected Info</h4>
+                    <p>Excavation (tons): <span className="font-bold">{formData.excavation}</span></p>
+                    <p>Transportation (km):<span className="font-bold"> {formData.transportation}</span></p>
+                    <p>Fuel Consumption (liters): <span className="font-bold">{formData.fuel}</span></p>
+                    <p>Equipment Usage (hours): <span className="font-bold">{formData.equipment}</span></p>
+                    <p>Number of Workers: <span className="font-bold">{formData.workers}</span></p>
+                    <p>Baseline Emissions: <span className="font-bold">{formData.baseline}</span></p>
+                    <p>Annual Coal Production: <span className="font-bold">{formData.annualcoal}</span></p>
+                    <p>Fuel Type: <span className="font-bold">{formData.fuelType}</span></p>
+                    <p>Methane Emissions: <span className="font-bold">{formData.methaneemissions}</span></p>
+                    <p>Total Energy Consumed: <span className="font-bold">{formData.energy}</span></p>
+                  </div>
+                  <div className="shadow-md bg-gradient-to-tr from-blue-200 to-blue-400 mt-8 p-4 rounded-lg mb-4 min-h-40">
+                    {/* Carbon credits  Results */}
+                    <h4 className="text-lg font-semibold text-[#fff]">Carbon credits</h4>
+                    <p>Baseline Emissions: <span className="font-bold">{(results.baseline?? 0).toFixed(2)} kg CO2</span></p>
+                    <p>Total Emissions: <span className="font-bold">{(results.totalEmissions?? 0).toFixed(2)} kg CO2 equivalents</span></p>
+                    <p>Emissions after taking mitigation policies: <span className="font-bold">{(results.reduced?? 0).toFixed(2)} kg CO2 per ton</span></p>
+                    <p>Total carbon credits: <span className="font-bold">{(results.carboncredits?? 0).toFixed(2)} per ton</span></p>
+                    <p>The net worth of the carbon credits are: <span className="font-bold">{(results.worth?? 0).toFixed(2)}$ per ton</span></p>
+
+                  </div>
                 </div>
                 <div className="col-start-3 col-span-2 row-2 row-span-2 w-full"><DoughnutChart data={results} /></div>
+
+
               </div>
               <br></br>
               <div>
@@ -498,56 +535,55 @@ function Analysis() {
                   <div className="mt-8">
                     <h3 className="text-xl font-semibold mb-4">Neutralisation Pathways To Achieve {neutralizePercentage}% Of The Carbon Footprint</h3>
                     <p >Total Carbon Footprint: <span className="font-bold">{neutralisationResults.emissions?.toFixed(2) || 0} kg CO2</span></p>
-                    <p className='py-2'>Target Carbon Footprint To Be Neutralised: <span className="font-bold">{neutralisationResults.emissions_to_be_neutralised?.toFixed(2) || 0} kg CO2</span></p>
+                    <p className='py-2'>Target Carbon Footprint To Be Neutralised: <span className="font-bold">{(neutralisationResults.emissions_to_be_neutralised?? 0).toFixed(2)} kg CO2</span></p>
 
                     <div className="bg-blue-100 p-4 rounded-lg mb-4">
                       <h4 className="text-lg font-semibold text-blue-800">EV Transportation</h4>
-                      <p>CO2 Reduction Obtained By Converting {evConversionPercentage}% Of Transportation to EV: <span className="font-bold">{neutralisationResults.transportation_footprint_reduction?.toFixed(2) || 0} kg CO2</span></p>
+                      <p>CO2 Reduction Obtained By Converting {evConversionPercentage}% Of Transportation to EV: <span className="font-bold">{(neutralisationResults.transportation_footprint_reduction?? 0).toFixed(2)} kg CO2</span></p>
                     </div>
 
                     <div className="bg-yellow-100 p-4 rounded-lg mb-4">
                       <h4 className="text-lg font-semibold text-yellow-800">Green Fuel</h4>
-                      <p>CO2 Reduction Obtained By Replacing {greenFuelPercentage}% Fuel With Green Fuel: <span className="font-bold">{neutralisationResults.fuel_footprint_reduction?.toFixed(2) || 0} kg CO2</span></p>
+                      <p>CO2 Reduction Obtained By Replacing {greenFuelPercentage}% Fuel With Green Fuel: <span className="font-bold">{(neutralisationResults.fuel_footprint_reduction?? 0).toFixed(2)} kg CO2</span></p>
                     </div>
 
-                    <p className='py-2'>Remaining Emissions After Reduction: <span className="font-bold">{neutralisationResults.remaining_footprint_after_reduction?.toFixed(2) || 0} kg CO2</span></p>
+                    <p className='py-2'>Remaining Emissions After Reduction: <span className="font-bold">{(neutralisationResults.remaining_footprint_after_reduction?? 0).toFixed(2)} kg CO2</span></p>
 
                     <div className="bg-green-100 p-4 rounded-lg mb-4">
                       <h4 className="text-lg font-semibold text-green-800">Afforestation</h4>
-                      <p>Land Required for Afforestation To Neutralise The Remaining Emissions: <span className="font-bold">{neutralisationResults.land_required_for_afforestation_hectares?.toFixed(2) || 0} hectares</span></p>
+                      <p>Land Required for Afforestation To Neutralise The Remaining Emissions: <span className="font-bold">{(neutralisationResults.land_required_for_afforestation_hectares?? 0).toFixed(2)} hectares</span></p>
                     </div>
 
-                    <p className='py-2'>Estimated Electricity Savings: <span className="font-bold">{neutralisationResults.estimated_electricity_savings_mwh?.toFixed(2) || 0} MWh</span></p>
+                    <p className='py-2'>Estimated Electricity Savings: <span className="font-bold">{(neutralisationResults.estimated_electricity_savings_mwh?? 0).toFixed(2)} MWh</span></p>
 
-                    <p>Remaining Emissions After Following Complete Steps: <span className="font-bold">{neutralisationResults.overall_reamaining_footprint?.toFixed(2) || 0} kg CO2</span> </p>
+                    <p>Remaining Emissions After Following Complete Steps: <span className="font-bold">{(neutralisationResults.overall_remaining_footprint?? 0).toFixed(2)} kg CO2</span> </p>
+                    <div className='mt-8'>
+                      <h3 className='text-lg font-semibold text-center'>Neutralisation Pathway Chart</h3>
+                      {neutralisationResults && <NeutralizationChart data={neutralisationResults} />}
+                    </div>
                   </div>
                 )}
               </div>
-
+              <div className='flex flex-col w-fit justify-center items-center m-auto'>
+                <button
+                  onClick={handleGenerateAndStorePDF}
+                  className="mt-4 bg-[#00F020] text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                >
+                  Generate and Store PDF
+                </button>
+                <Link to="/view">
+                  <button
+                    className="mt-4 bg-[#00F020] text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                  >
+                    View Data
+                  </button>
+                </Link>
+              </div>
             </div>
           )}
 
         </>
       )}
-
-
-      <button
-        onClick={handleGenerateAndStorePDF}
-        className="mt-4 bg-[#00F020] text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-      >
-        Generate and Store PDF
-      </button>
-      <Link to="/view">
-        <button
-          className="mt-4 bg-[#00F020] text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-        >
-          View Data
-        </button>
-      </Link>
-      <hr className="w-full border-t border-gray-300 my-4" />
-      <div className="w-full bg-gray-800 ">
-        <Footer />
-      </div>
     </div>
   );
 }

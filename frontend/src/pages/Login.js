@@ -26,13 +26,11 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Simple validation
     if (!loginData.email || !loginData.password) {
       setMessage("Email and password are required.");
       return;
     }
 
-    // Email format validation
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(loginData.email)) {
       setMessage("Invalid email format.");
@@ -83,30 +81,30 @@ const Login = () => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center pt-12">
-      <div className="bg-gray-800 p-10 rounded-lg shadow-md border border-gray-700 max-w-md w-full relative">
-        <h2 className="text-3xl font-bold mb-8 text-center text-yellow-500">Login</h2>
+      <div className="bg-white p-10 rounded-lg shadow-md border border-gray-300 max-w-md w-full relative">
+        <h2 className="text-3xl font-bold mb-8 text-center text-[#00F020]">Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
-            <label className="block text-gray-300 mb-2">Email:</label>
+            <label className="block text-gray-700 mb-2">Email:</label>
             <input
               type="email"
               name="email"
               placeholder="Enter your email"
               value={loginData.email}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-700 bg-gray-700 text-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              className="w-full px-4 py-3 border border-gray-300 bg-white text-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00F020]"
               required
             />
           </div>
           <div className="mb-6">
-            <label className="block text-gray-300 mb-2">Password:</label>
+            <label className="block text-gray-700 mb-2">Password:</label>
             <input
               type="password"
               name="password"
               placeholder="Enter your password"
               value={loginData.password}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-700 bg-gray-700 text-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              className="w-full px-4 py-3 border border-gray-300 bg-white text-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00F020]"
               required
             />
           </div>
@@ -119,19 +117,19 @@ const Login = () => {
                 onChange={handleChange}
                 className="mr-2"
               />
-              <label className="text-gray-300">Remember Me</label>
+              <label className="text-gray-700">Remember Me</label>
             </div>
             <button
               type="button"
               onClick={handleForgotPassword}
-              className="text-white hover:underline text-sm"
+              className="text-[#00F020] hover:underline text-sm"
             >
               Forgot Password?
             </button>
           </div>
           <button
             type="submit"
-            className="w-full bg-gray-300 text-gray-900 py-3 rounded-md hover:bg-gray-500 transition duration-200"
+            className="w-full border border-[#00F020] text-[#00F020] py-3 rounded-md hover:bg-green-600 transition duration-200"
           >
             Login
           </button>
@@ -139,16 +137,16 @@ const Login = () => {
         <div className="mt-6 flex justify-center">
           <button
             onClick={handleGoogleSignIn}
-            className="w-full bg-gray-300 text-gray-900 py-3 rounded-md hover:bg-gray-500 transition duration-200 flex items-center justify-center"
+            className="w-full border border-[#00F020] text-[#00F020] py-3 rounded-md hover:bg-green-600 transition duration-200 flex items-center justify-center"
           >
             <FcGoogle className="text-2xl mr-2" />
             Sign in with Google
           </button>
         </div>
         <div className="mt-6 text-center">
-          <p className="text-gray-400">
+          <p className="text-gray-500">
             Don't have an account?{' '}
-            <a href="/register" className="text-white hover:underline">
+            <a href="/register" className="text-[#00F020] hover:underline">
               Register
             </a>
           </p>
