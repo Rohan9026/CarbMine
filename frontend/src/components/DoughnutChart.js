@@ -37,12 +37,12 @@ const DoughnutChart = ({ data }) => {
   //  ['#008000', '#800080', '#FFA500']
   // );
 
-  // const totalEmissions=createChartData(
-  //   ['Excavation', 'Transportation', 'Equipment'],
-  //   [data.totalEmissions,data.perCapitaEmissions,data.perOutputEmissions],
-  //      ['#008000', '#800080', '#FFA500']
+  const totalEmissions=createChartData(
+    ['Excavation', 'Transportation', 'Equipment'],
+    [data.totalEmissions,data.perCapitaEmissions,data.perOutputEmissions],
+       ['#008000', '#800080', '#FFA500']
  
-  // )
+  )
 
 
   const options = {
@@ -50,7 +50,7 @@ const DoughnutChart = ({ data }) => {
       datalabels: {
         color: '#fff',
         display: true,
-        formatter: (value) => `${value.toFixed(2)} kg CO2`,
+        formatter: (value) => `${Number(value).toFixed(2)} kg CO2`,
         font: {
           weight: 'bold',
         },
@@ -65,7 +65,7 @@ const DoughnutChart = ({ data }) => {
           label: (context) => {
             let label = context.label || '';
             if (context.parsed !== null) {
-              label += ': ' + context.parsed.toFixed(2);
+              label += ': ' + Number(context.parsed).toFixed(2);
             }
             return label;
           },

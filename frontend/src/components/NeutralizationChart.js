@@ -31,7 +31,7 @@ const options = {
         datalabels: {
             color: '#fff',
             display: true,
-            formatter: (value) => `${value.toFixed(2)} kg CO2`,
+            formatter: (value) => `${Number(value).toFixed(2)} kg CO2`,
             font: {
                 weight: 'bold',
             },
@@ -46,7 +46,7 @@ const options = {
                 label: (context) => {
                     let label = context.label || '';
                     if (context.parsed !== null) {
-                        label += ': ' + context.parsed.toFixed(2) + ' kg CO2';
+                        label += ': ' + Number(context.parsed).toFixed(2) + ' kg CO2';
                     }
                     return label;
                 },
