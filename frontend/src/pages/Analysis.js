@@ -58,7 +58,7 @@ function Analysis() {
       body: JSON.stringify({
         green_fuel_percentage: greenFuelPercentage,
         neutralise_percentage: neutralizePercentage,
-        ev_transportaion_percentage: evConversionPercentage,
+        ev_transportation_percentage: evConversionPercentage,
         emissions: results?.totalEmissions || 0,
         transportation: formData.transportation,
         fuel: formData.fuel,
@@ -516,33 +516,33 @@ function Analysis() {
                 {/* Excavation Results */}
                 <div className="mt-8 bg-blue-100 p-4 rounded-lg mb-4 row-start-1 col-start-1 min-h-50">
                   <h4 className="text-lg font-semibold text-blue-800 ">Excavation</h4>
-                  <p>Total Emissions: <span className="font-bold">{results.excavationEmissions.toFixed(2)} kg CO2</span></p>
-                  <p>Per Capita Emissions: <span className="font-bold">{results.excavationPerCapita.toFixed(2)} kg CO2 per worker</span></p>
-                  <p>Per Output Emissions: <span className="font-bold">{results.excavationPerOutput.toFixed(2)} kg CO2 per ton</span></p>
+                  <p>Total Emissions: <span className="font-bold">{(results.excavationEmissions ?? 0).toFixed(2)} kg CO2</span></p>
+                  <p>Per Capita Emissions: <span className="font-bold">{(results.excavationPerCapita?? 0).toFixed(2)} kg CO2 per worker</span></p>
+                  <p>Per Output Emissions: <span className="font-bold">{(results.excavationPerOutput?? 0).toFixed(2)} kg CO2 per ton</span></p>
                 </div>
 
                 {/* Transportation Results */}
                 <div className=" mt-8 bg-green-100 p-4 rounded-lg mb-4 row-start-1 col-start-2 min-h-50">
                   <h4 className="text-lg font-semibold text-green-800">Transportation</h4>
-                  <p>Total Emissions: <span className="font-bold">{results.transportationEmissions.toFixed(2)} kg CO2</span></p>
-                  <p>Per Capita Emissions: <span className="font-bold">{results.transportationPerCapita.toFixed(2)} kg CO2 per worker</span></p>
-                  <p>Per Output Emissions: <span className="font-bold">{results.transportationPerOutput.toFixed(2)} kg CO2 per ton</span></p>
+                  <p>Total Emissions: <span className="font-bold">{(results.transportationEmissions?? 0).toFixed(2)} kg CO2</span></p>
+                  <p>Per Capita Emissions: <span className="font-bold">{(results.transportationPerCapita?? 0).toFixed(2)} kg CO2 per worker</span></p>
+                  <p>Per Output Emissions: <span className="font-bold">{(results.transportationPerOutput?? 0).toFixed(2)} kg CO2 per ton</span></p>
                 </div>
 
                 {/* Equipment Results */}
                 <div className=" mt-8 bg-yellow-100 p-4 rounded-lg mb-4 row-start-1 col-start-3 min-h-50">
                   <h4 className="text-lg font-semibold text-yellow-800">Equipment</h4>
-                  <p>Total Emissions: <span className="font-bold">{results.equipmentEmissions.toFixed(2)} kg CO2</span></p>
-                  <p>Per Capita Emissions: <span className="font-bold">{results.equipmentPerCapita.toFixed(2)} kg CO2 per worker</span></p>
-                  <p>Per Output Emissions: <span className="font-bold">{results.equipmentPerOutput.toFixed(2)} kg CO2 per ton</span></p>
+                  <p>Total Emissions: <span className="font-bold">{(results.equipmentEmissions?? 0).toFixed(2)} kg CO2</span></p>
+                  <p>Per Capita Emissions: <span className="font-bold">{(results.equipmentPerCapita?? 0).toFixed(2)} kg CO2 per worker</span></p>
+                  <p>Per Output Emissions: <span className="font-bold">{(results.equipmentPerOutput?? 0).toFixed(2)} kg CO2 per ton</span></p>
                 </div>
 
                 {/* Total Results */}
                 <div className="mt-8 bg-gray-100 p-4 rounded-lg mb-4 row-start-1 col-start-4 min-h-50">
                   <h4 className="text-lg font-semibold text-gray-800">Total</h4>
-                  <p>Total Emissions: <span className="font-bold">{results.totalEmissions.toFixed(2)} kg CO2</span></p>
-                  <p>Total Per Capita Emissions: <span className="font-bold">{results.perCapitaEmissions.toFixed(2)} kg CO2 per worker</span></p>
-                  <p>Total Per Output Emissions: <span className="font-bold">{results.perOutputEmissions.toFixed(2)} kg CO2 per ton</span></p>
+                  <p>Total Emissions: <span className="font-bold">{(results.totalEmissions?? 0).toFixed(2)} kg CO2</span></p>
+                  <p>Total Per Capita Emissions: <span className="font-bold">{(results.perCapitaEmissions?? 0).toFixed(2)} kg CO2 per worker</span></p>
+                  <p>Total Per Output Emissions: <span className="font-bold">{(results.perOutputEmissions?? 0).toFixed(2)} kg CO2 per ton</span></p>
                 </div>
                 <div className="col-start-1 col-span-2 row-2 row-span-2 block shadow-md bg-[#fff] p-4 rounded-lg ">
                   <div className="shadow-md bg-gradient-to-r from-pink-200 to-pink-400  mt-4 p-4 rounded-lg mb-4 min-h-40">
@@ -561,11 +561,11 @@ function Analysis() {
                   <div className="shadow-md bg-gradient-to-tr from-blue-200 to-blue-400 mt-8 p-4 rounded-lg mb-4 min-h-40">
                     {/* Carbon credits  Results */}
                     <h4 className="text-lg font-semibold text-[#fff]">Carbon credits</h4>
-                    <p>Baseline Emissions: <span className="font-bold">{results.baseline.toFixed(2)} kg CO2</span></p>
-                    <p>Total Emissions: <span className="font-bold">{results.totalEmissions.toFixed(2)} kg CO2 equivalents</span></p>
-                    <p>Emissions after taking mitigation policies: <span className="font-bold">{results.reduced.toFixed(2)} kg CO2 per ton</span></p>
-                    <p>Total carbon credits: <span className="font-bold">{results.carboncredits.toFixed(2)} per ton</span></p>
-                    <p>The net worth of the carbon credits are: <span className="font-bold">{results.worth.toFixed(2)}$ per ton</span></p>
+                    <p>Baseline Emissions: <span className="font-bold">{(results.baseline?? 0).toFixed(2)} kg CO2</span></p>
+                    <p>Total Emissions: <span className="font-bold">{(results.totalEmissions?? 0).toFixed(2)} kg CO2 equivalents</span></p>
+                    <p>Emissions after taking mitigation policies: <span className="font-bold">{(results.reduced?? 0).toFixed(2)} kg CO2 per ton</span></p>
+                    <p>Total carbon credits: <span className="font-bold">{(results.carboncredits?? 0).toFixed(2)} per ton</span></p>
+                    <p>The net worth of the carbon credits are: <span className="font-bold">{(results.worth?? 0).toFixed(2)}$ per ton</span></p>
 
                   </div>
                 </div>
@@ -614,28 +614,28 @@ function Analysis() {
                   <div className="mt-8">
                     <h3 className="text-xl font-semibold mb-4">Neutralisation Pathways To Achieve {neutralizePercentage}% Of The Carbon Footprint</h3>
                     <p >Total Carbon Footprint: <span className="font-bold">{neutralisationResults.emissions?.toFixed(2) || 0} kg CO2</span></p>
-                    <p className='py-2'>Target Carbon Footprint To Be Neutralised: <span className="font-bold">{neutralisationResults.emissions_to_be_neutralised?.toFixed(2) || 0} kg CO2</span></p>
+                    <p className='py-2'>Target Carbon Footprint To Be Neutralised: <span className="font-bold">{(neutralisationResults.emissions_to_be_neutralised?? 0).toFixed(2)} kg CO2</span></p>
 
                     <div className="bg-blue-100 p-4 rounded-lg mb-4">
                       <h4 className="text-lg font-semibold text-blue-800">EV Transportation</h4>
-                      <p>CO2 Reduction Obtained By Converting {evConversionPercentage}% Of Transportation to EV: <span className="font-bold">{neutralisationResults.transportation_footprint_reduction?.toFixed(2) || 0} kg CO2</span></p>
+                      <p>CO2 Reduction Obtained By Converting {evConversionPercentage}% Of Transportation to EV: <span className="font-bold">{(neutralisationResults.transportation_footprint_reduction?? 0).toFixed(2)} kg CO2</span></p>
                     </div>
 
                     <div className="bg-yellow-100 p-4 rounded-lg mb-4">
                       <h4 className="text-lg font-semibold text-yellow-800">Green Fuel</h4>
-                      <p>CO2 Reduction Obtained By Replacing {greenFuelPercentage}% Fuel With Green Fuel: <span className="font-bold">{neutralisationResults.fuel_footprint_reduction?.toFixed(2) || 0} kg CO2</span></p>
+                      <p>CO2 Reduction Obtained By Replacing {greenFuelPercentage}% Fuel With Green Fuel: <span className="font-bold">{(neutralisationResults.fuel_footprint_reduction?? 0).toFixed(2)} kg CO2</span></p>
                     </div>
 
-                    <p className='py-2'>Remaining Emissions After Reduction: <span className="font-bold">{neutralisationResults.remaining_footprint_after_reduction?.toFixed(2) || 0} kg CO2</span></p>
+                    <p className='py-2'>Remaining Emissions After Reduction: <span className="font-bold">{(neutralisationResults.remaining_footprint_after_reduction?? 0).toFixed(2)} kg CO2</span></p>
 
                     <div className="bg-green-100 p-4 rounded-lg mb-4">
                       <h4 className="text-lg font-semibold text-green-800">Afforestation</h4>
-                      <p>Land Required for Afforestation To Neutralise The Remaining Emissions: <span className="font-bold">{neutralisationResults.land_required_for_afforestation_hectares?.toFixed(2) || 0} hectares</span></p>
+                      <p>Land Required for Afforestation To Neutralise The Remaining Emissions: <span className="font-bold">{(neutralisationResults.land_required_for_afforestation_hectares?? 0).toFixed(2)} hectares</span></p>
                     </div>
 
-                    <p className='py-2'>Estimated Electricity Savings: <span className="font-bold">{neutralisationResults.estimated_electricity_savings_mwh?.toFixed(2) || 0} MWh</span></p>
+                    <p className='py-2'>Estimated Electricity Savings: <span className="font-bold">{(neutralisationResults.estimated_electricity_savings_mwh?? 0).toFixed(2)} MWh</span></p>
 
-                    <p>Remaining Emissions After Following Complete Steps: <span className="font-bold">{neutralisationResults.overall_reamaining_footprint?.toFixed(2) || 0} kg CO2</span> </p>
+                    <p>Remaining Emissions After Following Complete Steps: <span className="font-bold">{(neutralisationResults.overall_remaining_footprint?? 0).toFixed(2)} kg CO2</span> </p>
                     <div className='mt-8'>
                       <h3 className='text-lg font-semibold text-center'>Neutralisation Pathway Chart</h3>
                       {neutralisationResults && <NeutralizationChart data={neutralisationResults} />}
