@@ -29,7 +29,7 @@ const CalculationsPage = () => {
               <p className="text-base text-gray-700 mb-6">
                 Emissions are calculated for various activities involved in operations, including excavation, transportation, fuel consumption, and equipment usage. Below are the formulas and explanations for each calculation.
               </p>
-              
+
               <div className="space-y-8">
                 {/* Excavation Emissions */}
                 <div className="bg-gradient-to-r from-green-50 to-green-200 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
@@ -130,7 +130,7 @@ const CalculationsPage = () => {
               <p className="text-base text-gray-700 mb-6">
                 To mitigate the impact of emissions, various neutralization strategies are employed. These strategies aim to offset or reduce the overall carbon footprint.
               </p>
-              
+
               <div className="space-y-8">
                 {/* Electric Vehicles */}
                 <div className="bg-gradient-to-r from-teal-50 to-teal-200 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">

@@ -501,7 +501,7 @@ function Analysis() {
         <>
           {results && (
 
-            <div className="mt-8 bg-white-800 px-6 py-6 block rounded-md shadow-md">
+            <div ref={formRef} className="mt-8 bg-white-800 px-6 py-6 block rounded-md shadow-md">
               <h2 className="text-2xl font-bold mb-6 text-center ">Emission Estimation Results</h2>
               <div className="mt-8 space-y-8 px-6 max-w-4xl mx-auto grid grid-cols-4 grid-rows-3 gap-6">
                 {/* Excavation Results */}
@@ -616,27 +616,36 @@ function Analysis() {
                   </div>
                 )}
               </div>
-
+              <div className='flex flex-col w-fit justify-center items-center m-auto'>
+                <button
+                  onClick={handleGenerateAndStorePDF}
+                  className="mt-4 bg-[#00F020] text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                >
+                  Generate and Store PDF
+                </button>
+                <Link to="/view">
+                  <button
+                    className="mt-4 bg-[#00F020] text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                  >
+                    View Data
+                  </button>
+                </Link>
+              </div>
             </div>
+
+
+
+
           )}
 
         </>
       )}
 
 
-      <button
-        onClick={handleGenerateAndStorePDF}
-        className="mt-4 bg-[#00F020] text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-      >
-        Generate and Store PDF
-      </button>
-      <Link to="/view">
-        <button
-          className="mt-4 bg-[#00F020] text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-        >
-          View Data
-        </button>
-      </Link>
+
+
+
+
       <hr className="w-full border-t border-gray-300 my-4" />
       <div className="w-full bg-gray-800 ">
         <Footer />
