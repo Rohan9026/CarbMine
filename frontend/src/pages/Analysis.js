@@ -81,11 +81,11 @@ function Analysis() {
   const [currentSection, setCurrentSection] = useState(0);
 
   const showNextSection = () => {
-    
-      if (currentSection < sections.current.length - 1) {
-        setCurrentSection(currentSection + 1);
-      }
-    
+
+    if (currentSection < sections.current.length - 1) {
+      setCurrentSection(currentSection + 1);
+    }
+
   };
 
   const showPreviousSection = () => {
@@ -545,34 +545,34 @@ function Analysis() {
                   <p>Total Per Capita Emissions: <span className="font-bold">{results.perCapitaEmissions.toFixed(2)} kg CO2 per worker</span></p>
                   <p>Total Per Output Emissions: <span className="font-bold">{results.perOutputEmissions.toFixed(2)} kg CO2 per ton</span></p>
                 </div>
-                <div className="col-start-1 col-span-2 row-2 row-span-2 rounded-md block shadow-md bg-[#fff] p-4 rounded-lg ">
-                <div className="rounded-md shadow-md bg-gradient-to-r from-pink-200 to-pink-400  mt-4 p-4 rounded-lg mb-4 min-h-40">
-                <h4 className="text-lg font-semibold text-[#fff]">Collected Info</h4>
-                  <p>Excavation (tons): <span className="font-bold">{formData.excavation}</span></p>
-                  <p>Transportation (km):<span className="font-bold"> {formData.transportation}</span></p>
-                  <p>Fuel Consumption (liters): <span className="font-bold">{formData.fuel}</span></p>
-                  <p>Equipment Usage (hours): <span className="font-bold">{formData.equipment}</span></p>
-                  <p>Number of Workers: <span className="font-bold">{formData.workers}</span></p>
-                  <p>Baseline Emissions: <span className="font-bold">{formData.baseline}</span></p>
-                  <p>Annual Coal Production: <span className="font-bold">{formData.annualcoal}</span></p>
-                  <p>Fuel Type: <span className="font-bold">{formData.fuelType}</span></p>
-                  <p>Methane Emissions: <span className="font-bold">{formData.methaneemissions}</span></p>
-                  <p>Total Energy Consumed: <span className="font-bold">{formData.energy}</span></p>
+                <div className="col-start-1 col-span-2 row-2 row-span-2 block shadow-md bg-[#fff] p-4 rounded-lg ">
+                  <div className="shadow-md bg-gradient-to-r from-pink-200 to-pink-400  mt-4 p-4 rounded-lg mb-4 min-h-40">
+                    <h4 className="text-lg font-semibold text-[#fff]">Collected Info</h4>
+                    <p>Excavation (tons): <span className="font-bold">{formData.excavation}</span></p>
+                    <p>Transportation (km):<span className="font-bold"> {formData.transportation}</span></p>
+                    <p>Fuel Consumption (liters): <span className="font-bold">{formData.fuel}</span></p>
+                    <p>Equipment Usage (hours): <span className="font-bold">{formData.equipment}</span></p>
+                    <p>Number of Workers: <span className="font-bold">{formData.workers}</span></p>
+                    <p>Baseline Emissions: <span className="font-bold">{formData.baseline}</span></p>
+                    <p>Annual Coal Production: <span className="font-bold">{formData.annualcoal}</span></p>
+                    <p>Fuel Type: <span className="font-bold">{formData.fuelType}</span></p>
+                    <p>Methane Emissions: <span className="font-bold">{formData.methaneemissions}</span></p>
+                    <p>Total Energy Consumed: <span className="font-bold">{formData.energy}</span></p>
                   </div>
-                  <div className="rounded-md shadow-md bg-gradient-to-tr from-blue-200 to-blue-400 mt-8 p-4 rounded-lg mb-4 min-h-40">
-                  {/* Carbon credits  Results */}
-                  <h4 className="text-lg font-semibold text-[#fff]">Carbon credits</h4>
-                  <p>Baseline Emissions: <span className="font-bold">{results.baseline.toFixed(2)} kg CO2</span></p>
-                  <p>Total Emissions: <span className="font-bold">{results.totalEmissions.toFixed(2)} kg CO2 equivalents</span></p>
-                  <p>Emissions after taking mitigation policies: <span className="font-bold">{results.reduced.toFixed(2)} kg CO2 per ton</span></p>
-                  <p>Total carbon credits: <span className="font-bold">{results.carboncredits.toFixed(2)} per ton</span></p>
-                  <p>The net worth of the carbon credits are: <span className="font-bold">{results.worth.toFixed(2)}$ per ton</span></p>
-               
-                </div>
+                  <div className="shadow-md bg-gradient-to-tr from-blue-200 to-blue-400 mt-8 p-4 rounded-lg mb-4 min-h-40">
+                    {/* Carbon credits  Results */}
+                    <h4 className="text-lg font-semibold text-[#fff]">Carbon credits</h4>
+                    <p>Baseline Emissions: <span className="font-bold">{results.baseline.toFixed(2)} kg CO2</span></p>
+                    <p>Total Emissions: <span className="font-bold">{results.totalEmissions.toFixed(2)} kg CO2 equivalents</span></p>
+                    <p>Emissions after taking mitigation policies: <span className="font-bold">{results.reduced.toFixed(2)} kg CO2 per ton</span></p>
+                    <p>Total carbon credits: <span className="font-bold">{results.carboncredits.toFixed(2)} per ton</span></p>
+                    <p>The net worth of the carbon credits are: <span className="font-bold">{results.worth.toFixed(2)}$ per ton</span></p>
+
+                  </div>
                 </div>
                 <div className="col-start-3 col-span-2 row-2 row-span-2 w-full"><DoughnutChart data={results} /></div>
-                
-                
+
+
               </div>
               <br></br>
               <div>
@@ -637,9 +637,9 @@ function Analysis() {
                     <p className='py-2'>Estimated Electricity Savings: <span className="font-bold">{neutralisationResults.estimated_electricity_savings_mwh?.toFixed(2) || 0} MWh</span></p>
 
                     <p>Remaining Emissions After Following Complete Steps: <span className="font-bold">{neutralisationResults.overall_reamaining_footprint?.toFixed(2) || 0} kg CO2</span> </p>
-                  <div className='mt-8'>
-                    <h3 className='text-lg font-semibold text-center'>Neutralisation Pathway Chart</h3>
-                    {neutralisationResults && <NeutralizationChart data={neutralisationResults}/>}
+                    <div className='mt-8'>
+                      <h3 className='text-lg font-semibold text-center'>Neutralisation Pathway Chart</h3>
+                      {neutralisationResults && <NeutralizationChart data={neutralisationResults} />}
                     </div>
                   </div>
                 )}
@@ -660,20 +660,10 @@ function Analysis() {
                 </Link>
               </div>
             </div>
-
-
-
-
           )}
 
         </>
       )}
-
-
-
-
-
-
       <hr className="w-full border-t border-gray-300 my-4" />
       <div className="w-full bg-gray-800 ">
         <Footer />
