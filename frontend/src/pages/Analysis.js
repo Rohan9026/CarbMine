@@ -132,8 +132,6 @@ function Analysis() {
   };
 
 
-
-
   return (
     <div className=" min-w-screen flex flex-col justify-center items-center bg-[#fff]">
       {/* Title and Image Section */}
@@ -498,7 +496,7 @@ function Analysis() {
 
                     <div className="bg-blue-100 p-4 rounded-lg mb-4">
                       <h4 className="text-lg font-semibold text-blue-800">EV Transportation</h4>
-                      <p>CO2 Reduction Obtained By Converting {evConversionPercentage}% Of Transportation To EV: <span className="font-bold">{(neutralisationResults.transportation_footprint_reduction?? 0).toFixed(2)} kg CO2</span></p>
+                      <p>CO2 Reduction Obtained By Converting {evConversionPercentage}% Of Transportation To EV: <span className="font-bold">{(neutralisationResults.transportation_footprint_reduction ?? 0).toFixed(2)} kg CO2</span></p>
                     </div>
 
                     <div className="bg-yellow-100 p-4 rounded-lg mb-4">
@@ -506,11 +504,11 @@ function Analysis() {
                       <p>CO2 Reduction Obtained By Replacing {greenFuelPercentage}% Fuel With Green Fuel: <span className="font-bold">{(neutralisationResults.fuel_footprint_reduction ?? 0).toFixed(2)} kg CO2</span></p>
                     </div>
 
-                    <p className='py-2'>Remaining Emissions To Be Reduced After Following Above Steps: <span className="font-bold">{(neutralisationResults.remaining_footprint_after_reduction?? 0).toFixed(2)} kg CO2</span></p>
+                    <p className='py-2'>Remaining Emissions To Be Reduced After Following Above Steps: <span className="font-bold">{(neutralisationResults.remaining_footprint_after_reduction ?? 0).toFixed(2)} kg CO2</span></p>
 
                     <div className="bg-green-100 p-4 rounded-lg mb-4">
                       <h4 className="text-lg font-semibold text-green-800">Afforestation</h4>
-                      <p>Land Required For Afforestation To Neutralise The Remaining Emissions: <span className="font-bold">{(neutralisationResults.land_required_for_afforestation_hectares?? 0).toFixed(2)} hectares</span></p>
+                      <p>Land Required For Afforestation To Neutralise The Remaining Emissions: <span className="font-bold">{(neutralisationResults.land_required_for_afforestation_hectares ?? 0).toFixed(2)} hectares</span></p>
                     </div>
 
                     <p className='py-2'>Estimated Electricity Savings: <span className="font-bold">{(neutralisationResults.estimated_electricity_savings_mwh ?? 0).toFixed(2)} MWh</span></p>

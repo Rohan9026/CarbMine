@@ -14,7 +14,7 @@ const CalculationsPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-100 via-white to-blue-50 py-12">
       <div className="container mx-auto px-6 lg:px-8">
         <div className="bg-white shadow-xl rounded-lg overflow-hidden border border-gray-300">
-          <div className="bg-gradient-to-r from-blue-400 to-teal-300 text-white py-8">
+          <div className="bg-gradient-to-r from-blue-300 to-teal-300 text-white py-8">
             <h1 className="text-5xl font-bold text-center">CarbMine Project Calculations</h1>
             <p className="text-lg text-center mt-2 font-medium">
               An in-depth look at the calculations used in the CarbMine project, detailing emissions and neutralization pathways.
@@ -30,7 +30,7 @@ const CalculationsPage = () => {
               <p className="text-base text-gray-700 mb-6">
                 Emissions are calculated for various activities involved in operations, including excavation, transportation, fuel consumption, and equipment usage. Below are the formulas and explanations for each calculation.
               </p>
-              
+
               <div className="space-y-8">
                 {/* Excavation Emissions */}
                 <div className="bg-gradient-to-r from-green-50 to-green-200 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
@@ -197,8 +197,8 @@ const CalculationsPage = () => {
                 </div>
               </div>
             </section>
-             {/* Carbon Credits Section */}
-             <section>
+            {/* Carbon Credits Section */}
+            <section>
               <h2 className="text-3xl font-semibold mb-4 text-gray-900 border-b-2 border-teal-400 pb-2">
                 4.Carbon Credits
               </h2>
@@ -295,17 +295,17 @@ const CalculationsPage = () => {
                 <div className="bg-gray-100 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
                   <h3 className="text-2xl font-semibold text-gray-800">2006 IPCC Guidelines for National Greenhouse Gas Inventories</h3>
                   <p className="text-base text-gray-700 mt-4">
-                    These guidelines provide methodologies for estimating greenhouse gas emissions and removals. 
+                    These guidelines provide methodologies for estimating greenhouse gas emissions and removals.
                     <br />
-                    <a href="https://www.ipcc-nggip.iges.or.jp/public/2006gl/pdf/2_Volume2/V2_3_Ch3_Mobile_Combustion.pdf" 
-                       className="text-blue-600 hover:underline" 
-                       target="_blank" 
-                       rel="noopener noreferrer">Link to IPCC Mobile Combustion Guidelines</a>
+                    <a href="https://www.ipcc-nggip.iges.or.jp/public/2006gl/pdf/2_Volume2/V2_3_Ch3_Mobile_Combustion.pdf"
+                      className="text-blue-600 hover:underline"
+                      target="_blank"
+                      rel="noopener noreferrer">Link to IPCC Mobile Combustion Guidelines</a>
                     <br />
-                    <a href="https://www.ipcc-nggip.iges.or.jp/public/2006gl/pdf/2_Volume2/V2_2_Ch2_Stationary_Combustion.pdf" 
-                       className="text-blue-600 hover:underline" 
-                       target="_blank" 
-                       rel="noopener noreferrer">Link to IPCC Stationary Combustion Guidelines</a>
+                    <a href="https://www.ipcc-nggip.iges.or.jp/public/2006gl/pdf/2_Volume2/V2_2_Ch2_Stationary_Combustion.pdf"
+                      className="text-blue-600 hover:underline"
+                      target="_blank"
+                      rel="noopener noreferrer">Link to IPCC Stationary Combustion Guidelines</a>
                   </p>
                 </div>
 
@@ -313,12 +313,12 @@ const CalculationsPage = () => {
                 <div className="bg-gray-100 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
                   <h3 className="text-2xl font-semibold text-gray-800">Carbon Footprint Reduction from EVs</h3>
                   <p className="text-base text-gray-700 mt-4">
-                    EVs typically reduce carbon emissions by 20%-30% compared to conventional vehicles. 
+                    EVs typically reduce carbon emissions by 20%-30% compared to conventional vehicles.
                     <br />
-                    <a href="https://www.iea.org/reports/global-ev-outlook-2023" 
-                       className="text-blue-600 hover:underline" 
-                       target="_blank" 
-                       rel="noopener noreferrer">Link to IEA Global EV Outlook 2023</a>
+                    <a href="https://www.iea.org/reports/global-ev-outlook-2023"
+                      className="text-blue-600 hover:underline"
+                      target="_blank"
+                      rel="noopener noreferrer">Link to IEA Global EV Outlook 2023</a>
                   </p>
                 </div>
 
@@ -326,12 +326,12 @@ const CalculationsPage = () => {
                 <div className="bg-gray-100 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
                   <h3 className="text-2xl font-semibold text-gray-800">Carbon Footprint Reduction from Cleaner Fuels</h3>
                   <p className="text-base text-gray-700 mt-4">
-                    Switching from coal to natural gas can reduce carbon emissions by about 50%. 
+                    Switching from coal to natural gas can reduce carbon emissions by about 50%.
                     <br />
-                    <a href="https://www.epa.gov/greenvehicles/greenhouse-gas-emissions-typical-passenger-vehicle" 
-                       className="text-blue-600 hover:underline" 
-                       target="_blank" 
-                       rel="noopener noreferrer">Link to EPA Greenhouse Gas Emissions from Passenger Vehicles</a>
+                    <a href="https://www.epa.gov/greenvehicles/greenhouse-gas-emissions-typical-passenger-vehicle"
+                      className="text-blue-600 hover:underline"
+                      target="_blank"
+                      rel="noopener noreferrer">Link to EPA Greenhouse Gas Emissions from Passenger Vehicles</a>
                   </p>
                 </div>
 
@@ -339,12 +339,12 @@ const CalculationsPage = () => {
                 <div className="bg-gray-100 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
                   <h3 className="text-2xl font-semibold text-gray-800">Afforestation Sequestration Rate</h3>
                   <p className="text-base text-gray-700 mt-4">
-                    Afforestation sequesters approximately 2.2 tons of carbon per hectare per year. 
+                    Afforestation sequesters approximately 2.2 tons of carbon per hectare per year.
                     <br />
-                    <a href="https://www.ipcc.ch/srccl/" 
-                       className="text-blue-600 hover:underline" 
-                       target="_blank" 
-                       rel="noopener noreferrer">Link to IPCC Special Report on Climate Change and Land</a>
+                    <a href="https://www.ipcc.ch/srccl/"
+                      className="text-blue-600 hover:underline"
+                      target="_blank"
+                      rel="noopener noreferrer">Link to IPCC Special Report on Climate Change and Land</a>
                   </p>
                 </div>
 
@@ -352,12 +352,12 @@ const CalculationsPage = () => {
                 <div className="bg-gray-100 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
                   <h3 className="text-2xl font-semibold text-gray-800">Renewable Energy Reduction</h3>
                   <p className="text-base text-gray-700 mt-4">
-                    Renewable energy can reduce electricity consumption and carbon emissions by up to 30%. 
+                    Renewable energy can reduce electricity consumption and carbon emissions by up to 30%.
                     <br />
-                    <a href="https://www.irena.org/publications/2022/Dec/Renewable-Energy-and-Jobs-Annual-Review-2022" 
-                       className="text-blue-600 hover:underline" 
-                       target="_blank" 
-                       rel="noopener noreferrer">Link to IRENA Renewable Energy and Jobs Annual Review 2022</a>
+                    <a href="https://www.irena.org/publications/2022/Dec/Renewable-Energy-and-Jobs-Annual-Review-2022"
+                      className="text-blue-600 hover:underline"
+                      target="_blank"
+                      rel="noopener noreferrer">Link to IRENA Renewable Energy and Jobs Annual Review 2022</a>
                   </p>
                 </div>
               </div>
@@ -366,7 +366,7 @@ const CalculationsPage = () => {
         </div>
       </div>
     </div>
-    
+
   );
 };
 

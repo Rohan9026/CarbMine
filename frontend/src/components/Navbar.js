@@ -69,6 +69,10 @@ const Navbar = () => {
                     <li className="lg:mr-6">
                         <Link to="/estimate" className="text-black text-xl hover:text-[#00F020] transition">Estimate</Link>
                     </li>
+
+                    <li className="lg:mr-6">
+                        <Link to="/view" className="text-black text-xl hover:text-[#00F020] transition">Display</Link>
+                    </li>
                 </div>
                 <li className="relative lg:ml-auto">
                     {!loggedIn && (

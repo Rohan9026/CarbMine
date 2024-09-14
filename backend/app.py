@@ -39,7 +39,7 @@ def calculate_emissions():
 
     # Emission calculations
     excavation_emissions = excavation * EXCAVATION_FACTOR
-    transportation_emissions = transportation * TRANSPORTATION_FACTOR * fuel
+    transportation_emissions = transportation * TRANSPORTATION_FACTOR * 0.5
     equipment_emissions = equipment * EQUIPMENT_FACTOR
 
     total_emissions = excavation_emissions + transportation_emissions + equipment_emissions
