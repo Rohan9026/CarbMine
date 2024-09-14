@@ -1,8 +1,9 @@
 import React from 'react';
 
-const EXCAVATION_FACTOR = 0.1;
-const TRANSPORTATION_FACTOR = 2.5;
-const EQUIPMENT_FACTOR = 3.2;
+// Updated constants
+const EXCAVATION_FACTOR = 94.6; // kg CO2 per ton of coal mined
+const TRANSPORTATION_FACTOR = 74.1; // kg CO2 per ton per km (for diesel-powered transportation)
+const EQUIPMENT_FACTOR = 73.3; // kg CO2 per hour of equipment operation
 const EV_CONSTANT = 0.20;
 const GREEN_FUEL_CONSTANT = 0.50;
 const SEQUESTRATION_RATE = 2.2;
@@ -29,7 +30,7 @@ const CalculationsPage = () => {
               <p className="text-base text-gray-700 mb-6">
                 Emissions are calculated for various activities involved in operations, including excavation, transportation, fuel consumption, and equipment usage. Below are the formulas and explanations for each calculation.
               </p>
-
+              
               <div className="space-y-8">
                 {/* Excavation Emissions */}
                 <div className="bg-gradient-to-r from-green-50 to-green-200 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
@@ -128,71 +129,235 @@ const CalculationsPage = () => {
                 3. Neutralization Strategies
               </h2>
               <p className="text-base text-gray-700 mb-6">
-                To mitigate the impact of emissions, various neutralization strategies are employed. These strategies aim to offset or reduce the overall carbon footprint.
+                Strategies to neutralize emissions include using electric vehicles (EVs), green fuels, and afforestation. Below are the methods and their impact.
               </p>
-
               <div className="space-y-8">
-                {/* Electric Vehicles */}
+                {/* EV Reduction */}
                 <div className="bg-gradient-to-r from-teal-50 to-teal-200 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
-                  <h3 className="text-2xl font-semibold text-teal-800">Electric Vehicles (EVs)</h3>
+                  <h3 className="text-2xl font-semibold text-teal-800">Electric Vehicle (EV) Reduction</h3>
                   <p className="text-base text-gray-800 mt-4">
-                    <strong>Formula:</strong> <code className="bg-gray-100 p-1 rounded">Neutralization from EVs = Total Emissions × {EV_CONSTANT}</code>
+                    <strong>Formula:</strong> <code className="bg-gray-100 p-1 rounded">EV Reduction = E × {EV_CONSTANT}</code>
                     <br />
                     <strong>Where:</strong>
                     <ul className="list-disc pl-6 mt-2">
-                      <li><strong>Neutralization from EVs</strong>: Reduction in emissions due to the use of electric vehicles.</li>
-                      <li><strong>Total Emissions</strong>: The total emissions calculated.</li>
-                      <li><strong>EV Constant</strong>: Reduction factor for EVs ({EV_CONSTANT}).</li>
+                      <li><strong>EV Reduction</strong>: Reduction in emissions by using EVs (kg CO2).</li>
+                      <li><strong>E</strong>: Total emissions from transportation.</li>
+                      <li><strong>EV Constant</strong>: Reduction rate of EVs ({EV_CONSTANT}).</li>
                     </ul>
-                    <strong>Detailed Explanation:</strong> Using electric vehicles can significantly reduce emissions. The `EV_CONSTANT` represents the proportion of emissions offset by employing EVs compared to conventional vehicles.
+                    <strong>Detailed Explanation:</strong> This formula calculates the emissions reduction achieved by using electric vehicles. The `EV_CONSTANT` reflects the efficiency of EVs in reducing CO2 emissions compared to conventional vehicles.
                   </p>
                 </div>
 
-                {/* Green Fuels */}
-                <div className="bg-gradient-to-r from-green-50 to-green-200 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
-                  <h3 className="text-2xl font-semibold text-green-800">Green Fuels</h3>
+                {/* Green Fuel Reduction */}
+                <div className="bg-gradient-to-r from-red-50 to-red-200 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
+                  <h3 className="text-2xl font-semibold text-red-800">Green Fuel Reduction</h3>
                   <p className="text-base text-gray-800 mt-4">
-                    <strong>Formula:</strong> <code className="bg-gray-100 p-1 rounded">Neutralization from Green Fuels = Total Emissions × {GREEN_FUEL_CONSTANT}</code>
+                    <strong>Formula:</strong> <code className="bg-gray-100 p-1 rounded">Green Fuel Reduction = F × {GREEN_FUEL_CONSTANT}</code>
                     <br />
                     <strong>Where:</strong>
                     <ul className="list-disc pl-6 mt-2">
-                      <li><strong>Neutralization from Green Fuels</strong>: Reduction in emissions due to the use of green fuels.</li>
-                      <li><strong>Total Emissions</strong>: The total emissions calculated.</li>
-                      <li><strong>Green Fuel Constant</strong>: Reduction factor for green fuels ({GREEN_FUEL_CONSTANT}).</li>
+                      <li><strong>Green Fuel Reduction</strong>: Reduction in emissions using green fuels (kg CO2).</li>
+                      <li><strong>F</strong>: Total fuel consumption emissions.</li>
+                      <li><strong>Green Fuel Constant</strong>: Reduction rate by green fuels ({GREEN_FUEL_CONSTANT}).</li>
                     </ul>
-                    <strong>Detailed Explanation:</strong> Green fuels contribute to reducing emissions by replacing conventional fuels. The `GREEN_FUEL_CONSTANT` indicates the proportion of emissions mitigated by using green fuels.
+                    <strong>Detailed Explanation:</strong> This formula measures the emissions reduction achieved by using green fuels. The `GREEN_FUEL_CONSTANT` represents the effectiveness of green fuels in cutting down CO2 emissions.
                   </p>
                 </div>
 
                 {/* Afforestation */}
-                <div className="bg-gradient-to-r from-amber-50 to-amber-200 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
-                  <h3 className="text-2xl font-semibold text-amber-800">Afforestation</h3>
+                <div className="bg-gradient-to-r from-orange-50 to-orange-200 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
+                  <h3 className="text-2xl font-semibold text-orange-800">Afforestation</h3>
                   <p className="text-base text-gray-800 mt-4">
-                    <strong>Formula:</strong> <code className="bg-gray-100 p-1 rounded">Neutralization from Afforestation = Total Emissions × {SEQUESTRATION_RATE}</code>
+                    <strong>Formula:</strong> <code className="bg-gray-100 p-1 rounded">Afforestation = E × {SEQUESTRATION_RATE}</code>
                     <br />
                     <strong>Where:</strong>
                     <ul className="list-disc pl-6 mt-2">
-                      <li><strong>Neutralization from Afforestation</strong>: Reduction in emissions through afforestation efforts.</li>
-                      <li><strong>Total Emissions</strong>: The total emissions calculated.</li>
-                      <li><strong>Sequestration Rate</strong>: Carbon sequestration rate from afforestation ({SEQUESTRATION_RATE}).</li>
+                      <li><strong>Afforestation</strong>: CO2 absorbed by afforestation (tons CO2).</li>
+                      <li><strong>E</strong>: Total emissions.</li>
+                      <li><strong>Sequestration Rate</strong>: CO2 sequestration rate per ton of CO2 ({SEQUESTRATION_RATE}).</li>
                     </ul>
-                    <strong>Detailed Explanation:</strong> Afforestation helps to absorb CO2 from the atmosphere. The `SEQUESTRATION_RATE` represents the amount of CO2 sequestered per unit area of forest.
+                    <strong>Detailed Explanation:</strong> This formula calculates the CO2 reduction achieved through afforestation. The `SEQUESTRATION_RATE` indicates the amount of CO2 absorbed per ton of CO2 sequestered.
                   </p>
                 </div>
 
-                {/* Renewable Energy */}
-                <div className="bg-gradient-to-r from-teal-50 to-teal-200 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
-                  <h3 className="text-2xl font-semibold text-teal-800">Renewable Energy</h3>
+                {/* Renewable Energy Reduction */}
+                <div className="bg-gradient-to-r from-cyan-50 to-cyan-200 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
+                  <h3 className="text-2xl font-semibold text-cyan-800">Renewable Energy Reduction</h3>
                   <p className="text-base text-gray-800 mt-4">
-                    <strong>Formula:</strong> <code className="bg-gray-100 p-1 rounded">Neutralization from Renewable Energy = Total Emissions × {ELECTRICITY_REDUCTION_RATE}</code>
+                    <strong>Formula:</strong> <code className="bg-gray-100 p-1 rounded">Renewable Energy Reduction = E × {ELECTRICITY_REDUCTION_RATE}</code>
                     <br />
                     <strong>Where:</strong>
                     <ul className="list-disc pl-6 mt-2">
-                      <li><strong>Neutralization from Renewable Energy</strong>: Reduction in emissions through the use of renewable energy.</li>
-                      <li><strong>Total Emissions</strong>: The total emissions calculated.</li>
-                      <li><strong>Electricity Reduction Rate</strong>: Reduction factor for renewable energy ({ELECTRICITY_REDUCTION_RATE}).</li>
+                      <li><strong>Renewable Energy Reduction</strong>: Reduction in emissions due to renewable energy (kg CO2).</li>
+                      <li><strong>E</strong>: Total emissions.</li>
+                      <li><strong>Electricity Reduction Rate</strong>: Reduction rate due to renewable energy ({ELECTRICITY_REDUCTION_RATE}).</li>
                     </ul>
-                    <strong>Detailed Explanation:</strong> Utilizing renewable energy sources can reduce the carbon footprint. The `ELECTRICITY_REDUCTION_RATE` represents the proportion of emissions reduced by switching to renewable energy.
+                    <strong>Detailed Explanation:</strong> This formula calculates the reduction in emissions due to the use of renewable energy. The `ELECTRICITY_REDUCTION_RATE` reflects the efficiency of renewable energy sources in reducing CO2 emissions.
+                  </p>
+                </div>
+              </div>
+            </section>
+             {/* Carbon Credits Section */}
+             <section>
+              <h2 className="text-3xl font-semibold mb-4 text-gray-900 border-b-2 border-teal-400 pb-2">
+                4.Carbon Credits
+              </h2>
+              <p className="text-base text-gray-700 mb-6">
+                Carbon credits represent a permit allowing an entity to emit a certain amount of carbon dioxide or other greenhouse gases. Below are the calculations for determining carbon credits and their monetary value.
+              </p>
+              <div className="space-y-8">
+                {/* Fuel Emissions */}
+                <div className="bg-gradient-to-r from-green-50 to-green-200 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
+                  <h3 className="text-2xl font-semibold text-green-800">Fuel Emissions</h3>
+                  <p className="text-base text-gray-800 mt-4">
+                    <strong>Formula:</strong> <code className="bg-gray-100 p-1 rounded">fuel_emissions = fuel × fuel_emission_factor</code>
+                    <br />
+                    <strong>Where:</strong>
+                    <ul className="list-disc pl-6 mt-2">
+                      <li><strong>fuel_emissions</strong>: Emissions from fuel consumption (kg CO2).</li>
+                      <li><strong>fuel</strong>: Quantity of fuel consumed.</li>
+                      <li><strong>fuel_emission_factor</strong>: Emission factor for the specific fuel.</li>
+                    </ul>
+                    <strong>Detailed Explanation:</strong> This formula calculates the emissions generated from fuel consumption, using the fuel quantity and its emission factor.
+                  </p>
+                </div>
+
+                {/* Total Emissions */}
+                <div className="bg-gradient-to-r from-blue-50 to-blue-200 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
+                  <h3 className="text-2xl font-semibold text-blue-800">Total Emissions</h3>
+                  <p className="text-base text-gray-800 mt-4">
+                    <strong>Formula:</strong> <code className="bg-gray-100 p-1 rounded">total_emissions = annualcoal × COAL_CO2_EMISSION_FACTOR + fuel_emissions</code>
+                    <br />
+                    <strong>Where:</strong>
+                    <ul className="list-disc pl-6 mt-2">
+                      <li><strong>total_emissions</strong>: Total greenhouse gas emissions (kg CO2).</li>
+                      <li><strong>annualcoal</strong>: Annual coal usage (tons).</li>
+                      <li><strong>COAL_CO2_EMISSION_FACTOR</strong>: CO2 emitted per ton of coal.</li>
+                      <li><strong>fuel_emissions</strong>: Emissions from fuel consumption (from previous calculation).</li>
+                    </ul>
+                    <strong>Detailed Explanation:</strong> This formula calculates the total emissions from both coal consumption and fuel usage.
+                  </p>
+                </div>
+
+                {/* Baseline Emissions */}
+                <div className="bg-gradient-to-r from-yellow-50 to-yellow-200 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
+                  <h3 className="text-2xl font-semibold text-yellow-800">Baseline Emissions</h3>
+                  <p className="text-base text-gray-800 mt-4">
+                    <strong>Formula:</strong> <code className="bg-gray-100 p-1 rounded">baselineemissions = total_emissions</code>
+                    <br />
+                    <strong>Where:</strong>
+                    <ul className="list-disc pl-6 mt-2">
+                      <li><strong>baselineemissions</strong>: Emissions without reduction measures (kg CO2).</li>
+                      <li><strong>total_emissions</strong>: Total greenhouse gas emissions.</li>
+                    </ul>
+                    <strong>Detailed Explanation:</strong> Baseline emissions represent the "business-as-usual" scenario where no reduction measures are applied.
+                  </p>
+                </div>
+
+                {/* Carbon Credits */}
+                <div className="bg-gradient-to-r from-purple-50 to-purple-200 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
+                  <h3 className="text-2xl font-semibold text-purple-800">Carbon Credits</h3>
+                  <p className="text-base text-gray-800 mt-4">
+                    <strong>Formula:</strong> <code className="bg-gray-100 p-1 rounded">carboncredits = baselineemissions - reduced</code>
+                    <br />
+                    <strong>Where:</strong>
+                    <ul className="list-disc pl-6 mt-2">
+                      <li><strong>carboncredits</strong>: Number of carbon credits earned (tons CO2).</li>
+                      <li><strong>baselineemissions</strong>: Emissions without reduction measures.</li>
+                      <li><strong>reduced</strong>: Emissions after applying reduction measures.</li>
+                    </ul>
+                    <strong>Detailed Explanation:</strong> Carbon credits are calculated by comparing the baseline emissions with the reduced emissions.
+                  </p>
+                </div>
+
+                {/* Carbon Credit Worth */}
+                <div className="bg-gradient-to-r from-pink-50 to-pink-200 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
+                  <h3 className="text-2xl font-semibold text-pink-800">Carbon Credit Worth</h3>
+                  <p className="text-base text-gray-800 mt-4">
+                    <strong>Formula:</strong> <code className="bg-gray-100 p-1 rounded">worth = carboncredits × cost_per_cc</code>
+                    <br />
+                    <strong>Where:</strong>
+                    <ul className="list-disc pl-6 mt-2">
+                      <li><strong>worth</strong>: Monetary value of the carbon credits.</li>
+                      <li><strong>carboncredits</strong>: Number of carbon credits earned.</li>
+                      <li><strong>cost_per_cc</strong>: Cost per carbon credit (typically in dollars per metric ton of CO2).</li>
+                    </ul>
+                    <strong>Detailed Explanation:</strong> This formula calculates the financial worth of the carbon credits earned, based on the number of credits and their market value.
+                  </p>
+                </div>
+              </div>
+            </section>
+            {/* References Section */}
+            <section>
+              <h2 className="text-3xl font-semibold text-gray-900 mb-4">References</h2>
+              <div className="space-y-6">
+                {/* Reference 1 */}
+                <div className="bg-gray-100 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
+                  <h3 className="text-2xl font-semibold text-gray-800">2006 IPCC Guidelines for National Greenhouse Gas Inventories</h3>
+                  <p className="text-base text-gray-700 mt-4">
+                    These guidelines provide methodologies for estimating greenhouse gas emissions and removals. 
+                    <br />
+                    <a href="https://www.ipcc-nggip.iges.or.jp/public/2006gl/pdf/2_Volume2/V2_3_Ch3_Mobile_Combustion.pdf" 
+                       className="text-blue-600 hover:underline" 
+                       target="_blank" 
+                       rel="noopener noreferrer">Link to IPCC Mobile Combustion Guidelines</a>
+                    <br />
+                    <a href="https://www.ipcc-nggip.iges.or.jp/public/2006gl/pdf/2_Volume2/V2_2_Ch2_Stationary_Combustion.pdf" 
+                       className="text-blue-600 hover:underline" 
+                       target="_blank" 
+                       rel="noopener noreferrer">Link to IPCC Stationary Combustion Guidelines</a>
+                  </p>
+                </div>
+
+                {/* Reference 2 */}
+                <div className="bg-gray-100 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
+                  <h3 className="text-2xl font-semibold text-gray-800">Carbon Footprint Reduction from EVs</h3>
+                  <p className="text-base text-gray-700 mt-4">
+                    EVs typically reduce carbon emissions by 20%-30% compared to conventional vehicles. 
+                    <br />
+                    <a href="https://www.iea.org/reports/global-ev-outlook-2023" 
+                       className="text-blue-600 hover:underline" 
+                       target="_blank" 
+                       rel="noopener noreferrer">Link to IEA Global EV Outlook 2023</a>
+                  </p>
+                </div>
+
+                {/* Reference 3 */}
+                <div className="bg-gray-100 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
+                  <h3 className="text-2xl font-semibold text-gray-800">Carbon Footprint Reduction from Cleaner Fuels</h3>
+                  <p className="text-base text-gray-700 mt-4">
+                    Switching from coal to natural gas can reduce carbon emissions by about 50%. 
+                    <br />
+                    <a href="https://www.epa.gov/greenvehicles/greenhouse-gas-emissions-typical-passenger-vehicle" 
+                       className="text-blue-600 hover:underline" 
+                       target="_blank" 
+                       rel="noopener noreferrer">Link to EPA Greenhouse Gas Emissions from Passenger Vehicles</a>
+                  </p>
+                </div>
+
+                {/* Reference 4 */}
+                <div className="bg-gray-100 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
+                  <h3 className="text-2xl font-semibold text-gray-800">Afforestation Sequestration Rate</h3>
+                  <p className="text-base text-gray-700 mt-4">
+                    Afforestation sequesters approximately 2.2 tons of carbon per hectare per year. 
+                    <br />
+                    <a href="https://www.ipcc.ch/srccl/" 
+                       className="text-blue-600 hover:underline" 
+                       target="_blank" 
+                       rel="noopener noreferrer">Link to IPCC Special Report on Climate Change and Land</a>
+                  </p>
+                </div>
+
+                {/* Reference 5 */}
+                <div className="bg-gray-100 p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
+                  <h3 className="text-2xl font-semibold text-gray-800">Renewable Energy Reduction</h3>
+                  <p className="text-base text-gray-700 mt-4">
+                    Renewable energy can reduce electricity consumption and carbon emissions by up to 30%. 
+                    <br />
+                    <a href="https://www.irena.org/publications/2022/Dec/Renewable-Energy-and-Jobs-Annual-Review-2022" 
+                       className="text-blue-600 hover:underline" 
+                       target="_blank" 
+                       rel="noopener noreferrer">Link to IRENA Renewable Energy and Jobs Annual Review 2022</a>
                   </p>
                 </div>
               </div>
@@ -201,6 +366,7 @@ const CalculationsPage = () => {
         </div>
       </div>
     </div>
+    
   );
 };
 

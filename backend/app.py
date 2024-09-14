@@ -22,7 +22,7 @@ emissionFactors = {
   'oil': 3.17,         # kg CO2 per liter of oil
   'naturalGas': 2.75,  # kg CO2 per cubic meter of natural gas
   'biomass': 0         # kg CO2 per kg of biomass
-};
+}
 @app.route('/calculate', methods=['POST'])
 def calculate_emissions():
     data = request.json
@@ -112,7 +112,7 @@ def calculate_neutralisation_pathways():
     # Get the user-specified percentages
     green_fuel_percentage = float(data['green_fuel_percentage']) / 100
     neutralise_percentage = float(data['neutralise_percentage']) / 100
-    ev_transportation_percentage = float(data['ev_transportaion_percentage']) / 100
+    ev_transportation_percentage = float(data['ev_transportation_percentage']) / 100
 
     #Calculate Emissions to be neutralised
     emissions_to_be_neutralised = emissions*neutralise_percentage
@@ -129,7 +129,7 @@ def calculate_neutralisation_pathways():
     electricity_consumption = emissions_to_be_neutralised * ELECTRICITY_REDUCTION_RATE
     
     overall_remaining_emissions = emissions - emissions_to_be_neutralised
-
+ 
     result = {
         'emissions': emissions,
         'emissions_to_be_neutralised': emissions_to_be_neutralised,
@@ -138,7 +138,7 @@ def calculate_neutralisation_pathways():
         'remaining_footprint_after_reduction': remaining_emissions,
         'land_required_for_afforestation_hectares': land_required,
         'estimated_electricity_savings_mwh': electricity_consumption,
-        'overall_remianing_footprint': overall_remaining_emissions,
+        'overall_remaining_footprint': overall_remaining_emissions,
         'message': 'Carbon footprint neutralization pathways calculated successfully.'
     }
     
