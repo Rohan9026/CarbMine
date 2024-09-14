@@ -109,20 +109,27 @@ function Analysis() {
 
   const handleGenerateAndStorePDF = async () => {
     try {
+      // Reduce the canvas scale to improve performance and file size
       const canvas = await html2canvas(formRef.current, {
-        scale: 2, // Increase scale for higher resolution
-        useCORS: true, // Enable CORS if your images are from a different origin
+        scale: 1.5, // Lower scale for reduced resolution
+        useCORS: true,
       });
 
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4'); // Change the format to 'a4' for better fitting
+      const imgData = canvas.toDataURL('image/jpeg', 0.7); // Using JPEG with compression
+      const pdf = new jsPDF('p', 'mm', 'a4');
       const imgWidth = pdf.internal.pageSize.getWidth();
-      const imgHeight = (canvas.height * imgWidth) / canvas.width; // Maintain aspect ratio
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      // Adjust height to fit within page margins
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      if (imgHeight > pageHeight) {
+        const ratio = pageHeight / imgHeight;
+        pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth * ratio, pageHeight);
+      } else {
+        pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
+      }
 
       const pdfBlob = pdf.output('blob');
-
       const downloadURL = await uploadPDFToFirebase(pdfBlob);
       alert(`PDF generated and stored successfully! View it here: ${downloadURL}`);
     } catch (error) {
@@ -130,6 +137,7 @@ function Analysis() {
       alert("There was an error generating the PDF. Please try again.");
     }
   };
+
 
 
   return (
