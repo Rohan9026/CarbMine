@@ -34,7 +34,6 @@ def calculate_emissions():
     equipment = float(data['equipment'])
     workers = int(data['workers'])
     output = float(data['output'])
-    annualcoal = float(data['annualcoal'])
     fueltype = data.get('fuelType', 'coal')
     reduced = float(data['reduction'])
 
@@ -57,7 +56,7 @@ def calculate_emissions():
     # calculated carbon credits
     fuel_emission_factor = emissionFactors.get(fueltype, COAL_CO2_EMISSION_FACTOR)
     fuel_emissions = fuel * fuel_emission_factor
-    total_emissions =  annualcoal * COAL_CO2_EMISSION_FACTOR + fuel_emissions 
+    total_emissions =  output * COAL_CO2_EMISSION_FACTOR + fuel_emissions 
     baselineemissions = total_emissions
     carboncredits = baselineemissions - reduced
     worth = carboncredits * cost_per_cc
