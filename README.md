@@ -22,10 +22,6 @@
 - **Python (Flask):** A lightweight WSGI web application framework for building the backend services.
 - **Firebase:** A platform by Google that provides cloud-based services including authentication and real-time databases.
 
-## Demo Video
-
-[Click Here](https://photos.app.goo.gl/ovrfDobLS759zMfXA)
-
 ## Installation
 
 To run the Coal Carbon Footprint Tool locally, follow these steps:
