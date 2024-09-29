@@ -2,11 +2,6 @@
 
 **CarbMine** is a comprehensive web application designed to help the Indian coal industry address climate change challenges. It empowers coal mine operators to make informed decisions by quantifying carbon footprints and offering pathways to achieve carbon neutrality. The tool features emission estimation, carbon neutrality simulations, data visualization, carbon credit calculations, and allows users to generate and store PDF reports of their analysis.
 
-## Demo Video
-
-Watch the working demo of CarbMine below:
-
-<iframe width="560" height="315" src="https://youtu.be/T19DcbGDWgY?feature=shared" title="CarbMine Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Features
 
