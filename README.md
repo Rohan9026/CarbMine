@@ -4,9 +4,9 @@
 
 ## Demo Video
 
-Watch the working demo of CarbMine on YouTube:
+Here is the working demo of CarbMine:
 
-[[CarbMine Demo Video]](https://youtu.be/T19DcbGDWgY?feature=shared)
+[Demo Video](https://youtu.be/T19DcbGDWgY?feature=shared)
 
 ## Features
 
